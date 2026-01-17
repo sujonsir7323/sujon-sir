@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CQ মডেল টেস্ট - অধ্যায় ২ (মডেল ০২)</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        /* মডেল ১ এর হুবহু CSS */
+        body { font-family: 'Hind Siliguri', sans-serif; background: #f0f2f5; margin: 0; padding: 0; color: #222; }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; min-height: 100vh; padding-bottom: 50px; }
+
+        .header {
+            background: linear-gradient(135deg, #1b5e20 0%, #4caf50 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px; margin-bottom: 20px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .header p { font-size: 14px; margin: 0; opacity: 0.9; }
+        
+        .back-btn {
+            position: absolute; top: 20px; left: 20px; color: white; font-size: 20px;
+        }
+
+        .question-paper { padding: 20px; }
+        
+        .cq-container {
+            border: 1px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 30px;
+            background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .cq-top { display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: bold; color: #1b5e20; }
+        .board-tag { background: #e8f5e9; padding: 2px 8px; border-radius: 4px; font-size: 13px; color: #2e7d32; }
+        
+        .stem { 
+            background: #f9f9f9; padding: 15px; border-left: 4px solid #4caf50; 
+            margin-bottom: 15px; line-height: 1.6; border-radius: 4px;
+        }
+        
+        .question-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 16px; }
+        .q-text { flex: 1; }
+        .q-mark { font-weight: bold; margin-left: 10px; color: #555; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <a href="math_ch2_test.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <h1>CQ মডেল টেস্ট - ০২</h1>
+            <p>অধ্যায় ২: সেট ও ফাংশন</p>
+        </div>
+
+        <div class="question-paper">
+            
+            <div class="cq-container">
+                <div class="cq-top">
+                    <span>প্রশ্ন ০১</span>
+                    <span class="board-tag">ঢাকা বোর্ড ২০২৩</span>
+                </div>
+
+                <div class="stem">
+                    সার্বিক সেট $U = \{1, 2, 3, 4, 5, 6, 7\}$<br>
+                    $A = \{x \in \mathbb{N} : x^2 > 8 \text{ এবং } x^3 < 220\}$<br>
+                    $B = \{4, 5, 6, 7\}$ এবং $C = A \cup B$
+                </div>
+
+                <div class="questions">
+                    <div class="question-row">
+                        <span class="q-text">(ক) সেট $A$ কে তালিকা পদ্ধতিতে প্রকাশ কর।</span>
+                        <span class="q-mark">০২</span>
+                    </div>
+                    <div class="question-row">
+                        <span class="q-text">(খ) দেখাও যে, $(A \cap B)' = A' \cup B'$।</span>
+                        <span class="q-mark">০৪</span>
+                    </div>
+                    <div class="question-row">
+                        <span class="q-text">(গ) $P(C)$ নির্ণয় করে দেখাও যে, $P(C)$ এর উপাদান সংখ্যা $2^n$ কে সমর্থন করে।</span>
+                        <span class="q-mark">০৪</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cq-container">
+                <div class="cq-top">
+                    <span>প্রশ্ন ০২</span>
+                    <span class="board-tag">ময়মনসিংহ বোর্ড ২০২২</span>
+                </div>
+
+                <div class="stem">
+                    $f(y) = \frac{y^3 - 3y^2 + 1}{y(1-y)}$ একটি ফাংশন।<br>
+                    এবং $S = \{(x, y) : x \in A, y \in A \text{ এবং } y - x = 1\}$ যেখানে $A = \{-2, -1, 0, 1, 2\}$
+                </div>
+
+                <div class="questions">
+                    <div class="question-row">
+                        <span class="q-text">(ক) ফাংশনটির ডোমেন নির্ণয় কর।</span>
+                        <span class="q-mark">০২</span>
+                    </div>
+                    <div class="question-row">
+                        <span class="q-text">(খ) অন্বয় $S$ কে তালিকা পদ্ধতিতে প্রকাশ করে ডোমেন ও রেঞ্জ নির্ণয় কর।</span>
+                        <span class="q-mark">০৪</span>
+                    </div>
+                    <div class="question-row">
+                        <span class="q-text">(গ) দেখাও যে, $f(\frac{1}{y}) = f(1-y)$।</span>
+                        <span class="q-mark">০৪</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

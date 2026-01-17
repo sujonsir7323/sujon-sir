@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self Study with Sujon Sir</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Hind Siliguri', sans-serif; background: #f4f7f6; margin: 0; padding: 0; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; min-height: 100vh; background: #fff; box-shadow: 0 0 15px rgba(0,0,0,0.05); }
+        
+        /* Header */
+        .header { background: linear-gradient(135deg, #004d40 0%, #009688 100%); color: white; padding: 40px 20px; text-align: center; border-bottom-right-radius: 40px; border-bottom-left-radius: 40px; margin-bottom: 20px; }
+        .header h1 { margin: 10px 0 5px; font-size: 26px; font-weight: 700; }
+        .header p { font-size: 14px; opacity: 0.9; color: #e0f2f1; }
+        .quote-box { background: #e0f2f1; padding: 15px; margin: 20px; border-radius: 10px; border-left: 5px solid #004d40; font-style: italic; color: #00695c; font-size: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        
+        /* Subject Cards */
+        .grid { padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+        .card { display: flex; align-items: center; background: white; padding: 20px; border-radius: 15px; text-decoration: none; color: #333; border: 1px solid #eee; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); border-color: #b2dfdb; }
+        
+        .icon-box { width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-right: 20px; color: white; }
+        
+        /* আগের ক্লাসগুলো (SSC) */
+        .math-bg { background: linear-gradient(135deg, #43a047, #66bb6a); }
+        .phy-bg { background: linear-gradient(135deg, #1e88e5, #42a5f5); }
+        .chem-bg { background: linear-gradient(135deg, #8e24aa, #ab47bc); }
+        
+        /* নতুন ক্লাসগুলো (HSC) */
+        .phy1-bg { background: linear-gradient(135deg, #0277bd, #4fc3f7); } /* গাঢ় নীল */
+        .phy2-bg { background: linear-gradient(135deg, #283593, #7986cb); } /* নেভি ব্লু */
+        .ict-bg { background: linear-gradient(135deg, #00695c, #4db6ac); }  /* টিল কালার */
+        
+        .info h3 { margin: 0; font-size: 18px; font-weight: 600; }
+        .info span { font-size: 13px; color: #777; }
+        .arrow { margin-left: auto; color: #ccc; }
+
+        .footer { text-align: center; padding: 20px; font-size: 12px; color: #aaa; margin-top: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <i class="fas fa-graduation-cap" style="font-size: 45px; color: #ffeb3b;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>"তোমার স্বপ্ন, আমাদের দিকনির্দেশনা"</p>
+        </div>
+
+        <div class="quote-box">
+            <i class="fas fa-quote-left"></i> জ্ঞান অর্জনের চেয়ে বড় কোনো সম্পদ নেই। লেগে থাকো, সাফল্য আসবেই।
+        </div>
+
+        <div class="grid">
+            <a href="math_subject.html" class="card">
+                <div class="icon-box math-bg"><i class="fas fa-calculator"></i></div>
+                <div class="info">
+                    <h3>গণিত (Mathematics)</h3>
+                    <span>নবম-দশম শ্রেণি • সকল অধ্যায়</span>
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+            </a>
+
+            <a href="physics_subject.html" class="card">
+                <div class="icon-box phy-bg"><i class="fas fa-atom"></i></div>
+                <div class="info">
+                    <h3>পদার্থবিজ্ঞান (Physics)</h3>
+                    <span>নবম-দশম শ্রেণি • সকল অধ্যায়</span>
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+            </a>
+
+            <a href="chemistry_subject.html" class="card">
+                <div class="icon-box chem-bg"><i class="fas fa-flask"></i></div>
+                <div class="info">
+                    <h3>রসায়ন (Chemistry)</h3>
+                    <span>নবম-দশম শ্রেণি • সকল অধ্যায়</span>
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+            </a>
+
+            <a href="hsc_phy1_subject.html" class="card">
+                <div class="icon-box phy1-bg"><i class="fas fa-magnet"></i></div>
+                <div class="info">
+                    <h3>পদার্থবিজ্ঞান ১ম পত্র</h3>
+                    <span>একাদশ-দ্বাদশ শ্রেণি • সকল অধ্যায়</span>
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+            </a>
+
+            <a href="hsc_phy2_subject.html" class="card">
+                <div class="icon-box phy2-bg"><i class="fas fa-bolt"></i></div>
+                <div class="info">
+                    <h3>পদার্থবিজ্ঞান ২য় পত্র</h3>
+                    <span>একাদশ-দ্বাদশ শ্রেণি • সকল অধ্যায়</span>
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+            </a>
+
+            <a href="hsc_ict_subject.html" class="card">
+                <div class="icon-box ict-bg"><i class="fas fa-laptop-code"></i></div>
+                <div class="info">
+                    <h3>তথ্য ও যোগাযোগ প্রযুক্তি (ICT)</h3>
+                    <span>একাদশ-দ্বাদশ শ্রেণি • সকল অধ্যায়</span>
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+            </a>
+        </div>
+
+        <div class="footer">&copy; 2026 Self Study with Sujon Sir | Developed for Students</div>
+    </div>
+</body>
+</html>
