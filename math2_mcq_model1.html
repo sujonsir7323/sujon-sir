@@ -121,7 +121,7 @@
             <div class="timer" id="timer">সময় বাকি: ২০:০০ মিনিট</div>
         </div>
 
-        <form id="quizForm" class="mcq-container" name="math2_mcq1" method="POST" data-netlify="true">
+        <form id="quizForm" class="mcq-container" name="math2_mcq1">
             
             <input type="hidden" name="form-name" value="math2_mcq1">
             <input type="hidden" name="obtained_score" id="hiddenScore">
@@ -459,26 +459,22 @@
                 }
             }
 
-            // Netlify-তে ডাটা পাঠানোর প্রস্তুতি
+            // স্কর সেট করা
             const hiddenScoreInput = document.getElementById('hiddenScore');
-            hiddenScoreInput.value = score; // স্কর ইনপুটে সেট করা
+            hiddenScoreInput.value = score;
             
-            // নতুন FormData তৈরি করে স্কর সহ পাঠানো
+            // নতুন FormData তৈরি
             const finalFormData = new FormData(this);
             
-            // Netlify-তে ডাটা পাঠানো (AJAX request)
-            fetch("/", {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams(finalFormData).toString()
+            // ⚠️ Google Sheet-এ ডাটা পাঠানোর কোড (আপনার দেওয়া লিংকটি ব্যবহার করা হয়েছে)
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbyTNSIT83A6MEY_H5tamipsKVA86QTBOJQ-_AeryxqTA3epPRieKAPo3ER7KN7f28be/exec';
+
+            fetch(scriptURL, {
+                method: 'POST',
+                body: finalFormData
             })
-            .then(() => {
-                console.log("Form successfully submitted to Netlify");
-            })
-            .catch((error) => {
-                console.error("Submission failed:", error);
-                // ফেইল করলেও ছাত্রকে রেজাল্ট দেখানো হবে
-            });
+            .then(response => console.log('Success!', response))
+            .catch(error => console.error('Error!', error.message));
 
             // ছাত্রকে রেজাল্ট দেখানো
             document.getElementById('displayScore').textContent = score;
