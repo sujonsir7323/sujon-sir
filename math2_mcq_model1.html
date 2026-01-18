@@ -115,7 +115,8 @@
                 </div>
                 
                 <input type="hidden" name="score" id="hiddenScore">
-                <input type="hidden" name="subject" value="Math_Ch2_Model1"> </div>
+                <input type="hidden" name="subject" value="Math_Ch2_Model1">
+            </div>
 
             <div class="question-card" id="q1">
                 <div class="q-title">
@@ -200,7 +201,7 @@
     <script>
         const form = document.getElementById('quizForm');
         
-        // ⚠️ আপনার নতুন লিংকটি এখানে বসানো হয়েছে
+        // আপনার লেটেস্ট স্ক্রিপ্ট লিংক
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwb7gDTgkExKiNoCUCLJi4i-IFDVet0TAz9SU_LN3to4TzpVDe8653E009nBi7m-fjg/exec';
 
         form.addEventListener('submit', function(e) {
@@ -218,6 +219,7 @@
             let score = 0;
             const questions = document.querySelectorAll('.question-card');
 
+            // নম্বর গণনার লজিক
             questions.forEach(card => {
                 const inputs = card.querySelectorAll('input[type="radio"]');
                 let answered = false;
@@ -230,7 +232,7 @@
                         selected = input.value;
                         answered = true;
                     }
-                    input.disabled = true; // পরীক্ষা শেষে অপশন লক করা
+                    input.disabled = true; // লক অপশন
                 });
 
                 // কালার লজিক
@@ -253,29 +255,27 @@
             // স্কোর ইনপুটে সেট করা
             document.getElementById('hiddenScore').value = score;
 
-            // ডাটা সাবমিশন প্রসেস
-            const finalFormData = new FormData(form);
+            // ⚠️ FIX: GitHub/External Domain থেকে ডাটা পাঠানোর জন্য URLSearchParams ব্যবহার
+            const formData = new FormData(form);
+            const data = new URLSearchParams(formData);
 
             fetch(scriptURL, {
                 method: 'POST',
-                mode: 'no-cors', // ⚠️ ডাটা পাঠানোর জন্য এটি জরুরি
-                body: finalFormData
+                body: data
             })
-            .then(() => {
-                // সফল হলে রেজাল্ট দেখানো
+            .then(response => {
+                console.log('Success!', response);
+                // রেজাল্ট দেখানো
                 document.getElementById('displayScore').textContent = score;
                 document.getElementById('displayName').textContent = name;
                 document.getElementById('resultOverlay').style.display = 'flex';
                 
-                // বাটন লুকিয়ে ফেলা
                 btn.style.display = 'none';
                 document.querySelector('.info-box').scrollIntoView({behavior: 'smooth'});
             })
             .catch(error => {
                 console.error('Error!', error.message);
-                alert("ইন্টারনেট সমস্যা! রেজাল্ট দেখানো যাচ্ছে, কিন্তু ডাটা সেভ হয়নি।");
-                
-                // এরর হলেও রেজাল্ট দেখিয়ে দিচ্ছি যাতে ছাত্র হতাশ না হয়
+                // এরর হলেও রেজাল্ট দেখানো হবে, কিন্তু কনসোলে লগ থাকবে
                 document.getElementById('displayScore').textContent = score;
                 document.getElementById('displayName').textContent = name;
                 document.getElementById('resultOverlay').style.display = 'flex';
