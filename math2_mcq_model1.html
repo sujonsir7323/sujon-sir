@@ -28,7 +28,7 @@
         .header h2 { margin: 0; font-size: 24px; }
         .header p { margin: 5px 0 0; opacity: 0.9; font-size: 14px; }
 
-        /* ইনফো বক্স (নাম ও রোল) */
+        /* ইনফো বক্স (শুধু নাম) */
         .info-box { padding: 0 20px; margin-bottom: 20px; }
         .input-group { margin-bottom: 15px; }
         .input-group label { display: block; font-weight: 600; margin-bottom: 5px; color: #555; }
@@ -111,16 +111,11 @@
             <div class="info-box">
                 <div class="input-group">
                     <label>তোমার নাম:</label>
-                    <input type="text" name="name" id="studentName" placeholder="বাংলায় নাম লিখ..." required>
+                    <input type="text" name="name" id="studentName" placeholder="তোমার নাম লিখ..." required>
                 </div>
-                <div class="input-group">
-                    <label>রোল নম্বর:</label>
-                    <input type="number" name="roll" placeholder="তোমার ক্লাস রোল..." required>
-                </div>
+                
                 <input type="hidden" name="score" id="hiddenScore">
-                <input type="hidden" name="total" value="5">
-                <input type="hidden" name="subject" value="Math_Ch2_Model1">
-            </div>
+                <input type="hidden" name="subject" value="Math_Ch2_Model1"> </div>
 
             <div class="question-card" id="q1">
                 <div class="q-title">
@@ -205,8 +200,8 @@
     <script>
         const form = document.getElementById('quizForm');
         
-        // ⚠️ আপনার গুগল অ্যাপস স্ক্রিপ্ট লিংক
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbyTNSIT83A6MEY_H5tamipsKVA86QTBOJQ-_AeryxqTA3epPRieKAPo3ER7KN7f28be/exec';
+        // ⚠️ আপনার নতুন লিংকটি এখানে বসানো হয়েছে
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwb7gDTgkExKiNoCUCLJi4i-IFDVet0TAz9SU_LN3to4TzpVDe8653E009nBi7m-fjg/exec';
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -215,7 +210,7 @@
             const name = document.getElementById('studentName').value;
             if(!name) { alert("নাম লিখুন!"); return; }
 
-            // সাবমিট বাটন ডিজেবল করা (যাতে ডাবল ক্লিক না হয়)
+            // সাবমিট বাটন ডিজেবল করা
             const btn = document.getElementById('submitBtn');
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> প্রসেসিং হচ্ছে...';
             btn.disabled = true;
@@ -235,19 +230,16 @@
                         selected = input.value;
                         answered = true;
                     }
-                    // সব ইনপুট ডিজেবল করে দেওয়া
-                    input.disabled = true;
+                    input.disabled = true; // পরীক্ষা শেষে অপশন লক করা
                 });
 
                 // কালার লজিক
                 inputs.forEach(input => {
                     const opt = input.parentElement;
-                    // সঠিক উত্তর সবুজ
                     if (input.value === correct) {
                         opt.classList.add('correct-ans');
                         opt.innerHTML += ' <i class="fas fa-check" style="margin-left:auto;"></i>';
                     }
-                    // ভুল উত্তর লাল
                     if (selected === input.value && selected !== correct) {
                         opt.classList.add('wrong-ans');
                         opt.innerHTML += ' <i class="fas fa-times" style="margin-left:auto;"></i>';
@@ -258,7 +250,7 @@
                 else if (!answered) card.classList.add('missed-ans');
             });
 
-            // স্কর ইনপুটে সেট করা
+            // স্কোর ইনপুটে সেট করা
             document.getElementById('hiddenScore').value = score;
 
             // ডাটা সাবমিশন প্রসেস
@@ -266,7 +258,7 @@
 
             fetch(scriptURL, {
                 method: 'POST',
-                mode: 'no-cors', // ⚠️ এই লাইনটি যোগ করা হয়েছে (CORS সমস্যা সমাধানের জন্য)
+                mode: 'no-cors', // ⚠️ ডাটা পাঠানোর জন্য এটি জরুরি
                 body: finalFormData
             })
             .then(() => {
@@ -281,9 +273,12 @@
             })
             .catch(error => {
                 console.error('Error!', error.message);
-                alert("ইন্টারনেট সংযোগ নেই অথবা সমস্যা হচ্ছে। আবার চেষ্টা করুন।");
-                btn.innerHTML = 'আবার চেষ্টা করুন';
-                btn.disabled = false;
+                alert("ইন্টারনেট সমস্যা! রেজাল্ট দেখানো যাচ্ছে, কিন্তু ডাটা সেভ হয়নি।");
+                
+                // এরর হলেও রেজাল্ট দেখিয়ে দিচ্ছি যাতে ছাত্র হতাশ না হয়
+                document.getElementById('displayScore').textContent = score;
+                document.getElementById('displayName').textContent = name;
+                document.getElementById('resultOverlay').style.display = 'flex';
             });
         });
 
