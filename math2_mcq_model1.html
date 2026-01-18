@@ -8,9 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <script>
-        window.MathJax = {
-            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
-        };
+        window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
@@ -28,7 +26,7 @@
         .header h2 { margin: 0; font-size: 24px; }
         .header p { margin: 5px 0 0; opacity: 0.9; font-size: 14px; }
 
-        /* ইনফো বক্স (শুধু নাম) */
+        /* ইনফো বক্স */
         .info-box { padding: 0 20px; margin-bottom: 20px; }
         .input-group { margin-bottom: 15px; }
         .input-group label { display: block; font-weight: 600; margin-bottom: 5px; color: #555; }
@@ -57,7 +55,7 @@
         .option-label:hover { background: #fafafa; border-color: #ddd; }
         .option-label input { margin-right: 10px; accent-color: #2e7d32; transform: scale(1.2); }
 
-        /* উত্তর সঠিক/ভুল কালার */
+        /* কালার */
         .correct-ans { background-color: #dcedc8 !important; border-color: #8bc34a !important; color: #1b5e20; }
         .wrong-ans { background-color: #ffcdd2 !important; border-color: #ef5350 !important; color: #b71c1c; }
         .missed-ans { border-color: #ff9800 !important; background-color: #fff3e0; }
@@ -92,11 +90,7 @@
             margin-top: 20px; padding: 10px 30px; background: #333; color: white; border: none;
             border-radius: 30px; cursor: pointer; font-size: 16px;
         }
-
-        /* Responsive Fix */
-        @media(max-width: 480px) {
-            .options-grid { grid-template-columns: 1fr; }
-        }
+        @media(max-width: 480px) { .options-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -107,22 +101,25 @@
             <p>অধ্যায় ২: সেট ও ফাংশন | মডেল ১</p>
         </div>
 
-        <form id="quizForm">
+        <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+        <form id="quizForm" 
+              action="https://script.google.com/macros/s/AKfycbwb7gDTgkExKiNoCUCLJi4i-IFDVet0TAz9SU_LN3to4TzpVDe8653E009nBi7m-fjg/exec" 
+              method="POST" 
+              target="hidden_iframe">
+            
             <div class="info-box">
                 <div class="input-group">
                     <label>তোমার নাম:</label>
-                    <input type="text" name="name" id="studentName" placeholder="তোমার নাম লিখ..." required>
+                    <input type="text" name="Name" id="studentName" placeholder="তোমার নাম লিখ..." required>
                 </div>
                 
-                <input type="hidden" name="score" id="hiddenScore">
-                <input type="hidden" name="subject" value="Math_Ch2_Model1">
+                <input type="hidden" name="Score" id="hiddenScore">
+                <input type="hidden" name="Exam Name" value="Math_Ch2_Model1">
             </div>
 
-            <div class="question-card" id="q1">
-                <div class="q-title">
-                    <span class="q-num">০১</span>
-                    <span>$A = \{x \in \mathbb{N} : x^2 < 9\}$ হলে, $A$ এর উপাদান কয়টি?</span>
-                </div>
+            <div class="question-card">
+                <div class="q-title"><span class="q-num">০১</span><span>$A = \{x \in \mathbb{N} : x^2 < 9\}$ হলে, $A$ এর উপাদান কয়টি?</span></div>
                 <div class="options-grid">
                     <label class="option-label"><input type="radio" name="q1" value="1"> ১টি</label>
                     <label class="option-label"><input type="radio" name="q1" value="2" data-correct="true"> ২টি</label>
@@ -131,11 +128,8 @@
                 </div>
             </div>
 
-            <div class="question-card" id="q2">
-                <div class="q-title">
-                    <span class="q-num">০২</span>
-                    <span>$f(x) = x^2 - 4x + 3$ হলে, $f(2)$ এর মান কত?</span>
-                </div>
+            <div class="question-card">
+                <div class="q-title"><span class="q-num">০২</span><span>$f(x) = x^2 - 4x + 3$ হলে, $f(2)$ এর মান কত?</span></div>
                 <div class="options-grid">
                     <label class="option-label"><input type="radio" name="q2" value="-2"> $-2$</label>
                     <label class="option-label"><input type="radio" name="q2" value="-1" data-correct="true"> $-1$</label>
@@ -144,11 +138,8 @@
                 </div>
             </div>
 
-            <div class="question-card" id="q3">
-                <div class="q-title">
-                    <span class="q-num">০৩</span>
-                    <span>নিচের কোনটি ফাঁকা সেট?</span>
-                </div>
+            <div class="question-card">
+                <div class="q-title"><span class="q-num">০৩</span><span>নিচের কোনটি ফাঁকা সেট?</span></div>
                 <div class="options-grid">
                     <label class="option-label"><input type="radio" name="q3" value="a"> $\{\emptyset\}$</label>
                     <label class="option-label"><input type="radio" name="q3" value="b"> $\{0\}$</label>
@@ -157,11 +148,8 @@
                 </div>
             </div>
 
-            <div class="question-card" id="q4">
-                <div class="q-title">
-                    <span class="q-num">০৪</span>
-                    <span>$P(A)$ এর উপাদান সংখ্যা ১৬ হলে, $A$ এর উপাদান সংখ্যা কত?</span>
-                </div>
+            <div class="question-card">
+                <div class="q-title"><span class="q-num">০৪</span><span>$P(A)$ এর উপাদান সংখ্যা ১৬ হলে, $A$ এর উপাদান সংখ্যা কত?</span></div>
                 <div class="options-grid">
                     <label class="option-label"><input type="radio" name="q4" value="2"> ২</label>
                     <label class="option-label"><input type="radio" name="q4" value="3"> ৩</label>
@@ -170,11 +158,8 @@
                 </div>
             </div>
 
-            <div class="question-card" id="q5">
-                <div class="q-title">
-                    <span class="q-num">০৫</span>
-                    <span>$(x-1, y+2) = (y-2, 2x+1)$ হলে $(x, y)$ এর মান কত?</span>
-                </div>
+            <div class="question-card">
+                <div class="q-title"><span class="q-num">০৫</span><span>$(x-1, y+2) = (y-2, 2x+1)$ হলে $(x, y)$ এর মান কত?</span></div>
                 <div class="options-grid">
                     <label class="option-label"><input type="radio" name="q5" value="a" data-correct="true"> $(2, 3)$</label>
                     <label class="option-label"><input type="radio" name="q5" value="b"> $(3, 2)$</label>
@@ -200,87 +185,68 @@
 
     <script>
         const form = document.getElementById('quizForm');
-        
-        // আপনার লেটেস্ট স্ক্রিপ্ট লিংক
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwb7gDTgkExKiNoCUCLJi4i-IFDVet0TAz9SU_LN3to4TzpVDe8653E009nBi7m-fjg/exec';
+        let submitted = false;
 
         form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // নাম ভ্যালিডেশন
-            const name = document.getElementById('studentName').value;
-            if(!name) { alert("নাম লিখুন!"); return; }
-
-            // সাবমিট বাটন ডিজেবল করা
+            // সাবমিট বাটন লোডিং দেখানো
             const btn = document.getElementById('submitBtn');
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> প্রসেসিং হচ্ছে...';
-            btn.disabled = true;
-
+            
+            // স্কোর গণনা করা
             let score = 0;
             const questions = document.querySelectorAll('.question-card');
 
-            // নম্বর গণনার লজিক
             questions.forEach(card => {
                 const inputs = card.querySelectorAll('input[type="radio"]');
-                let answered = false;
                 let correct = null;
                 let selected = null;
 
                 inputs.forEach(input => {
                     if (input.dataset.correct === "true") correct = input.value;
-                    if (input.checked) {
-                        selected = input.value;
-                        answered = true;
-                    }
-                    input.disabled = true; // লক অপশন
-                });
-
-                // কালার লজিক
-                inputs.forEach(input => {
-                    const opt = input.parentElement;
-                    if (input.value === correct) {
-                        opt.classList.add('correct-ans');
-                        opt.innerHTML += ' <i class="fas fa-check" style="margin-left:auto;"></i>';
-                    }
-                    if (selected === input.value && selected !== correct) {
-                        opt.classList.add('wrong-ans');
-                        opt.innerHTML += ' <i class="fas fa-times" style="margin-left:auto;"></i>';
-                    }
+                    if (input.checked) selected = input.value;
                 });
 
                 if (selected === correct) score++;
-                else if (!answered) card.classList.add('missed-ans');
-            });
-
-            // স্কোর ইনপুটে সেট করা
-            document.getElementById('hiddenScore').value = score;
-
-            // ⚠️ FIX: GitHub/External Domain থেকে ডাটা পাঠানোর জন্য URLSearchParams ব্যবহার
-            const formData = new FormData(form);
-            const data = new URLSearchParams(formData);
-
-            fetch(scriptURL, {
-                method: 'POST',
-                body: data
-            })
-            .then(response => {
-                console.log('Success!', response);
-                // রেজাল্ট দেখানো
-                document.getElementById('displayScore').textContent = score;
-                document.getElementById('displayName').textContent = name;
-                document.getElementById('resultOverlay').style.display = 'flex';
                 
-                btn.style.display = 'none';
-                document.querySelector('.info-box').scrollIntoView({behavior: 'smooth'});
-            })
-            .catch(error => {
-                console.error('Error!', error.message);
-                // এরর হলেও রেজাল্ট দেখানো হবে, কিন্তু কনসোলে লগ থাকবে
-                document.getElementById('displayScore').textContent = score;
-                document.getElementById('displayName').textContent = name;
-                document.getElementById('resultOverlay').style.display = 'flex';
+                // উত্তরের কালার দেখানোর জন্য ক্লাস যোগ করা (এখনই দেখাবে না)
+                inputs.forEach(input => {
+                    const opt = input.parentElement;
+                    if (input.value === correct) opt.classList.add('correct-ans-show');
+                    if (selected === input.value && selected !== correct) opt.classList.add('wrong-ans-show');
+                });
             });
+
+            // স্কোর হিডেন ইনপুটে সেট করা (যাতে এটি ফর্মে সাবমিট হয়)
+            document.getElementById('hiddenScore').value = score;
+            submitted = true;
+
+            // আমরা e.preventDefault() দিচ্ছি না, যাতে ফর্মটি স্বাভাবিকভাবে Iframe-এ সাবমিট হয়।
         });
+
+        // যখন Iframe লোড হবে (মানে ডাটা পাঠানো শেষ)
+        const iframe = document.getElementById('hidden_iframe');
+        iframe.onload = function() {
+            if (!submitted) return; 
+
+            const score = document.getElementById('hiddenScore').value;
+            const name = document.getElementById('studentName').value;
+            
+            // রেজাল্ট দেখানো
+            document.getElementById('displayScore').textContent = score;
+            document.getElementById('displayName').textContent = name;
+            document.getElementById('resultOverlay').style.display = 'flex';
+            
+            // বাটন লুকিয়ে ফেলা
+            document.getElementById('submitBtn').style.display = 'none';
+
+            // উত্তরগুলোর কালার শো করা
+            document.querySelectorAll('.correct-ans-show').forEach(el => el.classList.add('correct-ans'));
+            document.querySelectorAll('.wrong-ans-show').forEach(el => el.classList.add('wrong-ans'));
+            document.querySelectorAll('input[type="radio"]').forEach(el => el.disabled = true);
+
+            document.querySelector('.info-box').scrollIntoView({behavior: 'smooth'});
+            submitted = false; 
+        };
 
         function closeResult() {
             document.getElementById('resultOverlay').style.display = 'none';
