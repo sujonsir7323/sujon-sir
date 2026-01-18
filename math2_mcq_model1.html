@@ -16,7 +16,7 @@
         body { font-family: 'Hind Siliguri', sans-serif; background: #f0f2f5; margin: 0; padding: 0; color: #333; user-select: none; }
         .container { max-width: 800px; margin: 0 auto; background: #fff; min-height: 100vh; padding-bottom: 60px; }
 
-        /* হেডার */
+        /* হেডার ডিজাইন */
         .header {
             background: linear-gradient(135deg, #1b5e20 0%, #4caf50 100%);
             color: white; padding: 30px 20px; text-align: center;
@@ -26,7 +26,7 @@
         .header h2 { margin: 0; font-size: 24px; }
         .header p { margin: 5px 0 0; opacity: 0.9; font-size: 14px; }
 
-        /* ইনফো বক্স */
+        /* ইনপুট বক্স */
         .info-box { padding: 0 20px; margin-bottom: 20px; }
         .input-group { margin-bottom: 15px; }
         .input-group label { display: block; font-weight: 600; margin-bottom: 5px; color: #555; }
@@ -46,7 +46,7 @@
         .q-title { font-weight: 600; font-size: 17px; margin-bottom: 15px; display: flex; gap: 10px; }
         .q-num { background: #e8f5e9; color: #2e7d32; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 14px; flex-shrink: 0; }
         
-        /* অপশন স্টাইল */
+        /* অপশন গ্রিড */
         .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .option-label {
             display: flex; align-items: center; padding: 12px; border: 2px solid #f5f5f5;
@@ -55,10 +55,11 @@
         .option-label:hover { background: #fafafa; border-color: #ddd; }
         .option-label input { margin-right: 10px; accent-color: #2e7d32; transform: scale(1.2); }
 
-        /* কালার */
+        /* উত্তর সঠিক/ভুল কালার */
         .correct-ans { background-color: #dcedc8 !important; border-color: #8bc34a !important; color: #1b5e20; }
         .wrong-ans { background-color: #ffcdd2 !important; border-color: #ef5350 !important; color: #b71c1c; }
-        .missed-ans { border-color: #ff9800 !important; background-color: #fff3e0; }
+        .correct-ans-show { /* পরে দেখানোর জন্য ক্লাস */ }
+        .wrong-ans-show { /* পরে দেখানোর জন্য ক্লাস */ }
 
         /* সাবমিট বাটন */
         .submit-btn {
@@ -68,7 +69,6 @@
             cursor: pointer; box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3); transition: 0.3s;
         }
         .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4); }
-        .submit-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
 
         /* রেজাল্ট ওভারলে */
         .result-overlay {
@@ -188,11 +188,19 @@
         let submitted = false;
 
         form.addEventListener('submit', function(e) {
-            // সাবমিট বাটন লোডিং দেখানো
+            // ১. নাম চেক করা
+            const name = document.getElementById('studentName').value;
+            if(!name) { 
+                e.preventDefault();
+                alert("নাম লিখুন!"); 
+                return; 
+            }
+
+            // ২. সাবমিট বাটন লোডিং দেখানো
             const btn = document.getElementById('submitBtn');
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> প্রসেসিং হচ্ছে...';
             
-            // স্কোর গণনা করা
+            // ৩. স্কোর গণনা করা
             let score = 0;
             const questions = document.querySelectorAll('.question-card');
 
@@ -208,7 +216,7 @@
 
                 if (selected === correct) score++;
                 
-                // উত্তরের কালার দেখানোর জন্য ক্লাস যোগ করা (এখনই দেখাবে না)
+                // উত্তরের ভিজ্যুয়াল ফিডব্যাক প্রস্তুত করা
                 inputs.forEach(input => {
                     const opt = input.parentElement;
                     if (input.value === correct) opt.classList.add('correct-ans-show');
@@ -216,14 +224,14 @@
                 });
             });
 
-            // স্কোর হিডেন ইনপুটে সেট করা (যাতে এটি ফর্মে সাবমিট হয়)
+            // ৪. স্কোর হিডেন ইনপুটে সেট করা
             document.getElementById('hiddenScore').value = score;
             submitted = true;
 
-            // আমরা e.preventDefault() দিচ্ছি না, যাতে ফর্মটি স্বাভাবিকভাবে Iframe-এ সাবমিট হয়।
+            // ফর্ম স্বাভাবিকভাবে সাবমিট হবে (Iframe-এ)
         });
 
-        // যখন Iframe লোড হবে (মানে ডাটা পাঠানো শেষ)
+        // ৫. যখন Iframe লোড হবে (মানে ডাটা পাঠানো শেষ)
         const iframe = document.getElementById('hidden_iframe');
         iframe.onload = function() {
             if (!submitted) return; 
