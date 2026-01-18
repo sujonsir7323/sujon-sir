@@ -8,7 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <script>
-        window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+        };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
@@ -16,227 +18,516 @@
         body { font-family: 'Hind Siliguri', sans-serif; background: #f0f2f5; margin: 0; padding: 0; color: #333; user-select: none; }
         .container { max-width: 800px; margin: 0 auto; background: #fff; min-height: 100vh; padding-bottom: 60px; }
 
+        /* হেডার */
         .header {
             background: linear-gradient(135deg, #1b5e20 0%, #4caf50 100%);
             color: white; padding: 30px 20px; text-align: center;
-            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px; margin-bottom: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px;
         }
-        .header h2 { margin: 0; font-size: 24px; }
-        .header p { margin: 5px 0 0; opacity: 0.9; font-size: 14px; }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .back-btn { color: white; float: left; font-size: 20px; }
 
-        .info-box { padding: 0 20px; margin-bottom: 20px; }
-        .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; font-weight: 600; margin-bottom: 5px; color: #555; }
-        .input-group input {
-            width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px;
-            font-family: 'Hind Siliguri', sans-serif; font-size: 16px; outline: none; box-sizing: border-box;
+        /* ইনপুট সেকশন */
+        .info-box {
+            padding: 20px; margin: 0 20px; background: #e8f5e9;
+            border-radius: 10px; border: 1px solid #c8e6c9;
+            text-align: center;
+        }
+        .input-field {
+            width: 80%; padding: 12px; border-radius: 5px; border: 1px solid #aaa;
+            font-family: 'Hind Siliguri', sans-serif; font-size: 16px; margin-top: 10px;
+            outline: none;
+        }
+        .timer { font-size: 20px; font-weight: bold; color: #c62828; margin-top: 10px; }
+
+        /* প্রশ্ন ডিজাইন */
+        .mcq-container { padding: 20px; }
+        .question-card {
+            background: #fff; padding: 15px; margin-bottom: 20px;
+            border-radius: 10px; border: 1px solid #eee;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             transition: 0.3s;
         }
-        .input-group input:focus { border-color: #4caf50; }
-
-        .question-card {
-            background: #fff; margin: 0 20px 20px; padding: 20px; border-radius: 15px;
-            border: 1px solid #eee; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: 0.3s; position: relative;
-        }
-        .q-title { font-weight: 600; font-size: 17px; margin-bottom: 15px; display: flex; gap: 10px; }
-        .q-num { background: #e8f5e9; color: #2e7d32; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 14px; flex-shrink: 0; }
+        .q-header { font-weight: 600; font-size: 17px; margin-bottom: 15px; display: flex; gap: 10px; align-items: flex-start; }
+        .board-tag { font-size: 11px; background: #eee; color: #555; padding: 2px 6px; border-radius: 4px; height: fit-content; white-space: nowrap; margin-top: 3px; }
         
         .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .option-label {
-            display: flex; align-items: center; padding: 12px; border: 2px solid #f5f5f5;
-            border-radius: 10px; cursor: pointer; transition: 0.2s; font-size: 15px;
+        .option {
+            display: flex; align-items: center; padding: 10px; border: 1px solid #ddd;
+            border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 15px;
         }
-        .option-label:hover { background: #fafafa; border-color: #ddd; }
-        .option-label input { margin-right: 10px; accent-color: #2e7d32; transform: scale(1.2); }
+        .option:hover { background: #f9f9f9; }
+        .option input { margin-right: 10px; transform: scale(1.2); cursor: pointer; }
 
-        .correct-ans { background-color: #dcedc8 !important; border-color: #8bc34a !important; color: #1b5e20; }
-        .wrong-ans { background-color: #ffcdd2 !important; border-color: #ef5350 !important; color: #b71c1c; }
-        .correct-ans-show { /* পরে দেখানোর জন্য */ }
-        .wrong-ans-show { /* পরে দেখানোর জন্য */ }
+        /* রেজাল্ট কালার */
+        .correct-ans { background-color: #d4edda !important; border-color: #c3e6cb !important; color: #155724; }
+        .wrong-ans { background-color: #f8d7da !important; border-color: #f5c6cb !important; color: #721c24; }
+        .missed-ans { border: 2px solid #ffc107 !important; background-color: #fff3cd; }
 
+        /* সাবমিট বাটন */
         .submit-btn {
-            display: block; width: calc(100% - 40px); margin: 20px auto; padding: 15px;
-            background: linear-gradient(135deg, #2e7d32 0%, #43a047 100%);
-            color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: 600;
-            cursor: pointer; box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3); transition: 0.3s;
+            display: block; width: 90%; margin: 20px auto; padding: 15px;
+            background: #2e7d32; color: white; font-size: 18px; font-weight: bold;
+            border: none; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3);
+            transition: 0.3s;
         }
-        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4); }
+        .submit-btn:hover { background: #1b5e20; transform: scale(1.02); }
+        .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
 
+        /* রেজাল্ট পপআপ */
         .result-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); z-index: 1000; display: none;
-            align-items: center; justify-content: center; backdrop-filter: blur(5px);
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;
         }
         .result-box {
-            background: white; width: 90%; max-width: 400px; padding: 30px; border-radius: 20px;
-            text-align: center; animation: popUp 0.4s ease; position: relative;
+            background: white; width: 90%; max-width: 400px; padding: 30px;
+            border-radius: 15px; text-align: center; position: relative; animation: popUp 0.4s ease;
         }
-        @keyframes popUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes popUp { from {transform: scale(0.5);} to {transform: scale(1);} }
+        
         .score-circle {
-            width: 100px; height: 100px; border-radius: 50%; background: #e8f5e9; color: #2e7d32;
-            display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
-            font-size: 32px; font-weight: 700; border: 5px solid #4caf50;
+            width: 120px; height: 120px; background: #e8f5e9; border-radius: 50%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin: 0 auto 20px; border: 5px solid #2e7d32;
         }
+        .score-number { font-size: 35px; font-weight: bold; color: #2e7d32; }
+        .score-label { font-size: 12px; color: #666; }
+
         .close-btn {
-            margin-top: 20px; padding: 10px 30px; background: #333; color: white; border: none;
-            border-radius: 30px; cursor: pointer; font-size: 16px;
+            background: #d32f2f; color: white; border: none; padding: 10px 20px;
+            border-radius: 5px; margin-top: 15px; cursor: pointer; font-size: 14px;
         }
-        @media(max-width: 480px) { .options-grid { grid-template-columns: 1fr; } }
+
+        /* মোবাইল রেসপন্সিভ */
+        @media (max-width: 500px) {
+            .options-grid { grid-template-columns: 1fr; }
+            .header h1 { font-size: 20px; }
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
         <div class="header">
-            <h2><i class="fas fa-calculator"></i> গণিত বহুনির্বাচনি</h2>
-            <p>অধ্যায় ২: সেট ও ফাংশন | মডেল ১</p>
+            <a href="#" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>"সততাই সর্বোৎকৃষ্ট পন্থা"</p>
         </div>
 
-        <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+        <div class="info-box">
+            <h3 style="margin:0 0 10px;">অধ্যায় ২: সেট ও ফাংশন (MCQ)</h3>
+            <p style="font-size: 13px; color: #555;">নোট: উপরে নামের জায়গায় নাম লিখবে, সাবমিট করার পর রেজাল্ট তোমার মেইলে বা ডাটাবেসে সেভ হবে।</p>
+            <div class="timer" id="timer">সময় বাকি: ২০:০০ মিনিট</div>
+        </div>
 
-        <form id="quizForm" 
-              action="https://script.google.com/macros/s/AKfycbyt2OGKOcKOcEMTds8VHL-RMibQ0N-lJgXF13-zReVgtr1Kvgtap7AlgkvNsBB4n4Ux/exec" 
-              method="POST" 
-              target="hidden_iframe">
+        <form id="quizForm" class="mcq-container">
             
-            <div class="info-box">
-                <div class="input-group">
-                    <label>তোমার নাম:</label>
-                    <input type="text" name="Name" id="studentName" placeholder="তোমার নাম লিখ..." required>
-                </div>
-                
-                <input type="hidden" name="Score" id="hiddenScore">
-                <input type="hidden" name="Exam Name" value="Math_Ch2_Model1">
+            <input type="hidden" name="_subject" value="Math MCQ Result Submission">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            
+            <div style="margin-bottom: 20px; text-align: center;">
+                <input type="text" name="Student_Name" id="studentName" class="input-field" placeholder="তোমার নাম লিখ (বাধ্যতামূলক)..." required>
             </div>
 
-            <div class="question-card">
-                <div class="q-title"><span class="q-num">০১</span><span>$A = \{x \in \mathbb{N} : x^2 < 9\}$ হলে, $A$ এর উপাদান কয়টি?</span></div>
+            <div class="question-card" id="q1_card">
+                <div class="q-header">
+                    <span>০১.</span> <span class="board-tag">[ঢাকা ২০]</span>
+                    <span>$A = \{x \in \mathbb{N} : x^2 < 25\}$ হলে, $A$ এর উপাদান সংখ্যা কত?</span>
+                </div>
                 <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="q1" value="1"> ১টি</label>
-                    <label class="option-label"><input type="radio" name="q1" value="2" data-correct="true"> ২টি</label>
-                    <label class="option-label"><input type="radio" name="q1" value="3"> ৩টি</label>
-                    <label class="option-label"><input type="radio" name="q1" value="4"> ৪টি</label>
+                    <label class="option"><input type="radio" name="q1" value="c"> ৩টি</label>
+                    <label class="option"><input type="radio" name="q1" value="b" data-correct="true"> ৪টি</label> 
+                    <label class="option"><input type="radio" name="q1" value="d"> ৫টি</label>
+                    <label class="option"><input type="radio" name="q1" value="a"> ২টি</label>
                 </div>
             </div>
 
-            <div class="question-card">
-                <div class="q-title"><span class="q-num">০২</span><span>$f(x) = x^2 - 4x + 3$ হলে, $f(2)$ এর মান কত?</span></div>
+            <div class="question-card" id="q2_card">
+                <div class="q-header">
+                    <span>০২.</span> <span class="board-tag">[রাজশাহী ১৯]</span>
+                    <span>সেট $A=\{a, b\}$ এর প্রকৃত উপসেট সংখ্যা কত?</span>
+                </div>
                 <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="q2" value="-2"> $-2$</label>
-                    <label class="option-label"><input type="radio" name="q2" value="-1" data-correct="true"> $-1$</label>
-                    <label class="option-label"><input type="radio" name="q2" value="0"> $0$</label>
-                    <label class="option-label"><input type="radio" name="q2" value="1"> $1$</label>
+                    <label class="option"><input type="radio" name="q2" value="a" data-correct="true"> ৩</label> 
+                    <label class="option"><input type="radio" name="q2" value="b"> ৪</label>
+                    <label class="option"><input type="radio" name="q2" value="c"> ২</label>
+                    <label class="option"><input type="radio" name="q2" value="d"> ১</label>
                 </div>
             </div>
 
-            <div class="question-card">
-                <div class="q-title"><span class="q-num">০৩</span><span>নিচের কোনটি ফাঁকা সেট?</span></div>
+            <div class="question-card" id="q3_card">
+                <div class="q-header">
+                    <span>০৩.</span> <span class="board-tag">[কুমিল্লা ২১]</span>
+                    <span>যদি $n(A) = 3$ হয়, তবে $P(A)$ এর সদস্য সংখ্যা কত?</span>
+                </div>
                 <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="q3" value="a"> $\{\emptyset\}$</label>
-                    <label class="option-label"><input type="radio" name="q3" value="b"> $\{0\}$</label>
-                    <label class="option-label"><input type="radio" name="q3" value="c" data-correct="true"> $\{ x : x \in \mathbb{N}, 1 < x < 2 \}$</label>
-                    <label class="option-label"><input type="radio" name="q3" value="d"> $\{ x : x^2 = 1 \}$</label>
+                    <label class="option"><input type="radio" name="q3" value="a"> ৪</label>
+                    <label class="option"><input type="radio" name="q3" value="b"> ৬</label>
+                    <label class="option"><input type="radio" name="q3" value="c" data-correct="true"> ৮</label> 
+                    <label class="option"><input type="radio" name="q3" value="d"> ৯</label>
                 </div>
             </div>
 
-            <div class="question-card">
-                <div class="q-title"><span class="q-num">০৪</span><span>$P(A)$ এর উপাদান সংখ্যা ১৬ হলে, $A$ এর উপাদান সংখ্যা কত?</span></div>
+            <div class="question-card" id="q4_card">
+                <div class="q-header">
+                    <span>০৪.</span> <span class="board-tag">[সিলেট ২২]</span>
+                    <span>$f(x) = x^2 - 4x + 3$ হলে, $f(-1)$ এর মান কত?</span>
+                </div>
                 <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="q4" value="2"> ২</label>
-                    <label class="option-label"><input type="radio" name="q4" value="3"> ৩</label>
-                    <label class="option-label"><input type="radio" name="q4" value="4" data-correct="true"> ৪</label>
-                    <label class="option-label"><input type="radio" name="q4" value="5"> ৫</label>
+                    <label class="option"><input type="radio" name="q4" value="b" data-correct="true"> ৮</label> 
+                    <label class="option"><input type="radio" name="q4" value="a"> ৬</label>
+                    <label class="option"><input type="radio" name="q4" value="c"> ০</label>
+                    <label class="option"><input type="radio" name="q4" value="d"> -২</label>
                 </div>
             </div>
 
-            <div class="question-card">
-                <div class="q-title"><span class="q-num">০৫</span><span>$(x-1, y+2) = (y-2, 2x+1)$ হলে $(x, y)$ এর মান কত?</span></div>
+            <div class="question-card" id="q5_card">
+                <div class="q-header">
+                    <span>০৫.</span> <span class="board-tag">[যশোর ২০]</span>
+                    <span>$A = \{1, 2, 3\}$ এবং $B = \{2, 4\}$ হলে $A \cup B$ কত?</span>
+                </div>
                 <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="q5" value="a" data-correct="true"> $(2, 3)$</label>
-                    <label class="option-label"><input type="radio" name="q5" value="b"> $(3, 2)$</label>
-                    <label class="option-label"><input type="radio" name="q5" value="c"> $(-2, 3)$</label>
-                    <label class="option-label"><input type="radio" name="q5" value="d"> $(2, -3)$</label>
+                    <label class="option"><input type="radio" name="q5" value="a" data-correct="true"> $\{1, 2, 3, 4\}$</label> 
+                    <label class="option"><input type="radio" name="q5" value="b"> $\{2\}$</label>
+                    <label class="option"><input type="radio" name="q5" value="c"> $\{1, 3\}$</label>
+                    <label class="option"><input type="radio" name="q5" value="d"> $\{4\}$</label>
                 </div>
             </div>
 
-            <button type="submit" class="submit-btn" id="submitBtn">সাবমিট ও রেজাল্ট দেখুন <i class="fas fa-arrow-right"></i></button>
+            <div class="question-card" id="q6_card">
+                <div class="q-header">
+                    <span>০৬.</span> <span class="board-tag">[চট্টগ্রাম ১৯]</span>
+                    <span>$A \cap B = \emptyset$ হলে, A ও B পরস্পর কী সেট?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q6" value="b" data-correct="true"> নিচ্ছেদ সেট</label> 
+                    <label class="option"><input type="radio" name="q6" value="a"> উপসেট</label>
+                    <label class="option"><input type="radio" name="q6" value="c"> শক্তি সেট</label>
+                    <label class="option"><input type="radio" name="q6" value="d"> সার্বিক সেট</label>
+                </div>
+            </div>
+
+            <div class="question-card" id="q7_card">
+                <div class="q-header">
+                    <span>০৭.</span> <span class="board-tag">[বরিশাল ২১]</span>
+                    <span>$S = \{(2,1), (2,2), (3,2)\}$ অন্বয়টির ডোমেন কোনটি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q7" value="a" data-correct="true"> $\{2, 3\}$</label> 
+                    <label class="option"><input type="radio" name="q7" value="b"> $\{1, 2\}$</label>
+                    <label class="option"><input type="radio" name="q7" value="c"> $\{2, 2, 3\}$</label>
+                    <label class="option"><input type="radio" name="q7" value="d"> $\{(2,3)\}$</label>
+                </div>
+            </div>
+
+            <div class="question-card" id="q8_card">
+                <div class="q-header">
+                    <span>০৮.</span> <span class="board-tag">[দিনাজপুর ২০]</span>
+                    <span>$A \times B$ সেটের উপাদানগুলোকে কী বলা হয়?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q8" value="a" data-correct="true"> ক্রোমজোড়</label> 
+                    <label class="option"><input type="radio" name="q8" value="b"> ডোমেন</label>
+                    <label class="option"><input type="radio" name="q8" value="c"> রেঞ্জ</label>
+                    <label class="option"><input type="radio" name="q8" value="d"> শক্তি সেট</label>
+                </div>
+            </div>
+
+            <div class="question-card" id="q9_card">
+                <div class="q-header">
+                    <span>০৯.</span> <span class="board-tag">[ময়মনসিংহ ২২]</span>
+                    <span>কোনো সেটের উপসেট সংখ্যা ১৬ হলে, ঐ সেটের উপাদান সংখ্যা কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q9" value="c" data-correct="true"> ৪</label> 
+                    <label class="option"><input type="radio" name="q9" value="a"> ২</label>
+                    <label class="option"><input type="radio" name="q9" value="b"> ৩</label>
+                    <label class="option"><input type="radio" name="q9" value="d"> ৫</label>
+                </div>
+            </div>
+
+            <div class="question-card" id="q10_card">
+                <div class="q-header">
+                    <span>১০.</span> <span class="board-tag">[ঢাকা ২২]</span>
+                    <span>$f(y) = y^3 + ky^2 - 4y - 8$ হলে, $k$ এর কোন মানের জন্য $f(-2)=0$ হবে?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q10" value="a" data-correct="true"> ২</label> 
+                    <label class="option"><input type="radio" name="q10" value="b"> ৩</label>
+                    <label class="option"><input type="radio" name="q10" value="c"> ৪</label>
+                    <label class="option"><input type="radio" name="q10" value="d"> ১</label>
+                </div>
+            </div>
+
+             <div class="question-card" id="q11_card">
+                <div class="q-header">
+                    <span>১১.</span> <span class="board-tag">[রাজশাহী ২০]</span>
+                    <span>$A=\{1, 2, 3, 4\}$ হলে সেটটির প্রকৃত উপসেট কয়টি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q11" value="d" data-correct="true"> ১৫টি</label> 
+                    <label class="option"><input type="radio" name="q11" value="a"> ১৬টি</label>
+                    <label class="option"><input type="radio" name="q11" value="b"> ১৪টি</label>
+                    <label class="option"><input type="radio" name="q11" value="c"> ১২টি</label>
+                </div>
+            </div>
+
+            <div class="question-card" id="q12_card">
+                <div class="q-header">
+                    <span>১২.</span> <span class="board-tag">[যশোর ১৯]</span>
+                    <span>সকল মূলদ ও অমূলদ সংখ্যা নিয়ে গঠিত সেটকে কী বলে?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q12" value="a" data-correct="true"> বাস্তব সংখ্যার সেট</label> 
+                    <label class="option"><input type="radio" name="q12" value="b"> পূর্ণ সংখ্যার সেট</label>
+                    <label class="option"><input type="radio" name="q12" value="c"> স্বাভাবিক সংখ্যার সেট</label>
+                    <label class="option"><input type="radio" name="q12" value="d"> কাল্পনিক সংখ্যার সেট</label>
+                </div>
+            </div>
+
+            <div class="question-card" id="q13_card">
+                <div class="q-header">
+                    <span>১৩.</span> <span class="board-tag">[কুমিল্লা ২০]</span>
+                    <span>$S = \{(3,1), (3,2), (4,2)\}$ অন্বয়টির রেঞ্জ কোনটি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q13" value="b" data-correct="true"> $\{1, 2\}$</label> 
+                    <label class="option"><input type="radio" name="q13" value="a"> $\{3, 4\}$</label>
+                    <label class="option"><input type="radio" name="q13" value="c"> $\{3, 2\}$</label>
+                    <label class="option"><input type="radio" name="q13" value="d"> $\{1, 2, 3\}$</label>
+                </div>
+            </div>
+
+            <div class="question-card" id="q14_card">
+                <div class="q-header">
+                    <span>১৪.</span> <span class="board-tag">[সিলেট ১৯]</span>
+                    <span>নিচের কোনটি ফাঁকা সেট নির্দেশ করে?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q14" value="c" data-correct="true"> $\{ x \in \mathbb{N} : 10 < x < 11 \}$</label> 
+                    <label class="option"><input type="radio" name="q14" value="a"> $\{0\}$</label>
+                    <label class="option"><input type="radio" name="q14" value="b"> $\{\emptyset\}$</label>
+                    <label class="option"><input type="radio" name="q14" value="d"> $\{ x \in \mathbb{N} : x \text{ জোড়} \}$</label>
+                </div>
+            </div>
+
+            <div class="question-card" id="q15_card">
+                <div class="q-header">
+                    <span>১৫.</span> <span class="board-tag">[বরিশাল ২০]</span>
+                    <span>$f(x) = |x|$ হলে $f(-5)$ এর মান কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q15" value="a" data-correct="true"> 5</label> 
+                    <label class="option"><input type="radio" name="q15" value="b"> -5</label>
+                    <label class="option"><input type="radio" name="q15" value="c"> $\pm 5$</label>
+                    <label class="option"><input type="radio" name="q15" value="d"> 25</label>
+                </div>
+            </div>
+
+            <div class="question-card" id="q16_card">
+                <div class="q-header">
+                    <span>১৬.</span> <span class="board-tag">[দিনাজপুর ১৯]</span>
+                    <span>$A=\{a, b, c\}$ এর উপসেট সংখ্যা কতটি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q16" value="b" data-correct="true"> ৮টি</label> 
+                    <label class="option"><input type="radio" name="q16" value="a"> ৬টি</label>
+                    <label class="option"><input type="radio" name="q16" value="c"> ৩টি</label>
+                    <label class="option"><input type="radio" name="q16" value="d"> ৯টি</label>
+                </div>
+            </div>
+
+            <div class="question-card" id="q17_card">
+                <div class="q-header">
+                    <span>১৭.</span> <span class="board-tag">[চট্টগ্ৰাম ২১]</span>
+                    <span>$A \cup B = A$ হলে নিচের কোনটি সঠিক?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q17" value="d" data-correct="true"> $B \subset A$</label> 
+                    <label class="option"><input type="radio" name="q17" value="a"> $A \subset B$</label>
+                    <label class="option"><input type="radio" name="q17" value="b"> $A \cap B = \emptyset$</label>
+                    <label class="option"><input type="radio" name="q17" value="c"> $B \neq A$</label>
+                </div>
+            </div>
+
+            <div class="question-card" id="q18_card">
+                <div class="q-header">
+                    <span>১৮.</span> <span class="board-tag">[ময়মনসিংহ ২০]</span>
+                    <span>নিচের কোনটি অসীম সেট?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q18" value="a" data-correct="true"> $\mathbb{N}$</label> 
+                    <label class="option"><input type="radio" name="q18" value="b"> $\{1, 2, ... 100\}$</label>
+                    <label class="option"><input type="radio" name="q18" value="c"> $\{x : x \in \mathbb{N}, x < 50\}$</label>
+                    <label class="option"><input type="radio" name="q18" value="d"> $\emptyset$</label>
+                </div>
+            </div>
+
+            <div class="question-card" id="q19_card">
+                <div class="q-header">
+                    <span>১৯.</span> <span class="board-tag">[ঢাকা ১৯]</span>
+                    <span>$P = \{x, y\}$ এবং $Q = \{y, z\}$ হলে $P \cap Q$ কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q19" value="c" data-correct="true"> $\{y\}$</label> 
+                    <label class="option"><input type="radio" name="q19" value="a"> $\{x, y, z\}$</label>
+                    <label class="option"><input type="radio" name="q19" value="b"> $\{x\}$</label>
+                    <label class="option"><input type="radio" name="q19" value="d"> $\{x, z\}$</label>
+                </div>
+            </div>
+
+            <div class="question-card" id="q20_card">
+                <div class="q-header">
+                    <span>২০.</span> <span class="board-tag">[রাজশাহী ২১]</span>
+                    <span>$R = \{(2,1), (3,2), (4,3)\}$ অন্বয়টির রেঞ্জ কোনটি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q20" value="b" data-correct="true"> $\{1, 2, 3\}$</label> 
+                    <label class="option"><input type="radio" name="q20" value="a"> $\{2, 3, 4\}$</label>
+                    <label class="option"><input type="radio" name="q20" value="c"> $\{1, 3, 4\}$</label>
+                    <label class="option"><input type="radio" name="q20" value="d"> $\{1, 2, 4\}$</label>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">সাবমিট করুন</button>
         </form>
-    </div>
 
-    <div class="result-overlay" id="resultOverlay">
-        <div class="result-box">
-            <div class="score-circle">
-                <span id="displayScore">0</span>/5
+        <div class="result-overlay" id="resultOverlay">
+            <div class="result-box">
+                <h2 style="color: #2e7d32; margin-top: 0;">অভিনন্দন!</h2>
+                <div class="score-circle">
+                    <div class="score-number" id="displayScore">0</div>
+                    <div class="score-label">নম্বর ২০ এর মধ্যে</div>
+                </div>
+                <p>তোমার নাম: <span id="displayName" style="font-weight: bold;"></span></p>
+                <p id="sendStatus" style="font-size: 14px; color: #555;">রেজাল্ট তৈরি হয়েছে।</p>
+                <button class="close-btn" onclick="closeResult()">উত্তরপত্র দেখুন</button>
             </div>
-            <h3 style="margin:0;">অভিনন্দন! <span id="displayName" style="color:#2e7d32;"></span></h3>
-            <p>তোমার রেজাল্ট ডাটাবেসে সেভ করা হয়েছে।</p>
-            <button class="close-btn" onclick="closeResult()">বন্ধ করুন</button>
         </div>
+
     </div>
 
     <script>
-        const form = document.getElementById('quizForm');
-        let submitted = false;
+        // ইমেইল সেটআপ (এটি পরিবর্তন করার দরকার নেই)
+        const ADMIN_EMAIL = "leeminho7323@gmail.com";
 
+        // টাইমার সেটআপ (২০ মিনিট)
+        let timeLeft = 20 * 60; // seconds
+        const timerElement = document.getElementById('timer');
+        let countdown;
+
+        function startTimer() {
+             countdown = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+                
+                timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    alert("সময় শেষ! স্বয়ংক্রিয়ভাবে সাবমিট হচ্ছে...");
+                    submitQuiz();
+                }
+                timeLeft--;
+            }, 1000);
+        }
+        startTimer();
+
+        // ফরম সাবমিশন ইভেন্ট
+        const form = document.getElementById('quizForm');
         form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            submitQuiz();
+        });
+
+        function submitQuiz() {
+            // নাম চেক করা
             const name = document.getElementById('studentName').value;
             if(!name) { 
-                e.preventDefault();
-                alert("নাম লিখুন!"); 
+                alert("দয়া করে তোমার নাম লিখ।"); 
+                document.getElementById('studentName').focus();
                 return; 
             }
 
+            clearInterval(countdown); // টাইমার থামানো
             const btn = document.getElementById('submitBtn');
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> প্রসেসিং হচ্ছে...';
+            btn.disabled = true;
             
             let score = 0;
-            const questions = document.querySelectorAll('.question-card');
+            const formData = new FormData(form);
+            const questionCards = document.querySelectorAll('.question-card');
 
-            questions.forEach(card => {
+            // খাতা মূল্যায়ন লজিক
+            questionCards.forEach(card => {
                 const inputs = card.querySelectorAll('input[type="radio"]');
-                let correct = null;
-                let selected = null;
+                let correctAnswer = null;
+                let userAnswer = null;
 
+                // সঠিক উত্তর খুঁজে বের করা (data-correct অ্যাট্রিবিউট থেকে)
                 inputs.forEach(input => {
-                    if (input.dataset.correct === "true") correct = input.value;
-                    if (input.checked) selected = input.value;
+                    if (input.getAttribute('data-correct') === 'true') {
+                        correctAnswer = input.value;
+                    }
+                    if (input.checked) {
+                        userAnswer = input.value;
+                    }
+                    // ইনপুট লক করে দেওয়া যাতে পরে চেঞ্জ না করা যায়
+                    input.disabled = true;
                 });
 
-                if (selected === correct) score++;
-                
+                // ভিজ্যুয়াল ফিডব্যাক
                 inputs.forEach(input => {
-                    const opt = input.parentElement;
-                    if (input.value === correct) opt.classList.add('correct-ans-show');
-                    if (selected === input.value && selected !== correct) opt.classList.add('wrong-ans-show');
+                    const label = input.parentElement;
+                    if (input.value === correctAnswer) {
+                        label.classList.add('correct-ans');
+                        label.innerHTML += ' <i class="fas fa-check" style="margin-left:auto;"></i>';
+                    }
+                    if (userAnswer === input.value && userAnswer !== correctAnswer) {
+                        label.classList.add('wrong-ans');
+                        label.innerHTML += ' <i class="fas fa-times" style="margin-left:auto;"></i>';
+                    }
                 });
+
+                if (userAnswer === correctAnswer) {
+                    score++;
+                } else if (!userAnswer) {
+                    card.classList.add('missed-ans');
+                }
             });
 
-            document.getElementById('hiddenScore').value = score;
-            submitted = true;
-        });
+            // স্কর ডাটাতে যোগ করা
+            formData.append("Obtained_Score", score + " / 20");
 
-        const iframe = document.getElementById('hidden_iframe');
-        iframe.onload = function() {
-            if (!submitted) return; 
+            // FormSubmit.co তে ডাটা পাঠানো (AJAX)
+            fetch(`https://formsubmit.co/ajax/${ADMIN_EMAIL}`, {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('sendStatus').textContent = "রেজাল্ট সফলভাবে স্যারের কাছে পাঠানো হয়েছে!";
+                document.getElementById('sendStatus').style.color = "green";
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('sendStatus').textContent = "ইন্টারনেট সমস্যার কারণে ইমেইল পাঠানো যায়নি, তবে তুমি রেজাল্ট দেখতে পারবে।";
+                document.getElementById('sendStatus').style.color = "red";
+            });
 
-            const score = document.getElementById('hiddenScore').value;
-            const name = document.getElementById('studentName').value;
-            
+            // ছাত্রকে রেজাল্ট দেখানো
             document.getElementById('displayScore').textContent = score;
             document.getElementById('displayName').textContent = name;
             document.getElementById('resultOverlay').style.display = 'flex';
             
-            document.getElementById('submitBtn').style.display = 'none';
-
-            document.querySelectorAll('.correct-ans-show').forEach(el => el.classList.add('correct-ans'));
-            document.querySelectorAll('.wrong-ans-show').forEach(el => el.classList.add('wrong-ans'));
-            document.querySelectorAll('input[type="radio"]').forEach(el => el.disabled = true);
-
+            // সাবমিট বাটন লুকিয়ে ফেলা
+            btn.style.display = 'none';
             document.querySelector('.info-box').scrollIntoView({behavior: 'smooth'});
-            submitted = false; 
-        };
+        }
 
         function closeResult() {
             document.getElementById('resultOverlay').style.display = 'none';
