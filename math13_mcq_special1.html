@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>গণিত MCQ - অধ্যায় ১৩.১</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { font-family: 'Hind Siliguri', sans-serif; background: #f0f2f5; margin: 0; padding: 0; color: #333; user-select: none; }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; min-height: 100vh; padding-bottom: 60px; }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #2e7d32;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%); /* নীল থিম */
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 22px; font-weight: 700; }
+        .back-btn { color: white; float: left; font-size: 20px; }
+
+        /* ইনপুট বক্স */
+        .info-box {
+            padding: 20px; margin: 0 20px; background: #e3f2fd;
+            border-radius: 10px; border: 1px solid #bbdefb;
+            text-align: center;
+        }
+        .input-field {
+            width: 80%; padding: 12px; border-radius: 5px; border: 1px solid #aaa;
+            font-family: 'Hind Siliguri', sans-serif; font-size: 16px; margin-top: 10px;
+            outline: none;
+        }
+        .timer { font-size: 20px; font-weight: bold; color: #d32f2f; margin-top: 10px; }
+
+        /* প্রশ্ন কার্ড */
+        .mcq-container { padding: 20px; }
+        .question-card {
+            background: #fff; padding: 15px; margin-bottom: 20px;
+            border-radius: 10px; border: 1px solid #eee;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+        .q-header { font-weight: 600; font-size: 17px; margin-bottom: 15px; display: flex; gap: 10px; align-items: flex-start; }
+        .board-tag { font-size: 11px; background: #eee; color: #555; padding: 2px 6px; border-radius: 4px; height: fit-content; white-space: nowrap; margin-top: 3px; }
+        
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .option {
+            display: flex; align-items: center; padding: 10px; border: 1px solid #ddd;
+            border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 15px;
+        }
+        .option:hover { background: #f9f9f9; }
+        .option input { margin-right: 10px; transform: scale(1.2); cursor: pointer; }
+
+        /* কালার স্কিম */
+        .correct-ans { background-color: #d4edda !important; border-color: #c3e6cb !important; color: #155724; }
+        .wrong-ans { background-color: #f8d7da !important; border-color: #f5c6cb !important; color: #721c24; }
+        .missed-ans { border: 2px solid #ffc107 !important; background-color: #fff3cd; }
+
+        /* বাটন */
+        .submit-btn {
+            display: block; width: 90%; margin: 20px auto; padding: 15px;
+            background: #1565c0; color: white; font-size: 18px; font-weight: bold;
+            border: none; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(21, 101, 192, 0.3);
+            transition: 0.3s;
+        }
+        .submit-btn:hover { background: #0d47a1; transform: scale(1.02); }
+
+        /* রেজাল্ট পপআপ */
+        .result-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;
+        }
+        .result-box {
+            background: white; width: 90%; max-width: 400px; padding: 30px;
+            border-radius: 15px; text-align: center; position: relative; animation: popUp 0.4s ease;
+        }
+        @keyframes popUp { from {transform: scale(0.5);} to {transform: scale(1);} }
+        
+        .score-circle {
+            width: 120px; height: 120px; background: #e3f2fd; border-radius: 50%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin: 0 auto 20px; border: 5px solid #1565c0;
+        }
+        .score-number { font-size: 35px; font-weight: bold; color: #1565c0; }
+        .score-label { font-size: 12px; color: #666; }
+
+        .close-btn {
+            background: #d32f2f; color: white; border: none; padding: 10px 20px;
+            border-radius: 5px; margin-top: 15px; cursor: pointer; font-size: 14px;
+        }
+
+        @media (max-width: 500px) {
+            .options-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="spinner"></div>
+        <p>প্রশ্ন লোড হচ্ছে... অনুগ্রহ করে অপেক্ষা করুন</p>
+    </div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        <div class="header">
+            <a href="#" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>অধ্যায় ১৩.১: সসীম ধারা (সমান্তর ধারা)</p>
+        </div>
+
+        <div class="info-box">
+            <h3 style="margin:0 0 10px;">MCQ পরীক্ষা - মডেল ১</h3>
+            <p style="font-size: 13px; color: #555;">পূর্ণমান: ৩০ | সময়: ৩০ মিনিট</p>
+            <div class="timer" id="timer">সময় বাকি: ৩০:০০ মিনিট</div>
+        </div>
+
+        <form id="quizForm" class="mcq-container">
+            <input type="hidden" name="_subject" value="Math MCQ Result: Chapter 13.1">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="obtained_score" id="hiddenScore">
+
+            <div style="margin-bottom: 20px; text-align: center;">
+                <input type="text" name="Student_Name" id="studentName" class="input-field" placeholder="তোমার নাম লিখ (বাধ্যতামূলক)..." required>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০১.</span> <span class="board-tag">[ঢাকা ২২]</span>
+                    <span>$1+3+5+...$ ধারাটির $n$-তম পদ কোনটি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q1" value="a"> $2n$</label>
+                    <label class="option"><input type="radio" name="q1" value="b" data-correct="true"> $2n-1$</label>
+                    <label class="option"><input type="radio" name="q1" value="c"> $2n+1$</label>
+                    <label class="option"><input type="radio" name="q1" value="d"> $n^2$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০২.</span> <span class="board-tag">[রাজশাহী ২১]</span>
+                    <span>সমান্তর ধারার $n$-তম পদ $u_n = a + (n-1)d$ হলে $u_1$ কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q2" value="a" data-correct="true"> $a$</label>
+                    <label class="option"><input type="radio" name="q2" value="b"> $d$</label>
+                    <label class="option"><input type="radio" name="q2" value="c"> $a+d$</label>
+                    <label class="option"><input type="radio" name="q2" value="d"> $a-d$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৩.</span> <span class="board-tag">[যশোর ২০]</span>
+                    <span>$8 + 11 + 14 + 17 + ...$ ধারাটির কোন পদ 392?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q3" value="a"> 128</label>
+                    <label class="option"><input type="radio" name="q3" value="b" data-correct="true"> 129</label>
+                    <label class="option"><input type="radio" name="q3" value="c"> 130</label>
+                    <label class="option"><input type="radio" name="q3" value="d"> 131</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৪.</span> <span class="board-tag">[কুমিল্লা ১৯]</span>
+                    <span>$5+8+11+...$ ধারাটির সাধারণ অন্তর কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q4" value="a"> 2</label>
+                    <label class="option"><input type="radio" name="q4" value="b" data-correct="true"> 3</label>
+                    <label class="option"><input type="radio" name="q4" value="c"> 5</label>
+                    <label class="option"><input type="radio" name="q4" value="d"> 8</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৫.</span> <span class="board-tag">[সিলেট ২০]</span>
+                    <span>প্রথম $n$ সংখ্যক স্বাভাবিক সংখ্যার সমষ্টি কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q5" value="a"> $n(n+1)$</label>
+                    <label class="option"><input type="radio" name="q5" value="b"> $n^2$</label>
+                    <label class="option"><input type="radio" name="q5" value="c" data-correct="true"> $\frac{n(n+1)}{2}$</label>
+                    <label class="option"><input type="radio" name="q5" value="d"> $2n+1$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৬.</span> <span class="board-tag">[দিনাজপুর ২১]</span>
+                    <span>$1+2+3+...+50 = ?$</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q6" value="a"> 1225</label>
+                    <label class="option"><input type="radio" name="q6" value="b" data-correct="true"> 1275</label>
+                    <label class="option"><input type="radio" name="q6" value="c"> 2500</label>
+                    <label class="option"><input type="radio" name="q6" value="d"> 2550</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৭.</span> <span class="board-tag">[চট্টগ্রাম ১৯]</span>
+                    <span>$\log 2 + \log 4 + \log 8 + ...$ ধারাটির ৮ম পদ কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q7" value="a"> $\log 32$</label>
+                    <label class="option"><input type="radio" name="q7" value="b"> $\log 64$</label>
+                    <label class="option"><input type="radio" name="q7" value="c"> $\log 128$</label>
+                    <label class="option"><input type="radio" name="q7" value="d" data-correct="true"> $\log 256$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৮.</span> <span class="board-tag">[বরিশাল ২০]</span>
+                    <span>$2-2+2-2+...$ ধারাটির $2n+2$ পদের সমষ্টি কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q8" value="a" data-correct="true"> 0</label>
+                    <label class="option"><input type="radio" name="q8" value="b"> 2</label>
+                    <label class="option"><input type="radio" name="q8" value="c"> -2</label>
+                    <label class="option"><input type="radio" name="q8" value="d"> 4</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৯.</span> <span class="board-tag">[ময়মনসিংহ ২১]</span>
+                    <span>$5+11+17+...$ ধারার 21 টি পদের সমষ্টি কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q9" value="a"> 1355</label>
+                    <label class="option"><input type="radio" name="q9" value="b" data-correct="true"> 1365</label>
+                    <label class="option"><input type="radio" name="q9" value="c"> 1465</label>
+                    <label class="option"><input type="radio" name="q9" value="d"> 1565</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১০.</span> <span class="board-tag">[ঢাকা ১৯]</span>
+                    <span>$a, b, c$ সমান্তর ভুক্ত হলে নিচের কোনটি সঠিক?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q10" value="a"> $b = a+c$</label>
+                    <label class="option"><input type="radio" name="q10" value="b" data-correct="true"> $2b = a+c$</label>
+                    <label class="option"><input type="radio" name="q10" value="c"> $b^2 = ac$</label>
+                    <label class="option"><input type="radio" name="q10" value="d"> $b = ac$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১১.</span> <span class="board-tag">[রাজশাহী ২০]</span>
+                    <span>প্রথম $n$ সংখ্যক বিজোড় স্বাভাবিক সংখ্যার সমষ্টি কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q11" value="a"> $n$</label>
+                    <label class="option"><input type="radio" name="q11" value="b"> $2n-1$</label>
+                    <label class="option"><input type="radio" name="q11" value="c" data-correct="true"> $n^2$</label>
+                    <label class="option"><input type="radio" name="q11" value="d"> $n(n+1)$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১২.</span> <span class="board-tag">[যশোর ২২]</span>
+                    <span>$1+2+3+...+n = 190$ হলে, $n$ এর মান কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q12" value="a"> 18</label>
+                    <label class="option"><input type="radio" name="q12" value="b" data-correct="true"> 19</label>
+                    <label class="option"><input type="radio" name="q12" value="c"> 20</label>
+                    <label class="option"><input type="radio" name="q12" value="d"> 21</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৩.</span> <span class="board-tag">[কুমিল্লা ২১]</span>
+                    <span>একটি সমান্তর ধারার প্রথম পদ 1, সাধারণ অন্তর 3 হলে, ধারাটির $n$-তম পদ কোনটি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q13" value="a"> $3n+2$</label>
+                    <label class="option"><input type="radio" name="q13" value="b" data-correct="true"> $3n-2$</label>
+                    <label class="option"><input type="radio" name="q13" value="c"> $3n+1$</label>
+                    <label class="option"><input type="radio" name="q13" value="d"> $3n-1$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৪.</span> <span class="board-tag">[চট্টগ্রাম ২১]</span>
+                    <span>$12+14+16+...$ ধারাটির 20 তম পদ কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q14" value="a"> 48</label>
+                    <label class="option"><input type="radio" name="q14" value="b" data-correct="true"> 50</label>
+                    <label class="option"><input type="radio" name="q14" value="c"> 52</label>
+                    <label class="option"><input type="radio" name="q14" value="d"> 54</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৫.</span> <span class="board-tag">[সিলেট ১৯]</span>
+                    <span>প্রথম 30 টি স্বাভাবিক সংখ্যার সমষ্টি কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q15" value="a"> 435</label>
+                    <label class="option"><input type="radio" name="q15" value="b"> 455</label>
+                    <label class="option"><input type="radio" name="q15" value="c" data-correct="true"> 465</label>
+                    <label class="option"><input type="radio" name="q15" value="d"> 495</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৬.</span> <span class="board-tag">[দিনাজপুর ২০]</span>
+                    <span>$\log 3 + \log 9 + \log 27 + ...$ ধারাটির প্রথম 10 টি পদের সমষ্টি কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q16" value="a"> $45 \log 3$</label>
+                    <label class="option"><input type="radio" name="q16" value="b" data-correct="true"> $55 \log 3$</label>
+                    <label class="option"><input type="radio" name="q16" value="c"> $10 \log 3$</label>
+                    <label class="option"><input type="radio" name="q16" value="d"> $110 \log 3$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৭.</span> <span class="board-tag">[ঢাকা ২১]</span>
+                    <span>$1+2+3+...+n$ ধারার সমষ্টি 78 হলে $n$ এর মান কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q17" value="a"> 11</label>
+                    <label class="option"><input type="radio" name="q17" value="b" data-correct="true"> 12</label>
+                    <label class="option"><input type="radio" name="q17" value="c"> 13</label>
+                    <label class="option"><input type="radio" name="q17" value="d"> 14</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৮.</span> <span class="board-tag">[রাজশাহী ১৯]</span>
+                    <span>একটি সমান্তর ধারার ১২ তম পদ 77 এবং সাধারণ অন্তর 3 হলে, প্রথম পদ কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q18" value="a"> 41</label>
+                    <label class="option"><input type="radio" name="q18" value="b"> 42</label>
+                    <label class="option"><input type="radio" name="q18" value="c"> 43</label>
+                    <label class="option"><input type="radio" name="q18" value="d" data-correct="true"> 44</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৯.</span> <span class="board-tag">[যশোর ২১]</span>
+                    <span>$1+5+9+...+161$ ধারাটির পদ সংখ্যা কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q19" value="a"> 40</label>
+                    <label class="option"><input type="radio" name="q19" value="b" data-correct="true"> 41</label>
+                    <label class="option"><input type="radio" name="q19" value="c"> 42</label>
+                    <label class="option"><input type="radio" name="q19" value="d"> 43</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২০.</span> <span class="board-tag">[কুমিল্লা ২০]</span>
+                    <span>$2+4+6+...+2n$ ধারাটির সমষ্টি কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q20" value="a" data-correct="true"> $n(n+1)$</label>
+                    <label class="option"><input type="radio" name="q20" value="b"> $n(n-1)$</label>
+                    <label class="option"><input type="radio" name="q20" value="c"> $n^2$</label>
+                    <label class="option"><input type="radio" name="q20" value="d"> $2n(n+1)$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২১.</span> <span class="board-tag">[চট্টগ্রাম ২০]</span>
+                    <span>$7+12+17+...$ ধারার 30 টি পদের সমষ্টি কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q21" value="a"> 2285</label>
+                    <label class="option"><input type="radio" name="q21" value="b" data-correct="true"> 2385</label>
+                    <label class="option"><input type="radio" name="q21" value="c"> 2485</label>
+                    <label class="option"><input type="radio" name="q21" value="d"> 2585</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২২.</span> <span class="board-tag">[সিলেট ২১]</span>
+                    <span>$a=8, d=-2$ হলে ধারাটির ৭ম পদ কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q22" value="a"> -2</label>
+                    <label class="option"><input type="radio" name="q22" value="b"> -3</label>
+                    <label class="option"><input type="radio" name="q22" value="c" data-correct="true"> -4</label>
+                    <label class="option"><input type="radio" name="q22" value="d"> -6</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২৩.</span> <span class="board-tag">[বরিশাল ১৯]</span>
+                    <span>$1+3+5+...+21$ ধারাটির সমষ্টি কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q23" value="a"> 100</label>
+                    <label class="option"><input type="radio" name="q23" value="b" data-correct="true"> 121</label>
+                    <label class="option"><input type="radio" name="q23" value="c"> 144</label>
+                    <label class="option"><input type="radio" name="q23" value="d"> 169</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২৪.</span> <span class="board-tag">[ময়মনসিংহ ২০]</span>
+                    <span>$8, 16, 24, ...$ ধারার ৯ম পদ কোনটি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q24" value="a"> 64</label>
+                    <label class="option"><input type="radio" name="q24" value="b" data-correct="true"> 72</label>
+                    <label class="option"><input type="radio" name="q24" value="c"> 80</label>
+                    <label class="option"><input type="radio" name="q24" value="d"> 88</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২৫.</span> <span class="board-tag">[ঢাকা ২০]</span>
+                    <span>কোনো সমান্তর ধারার সাধারণ অন্তর 4 এবং ৩য় পদ 14 হলে ১ম পদ কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q25" value="a"> 2</label>
+                    <label class="option"><input type="radio" name="q25" value="b"> 4</label>
+                    <label class="option"><input type="radio" name="q25" value="c" data-correct="true"> 6</label>
+                    <label class="option"><input type="radio" name="q25" value="d"> 8</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২৬.</span> <span class="board-tag">[রাজশাহী ২২]</span>
+                    <span>$29+25+21+...-23$ ধারাটির পদসংখ্যা কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q26" value="a"> 12</label>
+                    <label class="option"><input type="radio" name="q26" value="b"> 13</label>
+                    <label class="option"><input type="radio" name="q26" value="c" data-correct="true"> 14</label>
+                    <label class="option"><input type="radio" name="q26" value="d"> 15</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২৭.</span> <span class="board-tag">[যশোর ১৯]</span>
+                    <span>সমান্তর ধারার ক্ষেত্রে—<br>
+                    i. পদ সংখ্যা নির্দিষ্ট থাকে না <br>
+                    ii. সাধারণ অন্তর সমান থাকে <br>
+                    iii. পদগুলোর পার্থক্য ধ্রুবক থাকে <br>
+                    নিচের কোনটি সঠিক?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q27" value="a"> i ও ii</label>
+                    <label class="option"><input type="radio" name="q27" value="b"> i ও iii</label>
+                    <label class="option"><input type="radio" name="q27" value="c"> ii ও iii</label>
+                    <label class="option"><input type="radio" name="q27" value="d" data-correct="true"> i, ii ও iii</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২৮.</span> <span class="board-tag">[কুমিল্লা ২২]</span>
+                    <span>$10+15+20+...$ ধারার প্রথম $n$ পদের সমষ্টি কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q28" value="a"> $\frac{5n(n+1)}{2}$</label>
+                    <label class="option"><input type="radio" name="q28" value="b" data-correct="true"> $\frac{n(5n+15)}{2}$</label>
+                    <label class="option"><input type="radio" name="q28" value="c"> $5n+5$</label>
+                    <label class="option"><input type="radio" name="q28" value="d"> $\frac{n(n+5)}{2}$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২৯.</span> <span class="board-tag">[সিলেট ২০]</span>
+                    <span>$a+(a+d)+(a+2d)+...$ ধারার ১২ তম পদ কোনটি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q29" value="a"> $a+10d$</label>
+                    <label class="option"><input type="radio" name="q29" value="b" data-correct="true"> $a+11d$</label>
+                    <label class="option"><input type="radio" name="q29" value="c"> $a+12d$</label>
+                    <label class="option"><input type="radio" name="q29" value="d"> $a+13d$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>৩০.</span> <span class="board-tag">[চট্টগ্রাম ১৯]</span>
+                    <span>প্রথম $n$ সংখ্যক জোড় স্বাভাবিক সংখ্যার সমষ্টি—</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q30" value="a"> $n^2$</label>
+                    <label class="option"><input type="radio" name="q30" value="b"> $n(n-1)$</label>
+                    <label class="option"><input type="radio" name="q30" value="c" data-correct="true"> $n(n+1)$</label>
+                    <label class="option"><input type="radio" name="q30" value="d"> $2n+1$</label>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">সাবমিট করুন</button>
+        </form>
+
+        <div class="result-overlay" id="resultOverlay">
+            <div class="result-box">
+                <h2 style="color: #1565c0; margin-top: 0;">অভিনন্দন!</h2>
+                <div class="score-circle">
+                    <div class="score-number" id="displayScore">0</div>
+                    <div class="score-label">নম্বর ৩০ এর মধ্যে</div>
+                </div>
+                <p>তোমার নাম: <span id="displayName" style="font-weight: bold;"></span></p>
+                <p id="sendStatus" style="font-size: 14px; color: #555;">রেজাল্ট তৈরি হচ্ছে...</p>
+                <button class="close-btn" onclick="closeResult()">উত্তরপত্র দেখুন</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ইমেইল সেটআপ
+        const ADMIN_EMAIL = "leeminho7323@gmail.com";
+
+        // টাইমার সেটআপ (৩০ মিনিট)
+        let timeLeft = 30 * 60; 
+        const timerElement = document.getElementById('timer');
+        let countdown;
+
+        function startTimer() {
+             countdown = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+                
+                timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    alert("সময় শেষ! স্বয়ংক্রিয়ভাবে সাবমিট হচ্ছে...");
+                    submitQuiz();
+                }
+                timeLeft--;
+            }, 1000);
+        }
+        startTimer();
+
+        // ফরম সাবমিশন লজিক
+        const form = document.getElementById('quizForm');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            submitQuiz();
+        });
+
+        function submitQuiz() {
+            const name = document.getElementById('studentName').value;
+            if(!name) { 
+                alert("দয়া করে তোমার নাম লিখ।"); 
+                document.getElementById('studentName').focus();
+                return; 
+            }
+
+            clearInterval(countdown);
+            const btn = document.getElementById('submitBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ডাটা পাঠানো হচ্ছে...';
+            btn.disabled = true;
+            
+            let score = 0;
+            const questionCards = document.querySelectorAll('.question-card');
+
+            // খাতা মূল্যায়ন
+            questionCards.forEach(card => {
+                const inputs = card.querySelectorAll('input[type="radio"]');
+                let correctAnswer = null;
+                let userAnswer = null;
+
+                inputs.forEach(input => {
+                    if (input.getAttribute('data-correct') === 'true') {
+                        correctAnswer = input.value;
+                    }
+                    if (input.checked) {
+                        userAnswer = input.value;
+                    }
+                    input.disabled = true; // লক করা
+                });
+
+                // কালারিং
+                inputs.forEach(input => {
+                    const label = input.parentElement;
+                    if (input.value === correctAnswer) {
+                        label.classList.add('correct-ans');
+                        label.innerHTML += ' <i class="fas fa-check" style="margin-left:auto;"></i>';
+                    }
+                    if (userAnswer === input.value && userAnswer !== correctAnswer) {
+                        label.classList.add('wrong-ans');
+                        label.innerHTML += ' <i class="fas fa-times" style="margin-left:auto;"></i>';
+                    }
+                });
+
+                if (userAnswer === correctAnswer) {
+                    score++;
+                } else if (!userAnswer) {
+                    card.classList.add('missed-ans');
+                }
+            });
+
+            // স্কোর সেট করা
+            document.getElementById('hiddenScore').value = score + " / 30";
+            const finalFormData = new FormData(form);
+
+            // ইমেইলে পাঠানো (AJAX)
+            fetch(`https://formsubmit.co/ajax/${ADMIN_EMAIL}`, {
+                method: "POST",
+                body: finalFormData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('sendStatus').textContent = "রেজাল্ট সফলভাবে স্যারের ইমেইলে পাঠানো হয়েছে!";
+                document.getElementById('sendStatus').style.color = "green";
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('sendStatus').textContent = "নেটওয়ার্ক সমস্যার কারণে ইমেইল যায়নি, তবে তুমি রেজাল্ট দেখতে পারবে।";
+                document.getElementById('sendStatus').style.color = "red";
+            });
+
+            // রেজাল্ট দেখানো
+            document.getElementById('displayScore').textContent = score;
+            document.getElementById('displayName').textContent = name;
+            document.getElementById('resultOverlay').style.display = 'flex';
+            
+            btn.style.display = 'none';
+            document.querySelector('.info-box').scrollIntoView({behavior: 'smooth'});
+        }
+
+        function closeResult() {
+            document.getElementById('resultOverlay').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
