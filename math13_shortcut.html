@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>সমান্তর ও গুণোত্তর ধারার সূত্রাবলী</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        :root {
+            --primary: #00695c;
+            --secondary: #1565c0;
+            --accent: #e65100;
+            --bg: #f4f7f6;
+            --text-dark: #263238;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: var(--bg);
+            margin: 0; padding: 0; color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3; border-top: 4px solid var(--primary);
+            border-radius: 50%; width: 45px; height: 45px; animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+        /* হেডার ডিজাইন */
+        .header {
+            background: linear-gradient(135deg, #00695c 0%, #004d40 100%);
+            color: white; padding: 35px 20px; text-align: center;
+            border-radius: 20px; margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            position: relative; overflow: hidden;
+        }
+        .header::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            transform: rotate(45deg); pointer-events: none;
+        }
+        .header h1 { margin: 5px 0; font-size: 26px; font-weight: 700; text-shadow: 1px 2px 3px rgba(0,0,0,0.2); }
+        .header p { margin: 5px 0 0; font-size: 15px; opacity: 0.95; font-weight: 500; }
+        .quote-box {
+            background: rgba(255,255,255,0.15);
+            padding: 8px 20px; border-radius: 50px;
+            font-size: 14px; display: inline-block; margin-top: 15px; font-style: italic;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .back-btn {
+            position: absolute; top: 20px; left: 20px;
+            color: white; font-size: 18px; text-decoration: none;
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.4); transform: scale(1.1); }
+
+        /* সেকশন টাইটেল */
+        .section-header {
+            display: flex; align-items: center; gap: 10px; margin: 30px 0 15px;
+            border-bottom: 3px solid #b0bec5; padding-bottom: 8px;
+        }
+        .section-title { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
+        .section-icon { font-size: 1.4rem; color: var(--accent); }
+        
+        .intro-box {
+            background: white; padding: 15px; border-radius: 10px; border-left: 5px solid var(--accent);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 20px; font-size: 0.95rem;
+        }
+
+        /* গ্রিড লেআউট */
+        .grid-container {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;
+        }
+
+        /* ফর্মুলা কার্ড */
+        .formula-card {
+            background: white; border-radius: 15px; padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--primary);
+            transition: transform 0.3s;
+        }
+        .formula-card:hover { transform: translateY(-5px); }
+        
+        .card-label {
+            font-weight: 700; color: #455a64; font-size: 1.15rem; margin-bottom: 12px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .badge { font-size: 0.75rem; background: #eceff1; padding: 2px 8px; border-radius: 4px; color: #546e7a; }
+
+        /* ফর্মুলা বক্স ডিজাইন */
+        .formula-box {
+            background: #e0f2f1; padding: 15px; border-radius: 10px;
+            text-align: center; color: #004d40; margin-bottom: 10px;
+            border: 1px dashed #80cbc4;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 50px;
+        }
+        
+        /* ভগ্নাংশের জন্য কাস্টম CSS (MathJax ছাড়া বাংলা দেখানোর জন্য) */
+        .fraction { display: inline-block; text-align: center; vertical-align: middle; margin: 0 5px; }
+        .fraction .top { border-bottom: 2px solid #004d40; display: block; padding: 0 5px; }
+        .fraction .bottom { display: block; padding: 0 5px; }
+        .math-text { font-size: 1.2rem; font-weight: bold; }
+        .equal-sign { font-size: 1.2rem; margin: 0 8px; color: #e65100; font-weight: bold; }
+
+        .note { font-size: 0.9rem; color: #607d8b; background: #fafafa; padding: 8px; border-radius: 6px; border-left: 3px solid #cfd8dc; }
+
+        /* গুণোত্তর ধারার স্টাইল */
+        .geometric .formula-card { border-top-color: var(--secondary); }
+        .geometric .section-title { color: var(--secondary); }
+        .geometric .formula-box { background: #e3f2fd; color: #0d47a1; border-color: #90caf9; }
+        .geometric .fraction .top { border-bottom-color: #0d47a1; }
+
+        /* টেবিল ডিজাইন */
+        .table-wrapper { overflow-x: auto; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); background: white; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th { background: #ef6c00; color: white; padding: 15px; text-align: left; font-weight: 600; }
+        td { padding: 12px 15px; border-bottom: 1px solid #eee; color: #37474f; }
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) { background-color: #fff8e1; }
+
+        /* ফুটার */
+        .footer { text-align: center; margin-top: 40px; color: #90a4ae; font-size: 13px; }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 22px; }
+            .grid-container { grid-template-columns: 1fr; }
+            .formula-box { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="loader"><div class="spinner"></div></div>
+
+<div class="container" id="mainContent" style="display:none;">
+    
+    <div class="header">
+        <a href="math_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+        <h1>Self Study with Sujon Sir</h1>
+        <p>সমান্তর ও গুণোত্তর ধারার সকল সূত্র ও শর্টকাট টেকনিক</p>
+        <div class="quote-box">"সততাই সর্বোৎকৃষ্ট পন্থা"</div>
+    </div>
+
+    <div class="section-header">
+        <i class="fas fa-layer-group section-icon"></i>
+        <div class="section-title">সমান্তর ধারা (Arithmetic Series)</div>
+    </div>
+    
+    <div class="intro-box">
+        <strong>পরিচিতি:</strong> প্রথম পদ = $a$, সাধারণ অন্তর = $d$, পদসংখ্যা = $n$
+    </div>
+
+    <div class="grid-container">
+        <div class="formula-card">
+            <div class="card-label">১. সাধারণ পদ নির্ণয় <span class="badge">বেসিক</span></div>
+            <div class="formula-box">
+                <div>
+                    $n$-তম পদ <span class="equal-sign">=</span> $a + (n-1)d$
+                </div>
+            </div>
+            <div class="note">যেকোনো নির্দিষ্ট পদ (যেমন: ১০তম পদ) বের করতে এটি লাগে।</div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">২. সমষ্টি নির্ণয় <span class="badge">বেসিক</span></div>
+            <div class="formula-box">
+                <div>
+                    সমষ্টি ($S_n$) <span class="equal-sign">=</span> $\frac{n}{2}\{2a + (n-1)d\}$
+                </div>
+            </div>
+            <div class="note">ধারার সবগুলো পদের যোগফল বের করার মূল সূত্র।</div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">৩. পদসংখ্যা বের করার শর্টকাট <span class="badge" style="background:#ffebee; color:#c62828;">HOT</span></div>
+            <div class="formula-box">
+                <div>
+                    পদসংখ্যা ($n$) <span class="equal-sign">=</span>
+                    <div class="fraction">
+                        <span class="top">শেষ পদ - ১ম পদ</span>
+                        <span class="bottom">সাধারণ অন্তর</span>
+                    </div>
+                    + ১
+                </div>
+            </div>
+            <div class="note">শেষ পদ দেওয়া থাকলে $n$ এর মান বের করার সেরা উপায়।</div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">৪. সমষ্টির সুপার শর্টকাট <span class="badge" style="background:#ffebee; color:#c62828;">HOT</span></div>
+            <div class="formula-box">
+                <div>
+                    সমষ্টি <span class="equal-sign">=</span> গড় $\times$ পদসংখ্যা
+                </div>
+                <div style="margin-top:8px; font-size: 0.9rem;">
+                    [ যেখানে, গড় <span class="equal-sign">=</span>
+                    <div class="fraction" style="font-size:0.9rem;">
+                        <span class="top">১ম পদ + শেষ পদ</span>
+                        <span class="bottom">২</span>
+                    </div> ]
+                </div>
+            </div>
+            <div class="note">MCQ তে দ্রুত উত্তর বের করতে জাদুর মতো কাজ করে।</div>
+        </div>
+    </div>
+
+    <div class="section-header geometric">
+        <i class="fas fa-project-diagram section-icon" style="color:var(--secondary);"></i>
+        <div class="section-title">গুণোত্তর ধারা (Geometric Series)</div>
+    </div>
+
+    <div class="intro-box" style="border-left-color: var(--secondary);">
+        <strong>পরিচিতি:</strong> প্রথম পদ = $a$, সাধারণ অনুপাত = $r$
+    </div>
+
+    <div class="grid-container geometric">
+        <div class="formula-card">
+            <div class="card-label">১. সাধারণ পদ নির্ণয়</div>
+            <div class="formula-box">
+                <div>
+                    $n$-তম পদ <span class="equal-sign">=</span> $a r^{n-1}$
+                </div>
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">২. সমষ্টি (যখন $r > 1$)</div>
+            <div class="formula-box">
+                <div>
+                    সমষ্টি ($S_n$) <span class="equal-sign">=</span> $\frac{a(r^n - 1)}{r - 1}$
+                </div>
+            </div>
+            <div class="note">যখন সাধারণ অনুপাত ১ এর চেয়ে বড় হয়।</div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">৩. সমষ্টি (যখন $r < 1$)</div>
+            <div class="formula-box">
+                <div>
+                    সমষ্টি ($S_n$) <span class="equal-sign">=</span> $\frac{a(1 - r^n)}{1 - r}$
+                </div>
+            </div>
+            <div class="note">যখন সাধারণ অনুপাত ১ এর চেয়ে ছোট হয়।</div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">৪. অসীমতক সমষ্টি</div>
+            <div class="formula-box">
+                <div>
+                    সমষ্টি ($S_\infty$) <span class="equal-sign">=</span> $\frac{a}{1-r}$
+                </div>
+            </div>
+            <div class="note">শর্ত: অনুপাতের পরম মান ১ এর কম হতে হবে ($|r| < 1$)।</div>
+        </div>
+    </div>
+
+    <div class="section-header" style="border-bottom-color: #ffcc80;">
+        <i class="fas fa-star section-icon" style="color: #ef6c00;"></i>
+        <div class="section-title" style="color: #ef6c00;">স্বাভাবিক সংখ্যার সূত্র ও শর্টকাট</div>
+    </div>
+    
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>বিবরণ</th>
+                    <th>ধারাটি যেমন হবে</th>
+                    <th>সূত্র (Formula)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>স্বাভাবিক সংখ্যার সমষ্টি</td>
+                    <td>$1+2+3+...+n$</td>
+                    <td>$\frac{n(n+1)}{2}$</td>
+                </tr>
+                <tr>
+                    <td>বিজোড় সংখ্যার সমষ্টি</td>
+                    <td>$1+3+5+...+(2n-1)$</td>
+                    <td>$n^2$ <span class="badge" style="margin-left:5px;">Shortcut</span></td>
+                </tr>
+                <tr>
+                    <td>জোড় সংখ্যার সমষ্টি</td>
+                    <td>$2+4+6+...+2n$</td>
+                    <td>$n(n+1)$</td>
+                </tr>
+                <tr>
+                    <td>বর্গের সমষ্টি</td>
+                    <td>$1^2+2^2+3^2+...+n^2$</td>
+                    <td>$\frac{n(n+1)(2n+1)}{6}$</td>
+                </tr>
+                <tr>
+                    <td>ঘনের সমষ্টি</td>
+                    <td>$1^3+2^3+3^3+...+n^3$</td>
+                    <td>$\{\frac{n(n+1)}{2}\}^2$</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        &copy; 2024 Self Study with Sujon Sir | All Rights Reserved
+    </div>
+
+</div>
+
+</body>
+</html>

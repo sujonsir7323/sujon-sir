@@ -23,7 +23,7 @@
             padding-bottom: 20px;
         }
         
-        /* ১. হেডার ডিজাইন (ব্র্যান্ডিং) */
+        /* ১. হেডার ডিজাইন */
         .header {
             background: linear-gradient(135deg, #00695c 0%, #004d40 100%);
             color: white;
@@ -79,6 +79,37 @@
             padding: 0 20px;
         }
 
+        /* সূত্র বাটন ডিজাইন (নতুন) */
+        .formula-link {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-left: 6px solid #ff6f00; /* কমলা বর্ডার */
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 5px;
+        }
+        .formula-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+        .f-icon-box {
+            width: 45px; height: 45px;
+            background: #fff3e0;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin-right: 15px;
+            color: #ff6f00;
+            font-size: 20px;
+        }
+        .f-content h3 { margin: 0; font-size: 18px; color: #333; font-weight: 700; }
+        .f-content p { margin: 2px 0 0; font-size: 13px; color: #666; }
+        .f-arrow { margin-left: auto; color: #bbb; }
+
+        /* সাধারণ টেস্ট কার্ড */
         .test-card {
             background: white;
             padding: 20px;
@@ -109,11 +140,9 @@
             flex-direction: column;
         }
 
-        /* CQ বাটন স্টাইল (এখন টেস্ট ১ এর জন্য ব্যবহৃত) */
         .btn-cq { background: #fff3e0; color: #e65100; border: 1px solid #ffe0b2; }
         .btn-cq:hover { background: #ffe0b2; }
 
-        /* MCQ বাটন স্টাইল (এখন টেস্ট ২ এর জন্য ব্যবহৃত) */
         .btn-mcq { background: #e3f2fd; color: #1565c0; border: 1px solid #bbdefb; }
         .btn-mcq:hover { background: #bbdefb; }
 
@@ -143,6 +172,19 @@
 
         <div class="test-wrapper">
 
+            <a href="math13_shortcut.html" class="formula-link">
+                <div class="f-icon-box">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <div class="f-content">
+                    <h3>প্রয়োজনীয় সূত্র ও শর্টকাট</h3>
+                    <p>পরীক্ষার আগে এক নজরে দেখে নাও</p>
+                </div>
+                <div class="f-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </a>
+
             <div class="test-card">
                 <div class="test-header">
                     <div class="test-name">স্পেশাল MCQ মডেল টেস্ট ১৩.১</div>
@@ -162,7 +204,7 @@
                 </div>
             </div>
 
-            </div>
+        </div>
     </div>
 
 </body>
