@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>সেট ও ফাংশন - সূত্র ও শর্টকাট</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        :root {
+            --primary: #00897b; /* Teal Theme */
+            --secondary: #004d40;
+            --accent: #ff6f00;
+            --bg: #f0f8ff;
+            --text-dark: #263238;
+        }
+
+        body {
+            font-family: 'Noto Sans Bengali', sans-serif;
+            background-color: var(--bg);
+            margin: 0; padding: 0; color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3; border-top: 4px solid var(--primary);
+            border-radius: 50%; width: 45px; height: 45px; animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+        /* হেডার ডিজাইন */
+        .header {
+            background: linear-gradient(135deg, #00897b 0%, #004d40 100%);
+            color: white; padding: 35px 20px; text-align: center;
+            border-radius: 20px; margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            position: relative; overflow: hidden;
+        }
+        .header::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            transform: rotate(45deg); pointer-events: none;
+        }
+        .header h1 { margin: 5px 0; font-size: 26px; font-weight: 700; text-shadow: 1px 2px 3px rgba(0,0,0,0.2); }
+        .header p { margin: 5px 0 0; font-size: 16px; opacity: 0.95; font-weight: 500; }
+        .quote-box {
+            background: rgba(255,255,255,0.15);
+            padding: 8px 20px; border-radius: 50px;
+            font-size: 14px; display: inline-block; margin-top: 15px; font-style: italic;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .back-btn {
+            position: absolute; top: 20px; left: 20px;
+            color: white; font-size: 18px; text-decoration: none;
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.4); transform: scale(1.1); }
+
+        /* সেকশন টাইটেল */
+        .section-header {
+            display: flex; align-items: center; gap: 10px; margin: 30px 0 15px;
+            border-bottom: 3px solid #b2dfdb; padding-bottom: 8px;
+        }
+        .section-title { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
+        .section-icon { font-size: 1.4rem; color: var(--accent); }
+        
+        /* গ্রিড লেআউট */
+        .grid-container {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;
+        }
+
+        /* ফর্মুলা কার্ড */
+        .formula-card {
+            background: white; border-radius: 15px; padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--primary);
+            transition: transform 0.3s;
+        }
+        .formula-card:hover { transform: translateY(-5px); }
+        
+        .card-label {
+            font-weight: 700; color: #455a64; font-size: 1.15rem; margin-bottom: 12px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .badge { font-size: 0.8rem; background: #e0f2f1; padding: 4px 10px; border-radius: 4px; color: #00695c; }
+
+        /* ফর্মুলা বক্স */
+        .formula-box {
+            background: #e0f2f1; padding: 15px; border-radius: 10px;
+            text-align: center; color: #004d40; margin-bottom: 10px;
+            border: 1px dashed #80cbc4;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 50px; font-size: 1.1rem;
+        }
+
+        .equal-sign { font-size: 1.2rem; margin: 0 8px; color: #e65100; font-weight: bold; }
+        .note { font-size: 0.95rem; color: #607d8b; background: #fafafa; padding: 10px; border-radius: 6px; border-left: 3px solid #cfd8dc; }
+
+        /* ফাংশন সেকশন স্টাইল */
+        .function-style .formula-card { border-top-color: #6a1b9a; }
+        .function-style .section-title { color: #6a1b9a; border-color: #e1bee7; }
+        .function-style .formula-box { background: #f3e5f5; color: #4a148c; border-color: #ce93d8; }
+        .function-style .section-icon { color: #ab47bc; }
+
+        /* টেবিল ডিজাইন */
+        .table-wrapper { overflow-x: auto; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); background: white; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th { background: #ff8f00; color: white; padding: 15px; text-align: left; font-weight: 600; font-size: 1.1rem; }
+        td { padding: 12px 15px; border-bottom: 1px solid #eee; color: #37474f; font-size: 1rem; }
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) { background-color: #fff8e1; }
+
+        .footer { text-align: center; margin-top: 40px; color: #90a4ae; font-size: 14px; }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 22px; }
+            .grid-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="loader"><div class="spinner"></div></div>
+
+<div class="container" id="mainContent" style="display:none;">
+    
+    <div class="header">
+        <a href="math_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+        <h1>Self Study with Sujon Sir</h1>
+        <p>অধ্যায় ২: সেট ও ফাংশন - সকল সূত্র ও শর্টকাট</p>
+        <div class="quote-box">"চর্চাই মানুষকে দক্ষ করে তোলে"</div>
+    </div>
+
+    <div class="section-header">
+        <i class="fas fa-layer-group section-icon"></i>
+        <div class="section-title">সেট ও সেট প্রক্রিয়া</div>
+    </div>
+
+    <div class="grid-container">
+        <div class="formula-card">
+            <div class="card-label">১. সংযোগ সেট (Union)</div>
+            <div class="formula-box">
+                <div>$A \cup B = \{x : x \in A \text{ অথবা } x \in B\}$</div>
+            </div>
+            <div class="note">কমন এবং আনকমন সকল উপাদান নিয়ে গঠিত হয় (লসাগু এর মতো)।</div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">২. ছেদ সেট (Intersection)</div>
+            <div class="formula-box">
+                <div>$A \cap B = \{x : x \in A \text{ এবং } x \in B\}$</div>
+            </div>
+            <div class="note">শুধুমাত্র সাধারণ (Common) উপাদান নিয়ে গঠিত হয় (গসাগু এর মতো)।</div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">৩. অন্তর সেট (Difference)</div>
+            <div class="formula-box">
+                <div>$A - B = \{x : x \in A \text{ এবং } x \notin B\}$</div>
+            </div>
+            <div class="note">প্রথম সেট থেকে দ্বিতীয় সেটের উপাদানগুলো বাদ যাবে।</div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">৪. পূরক সেট (Complement)</div>
+            <div class="formula-box">
+                <div>$A' = U - A$</div>
+            </div>
+            <div class="note">সার্বিক সেট ($U$) থেকে ঐ সেটের উপাদান বাদ দিয়ে গঠিত হয়।</div>
+        </div>
+    </div>
+
+    <div class="section-header">
+        <i class="fas fa-bolt section-icon" style="color: #d84315;"></i>
+        <div class="section-title" style="color: #d84315;">গুরুত্বপূর্ণ শর্টকাট</div>
+    </div>
+
+    <div class="grid-container">
+        <div class="formula-card">
+            <div class="card-label">উপসেট সংখ্যা নির্ণয় <span class="badge" style="background:#ffebee; color:#c62828;">HOT</span></div>
+            <div class="formula-box">
+                <div>উপসেট সংখ্যা <span class="equal-sign">=</span> $2^n$</div>
+            </div>
+            <div class="note">$n$ হলো সেটের উপাদান সংখ্যা। যেমন: $\{a,b\}$ এর উপসেট $2^2=4$ টি।</div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">প্রকৃত উপসেট সংখ্যা</div>
+            <div class="formula-box">
+                <div>প্রকৃত উপসেট <span class="equal-sign">=</span> $2^n - 1$</div>
+            </div>
+            <div class="note">উপসেট থেকে ১টি কম হবে (নিজে বাদে বাকি সব)।</div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">উপাদান সংখ্যার সূত্র</div>
+            <div class="formula-box">
+                <div style="font-size: 0.95rem;">$n(A \cup B) = n(A) + n(B) - n(A \cap B)$</div>
+            </div>
+            <div class="note">বাস্তব সমস্যার সমাধানে (যেমন: চা-কফি পছন্দ করা) এটি ব্যবহৃত হয়।</div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">কার্তেসীয় গুণজ (Cartesian Product)</div>
+            <div class="formula-box">
+                <div>$A \times B = \{(x, y) : x \in A, y \in B\}$</div>
+            </div>
+            <div class="note">উপাদানগুলো ক্রমজোড় $(x, y)$ আকারে থাকে।</div>
+        </div>
+    </div>
+
+    <div class="section-header function-style">
+        <i class="fas fa-project-diagram section-icon"></i>
+        <div class="section-title">ফাংশন, ডোমেন ও রেঞ্জ</div>
+    </div>
+
+    <div class="grid-container function-style">
+        <div class="formula-card">
+            <div class="card-label">অন্বয়ের ডোমেন ও রেঞ্জ</div>
+            <div class="formula-box" style="align-items: flex-start; text-align: left;">
+                <div style="margin-bottom: 5px;"><strong>ডোমেন:</strong> ক্রমজোড়গুলোর ১ম উপাদান।</div>
+                <div><strong>রেঞ্জ:</strong> ক্রমজোড়গুলোর ২য় উপাদান।</div>
+            </div>
+            <div class="note">যেমন: $R=\{(1,2), (3,4)\}$ হলে, ডোমেন $\{1,3\}$, রেঞ্জ $\{2,4\}$</div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">ফাংশন চেনার উপায়</div>
+            <div class="formula-box">
+                <div>একই প্রথম উপাদান বিশিষ্ট একাধিক ক্রমজোড় থাকবে না।</div>
+            </div>
+            <div class="note">যেমন: $\{(1,2), (1,3)\}$ ফাংশন নয়, কারণ $1$ এর দুটি প্রতিচ্ছবি আছে।</div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">ডোমেন নির্ণয়ের শর্টকাট</div>
+            <div class="formula-box" style="font-size: 0.95rem; align-items: flex-start; text-align: left;">
+                <div style="margin-bottom:5px;">১. $f(x)=\frac{1}{x-a}$ হলে, Domain = $\mathbb{R} - \{a\}$</div>
+                <div>২. $f(x)=\sqrt{x-a}$ হলে, Domain = $x \ge a$</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header" style="border-bottom-color: #ffcc80;">
+        <i class="fas fa-info-circle section-icon" style="color: #ef6c00;"></i>
+        <div class="section-title" style="color: #ef6c00;">প্রতীক ও তথ্য কণিকা</div>
+    </div>
+    
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>প্রতীক / বিষয়</th>
+                    <th>অর্থ / বিবরণ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>$\in$ (Epsilon)</td>
+                    <td>সদস্য (Element Of)। যেমন: $x \in A$ (x, A এর সদস্য)</td>
+                </tr>
+                <tr>
+                    <td>$\notin$</td>
+                    <td>সদস্য নয় (Not Element Of)</td>
+                </tr>
+                <tr>
+                    <td>$\emptyset$ বা $\{\}$</td>
+                    <td>ফাঁকা সেট (Empty Set)</td>
+                </tr>
+                <tr>
+                    <td>$\subset$</td>
+                    <td>প্রকৃত উপসেট (Proper Subset)</td>
+                </tr>
+                <tr>
+                    <td>জর্জ ক্যান্টর (Georg Cantor)</td>
+                    <td>সেট তত্ত্বের জনক। তিনি জার্মান গণিতবিদ ছিলেন।</td>
+                </tr>
+                <tr>
+                    <td>ভেনচিত্র (Venn Diagram)</td>
+                    <td>জন ভেন (John Venn) সেটের চিত্ররূপ প্রবর্তন করেন।</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        &copy; 2026 Self Study with Sujon Sir | All Rights Reserved
+    </div>
+
+</div>
+
+</body>
+</html>
