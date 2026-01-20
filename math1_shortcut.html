@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>বাস্তব সংখ্যার সূত্র ও শর্টকাট</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        :root {
+            --primary: #1565c0;
+            --secondary: #2e7d32;
+            --accent: #d84315;
+            --bg: #f4f7f6;
+            --text-dark: #263238;
+        }
+
+        body {
+            /* নতুন ফন্ট অ্যাপ্লাই করা হয়েছে */
+            font-family: 'Noto Sans Bengali', sans-serif;
+            background-color: var(--bg);
+            margin: 0; padding: 0; color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3; border-top: 4px solid var(--primary);
+            border-radius: 50%; width: 45px; height: 45px; animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+        /* হেডার ডিজাইন */
+        .header {
+            background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+            color: white; padding: 35px 20px; text-align: center;
+            border-radius: 20px; margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            position: relative; overflow: hidden;
+        }
+        .header::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            transform: rotate(45deg); pointer-events: none;
+        }
+        .header h1 { margin: 5px 0; font-size: 26px; font-weight: 700; text-shadow: 1px 2px 3px rgba(0,0,0,0.2); }
+        .header p { margin: 5px 0 0; font-size: 16px; opacity: 0.95; font-weight: 500; }
+        .quote-box {
+            background: rgba(255,255,255,0.15);
+            padding: 8px 20px; border-radius: 50px;
+            font-size: 15px; display: inline-block; margin-top: 15px; font-style: italic;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .back-btn {
+            position: absolute; top: 20px; left: 20px;
+            color: white; font-size: 18px; text-decoration: none;
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.4); transform: scale(1.1); }
+
+        /* সেকশন টাইটেল */
+        .section-header {
+            display: flex; align-items: center; gap: 10px; margin: 30px 0 15px;
+            border-bottom: 3px solid #b0bec5; padding-bottom: 8px;
+        }
+        .section-title { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
+        .section-icon { font-size: 1.4rem; color: var(--accent); }
+        
+        .intro-box {
+            background: white; padding: 15px; border-radius: 10px; border-left: 5px solid var(--accent);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 20px; font-size: 1rem;
+        }
+
+        /* গ্রিড লেআউট */
+        .grid-container {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;
+        }
+
+        /* ফর্মুলা কার্ড */
+        .formula-card {
+            background: white; border-radius: 15px; padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--primary);
+            transition: transform 0.3s;
+        }
+        .formula-card:hover { transform: translateY(-5px); }
+        
+        .card-label {
+            font-weight: 700; color: #455a64; font-size: 1.2rem; margin-bottom: 12px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .badge { font-size: 0.8rem; background: #eceff1; padding: 4px 10px; border-radius: 4px; color: #546e7a; }
+
+        /* ফর্মুলা বক্স ডিজাইন */
+        .formula-box {
+            background: #e3f2fd; padding: 15px; border-radius: 10px;
+            text-align: center; color: #0d47a1; margin-bottom: 10px;
+            border: 1px dashed #64b5f6;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 50px;
+            font-size: 1.1rem;
+        }
+        
+        /* ভগ্নাংশ (CSS based) */
+        .fraction { display: inline-block; text-align: center; vertical-align: middle; margin: 0 5px; }
+        .fraction .top { border-bottom: 2px solid #0d47a1; display: block; padding: 0 5px; font-weight: bold;}
+        .fraction .bottom { display: block; padding: 0 5px; font-weight: bold;}
+        
+        .equal-sign { font-size: 1.2rem; margin: 0 8px; color: #d84315; font-weight: bold; }
+        .note { font-size: 0.95rem; color: #607d8b; background: #fafafa; padding: 10px; border-radius: 6px; border-left: 3px solid #cfd8dc; }
+
+        /* অমূলদ সংখ্যার স্টাইল */
+        .irrational .formula-card { border-top-color: #d84315; }
+        .irrational .section-title { color: #d84315; border-color: #ffccbc; }
+        .irrational .formula-box { background: #fbe9e7; color: #bf360c; border-color: #ffab91; }
+        .irrational .fraction .top { border-bottom-color: #bf360c; }
+
+        /* টেবিল ডিজাইন */
+        .table-wrapper { overflow-x: auto; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); background: white; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th { background: var(--secondary); color: white; padding: 15px; text-align: left; font-weight: 600; font-size: 1.1rem;}
+        td { padding: 12px 15px; border-bottom: 1px solid #eee; color: #37474f; font-size: 1rem;}
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) { background-color: #f1f8e9; }
+
+        .footer { text-align: center; margin-top: 40px; color: #90a4ae; font-size: 14px; }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 22px; }
+            .grid-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="loader"><div class="spinner"></div></div>
+
+<div class="container" id="mainContent" style="display:none;">
+    
+    <div class="header">
+        <a href="math_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+        <h1>Self Study with Sujon Sir</h1>
+        <p>অধ্যায় ১: বাস্তব সংখ্যা - সূত্র ও শর্টকাট টেকনিক</p>
+        <div class="quote-box">"গণিত হলো বিশ্বব্রহ্মাণ্ডের ভাষা"</div>
+    </div>
+
+    <div class="section-header">
+        <i class="fas fa-shapes section-icon"></i>
+        <div class="section-title">সংখ্যা চেনার উপায়</div>
+    </div>
+    
+    <div class="intro-box">
+        <strong>মৌলিক ধারণা:</strong> সকল মূলদ ও অমূলদ সংখ্যাই হলো বাস্তব সংখ্যা ($\mathbb{R}$)।
+    </div>
+
+    <div class="grid-container">
+        <div class="formula-card">
+            <div class="card-label">১. মূলদ সংখ্যা ($\mathbb{Q}$) <span class="badge" style="background:#e8f5e9; color:#2e7d32;">চেনার উপায়</span></div>
+            <div class="formula-box" style="align-items: flex-start; text-align: left;">
+                <ul style="margin: 0; padding-left: 20px; list-style-type: disc;">
+                    <li>সকল পূর্ণসংখ্যা ($0, \pm1, \pm2...$)</li>
+                    <li>সকল সসীম দশমিক ($2.5, 3.12$)</li>
+                    <li>সকল আবৃত্ত দশমিক ($1.333..., 2.\dot{4}\dot{5}$)</li>
+                    <li>পূর্ণবর্গ সংখ্যার বর্গমূল ($\sqrt{9}, \sqrt{16}$)</li>
+                </ul>
+            </div>
+            <div class="note">যাদের $\frac{p}{q}$ আকারে প্রকাশ করা যায়।</div>
+        </div>
+
+        <div class="formula-card irrational">
+            <div class="card-label">২. অমূলদ সংখ্যা ($\mathbb{Q}'$) <span class="badge" style="background:#ffebee; color:#c62828;">চেনার উপায়</span></div>
+            <div class="formula-box" style="align-items: flex-start; text-align: left;">
+                <ul style="margin: 0; padding-left: 20px; list-style-type: disc;">
+                    <li>পূর্ণবর্গ নয় এমন সংখ্যার বর্গমূল ($\sqrt{2}, \sqrt{3}, \sqrt{5}$)</li>
+                    <li>অসীম অনাবৃত্ত দশমিক ($1.4142...$)</li>
+                    <li>বিশেষ ধ্রুবক ($\pi, e$)</li>
+                </ul>
+            </div>
+            <div class="note">যাদের $\frac{p}{q}$ আকারে প্রকাশ করা যায় না।</div>
+        </div>
+    </div>
+
+    <div class="section-header irrational">
+        <i class="fas fa-magic section-icon" style="color: #d84315;"></i>
+        <div class="section-title" style="color: #d84315;">ম্যাজিক শর্টকাট</div>
+    </div>
+
+    <div class="grid-container">
+        <div class="formula-card">
+            <div class="card-label">আবৃত্ত দশমিক $\to$ সাধারণ ভগ্নাংশ <span class="badge" style="background:#fff3e0; color:#e65100;">HOT</span></div>
+            <div class="formula-box">
+                <div>
+                    ভগ্নাংশ <span class="equal-sign">=</span>
+                    <div class="fraction">
+                        <span class="top">পুরো সংখ্যা - অনাবৃত্ত অংশ</span>
+                        <span class="bottom">যতটি পৌনঃপুনিক ততটি ৯, যতটি অনাবৃত্ত ততটি ০</span>
+                    </div>
+                </div>
+            </div>
+            <div class="note">
+                উদাহরণ: $5.2\dot{3}\dot{4} = \frac{5234 - 52}{990}$
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">বিজোড় সংখ্যার বর্গের ধর্ম</div>
+            <div class="formula-box">
+                <div>
+                    বিজোড় সংখ্যার বর্গ <span class="equal-sign">=</span> ৮ দ্বারা ভাগ করলে ভাগশেষ ১ হবে
+                </div>
+            </div>
+            <div class="note">উদাহরণ: $5^2 = 25$ কে ৮ দিয়ে ভাগ করলে ১ থাকে।</div>
+        </div>
+    </div>
+
+    <div class="section-header" style="border-bottom-color: #a5d6a7;">
+        <i class="fas fa-info-circle section-icon" style="color: #2e7d32;"></i>
+        <div class="section-title" style="color: #2e7d32;">গুরুত্বপূর্ণ তথ্য</div>
+    </div>
+    
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>বিষয়</th>
+                    <th>তথ্য / উদাহরণ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>স্বাভাবিক সংখ্যা ($\mathbb{N}$)</td>
+                    <td>$1, 2, 3, 4, ...$ (শূন্য নয়)</td>
+                </tr>
+                <tr>
+                    <td>পূর্ণসংখ্যা ($\mathbb{Z}$)</td>
+                    <td>$..., -2, -1, 0, 1, 2, ...$</td>
+                </tr>
+                <tr>
+                    <td>মৌলিক সংখ্যা</td>
+                    <td>১ এর চেয়ে বড় যে সংখ্যার ১ ও ওই সংখ্যা ছাড়া গুণনীয়ক নেই। (যেমন: ২, ৩, ৫, ৭...)</td>
+                </tr>
+                <tr>
+                    <td>সহমৌলিক</td>
+                    <td>দুটি সংখ্যার গ.সা.গু ১ হলে তারা সহমৌলিক। (যেমন: ৬ ও ৩৫)</td>
+                </tr>
+                <tr>
+                    <td>শূন্য (0)</td>
+                    <td>শূন্য একটি মূলদ সংখ্যা এবং পূর্ণসংখ্যা। তবে এটি স্বাভাবিক সংখ্যা নয়।</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        &copy; 2026 Self Study with Sujon Sir | All Rights Reserved
+    </div>
+
+</div>
+
+</body>
+</html>
