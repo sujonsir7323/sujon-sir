@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>পদার্থবিজ্ঞান CQ - অধ্যায় ৩ (মডেল ১)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e8eaf6; 
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 60px; 
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #303f9f;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #303f9f 0%, #1a237e 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ইনফো বক্স */
+        .info-box {
+            padding: 15px; margin: 0 20px 20px; background: #e8eaf6;
+            border-radius: 10px; border: 1px solid #c5cae9;
+            text-align: center;
+        }
+        .timer { font-size: 22px; font-weight: bold; color: #c62828; margin-top: 5px; }
+
+        /* সৃজনশীল প্রশ্ন কার্ড */
+        .cq-container { padding: 0 20px; }
+        .question-card {
+            background: #fff; padding: 20px; margin-bottom: 25px;
+            border-radius: 12px; border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-top: 5px solid #303f9f;
+        }
+        .stem-box {
+            background: #f5f5f5; padding: 15px; border-radius: 8px;
+            margin-bottom: 15px; border-left: 4px solid #ff4081;
+            font-size: 16px; line-height: 1.6;
+        }
+        .sub-questions { list-style: none; padding: 0; }
+        .sub-questions li {
+            margin-bottom: 10px; padding: 8px 0;
+            border-bottom: 1px dashed #eee; font-size: 15px;
+        }
+        .sub-questions li:last-child { border-bottom: none; }
+        .mark {
+            float: right; font-size: 12px; background: #303f9f;
+            color: white; padding: 2px 8px; border-radius: 10px;
+        }
+        
+        /* উত্তর বাটন (প্র্যাকটিসের জন্য) */
+        .solution-btn {
+            background: white; border: 1px solid #303f9f; color: #303f9f;
+            padding: 5px 15px; border-radius: 20px; cursor: pointer;
+            font-size: 13px; margin-top: 10px; transition: 0.3s;
+        }
+        .solution-btn:hover { background: #303f9f; color: white; }
+        
+        .solution-box {
+            display: none; margin-top: 10px; padding: 10px;
+            background: #e8f5e9; border-radius: 8px; color: #2e7d32; font-size: 14px;
+        }
+
+        .footer { text-align: center; color: #777; font-size: 13px; margin-top: 30px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div><p>প্রশ্ন তৈরি হচ্ছে...</p></div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        
+        <div class="header">
+            <a href="physics_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-atom" style="font-size: 40px; margin-bottom: 10px; color: #ffeb3b;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>অধ্যায় ৩: বল (Force) - সৃজনশীল মডেল ১</p>
+        </div>
+
+        <div class="info-box">
+            <h3 style="margin:0;">সৃজনশীল পরীক্ষা (CQ)</h3>
+            <p style="font-size: 13px; color: #555; margin: 5px 0;">পূর্ণমান: ৩০ | সময়: ৬০ মিনিট</p>
+            <div class="timer" id="timer">সময় বাকি: ৬০:০০ মিনিট</div>
+        </div>
+
+        <div class="cq-container">
+            
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #303f9f;">প্রশ্ন নং - ০১ [ঢাকা বোর্ড ২০২২]</div>
+                
+                <div class="stem-box">
+                    $600 \ kg$ ভরের একটি ট্রাক $20 \ ms^{-1}$ বেগে চলছে। $1400 \ kg$ ভরের একটি স্থির পিকআপ ভ্যানের সাথে ট্রাকটির ধাক্কা লাগে। ধাক্কার পর গাড়ি দুটি মিলিত হয়ে একত্রে চলতে থাকে।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> জড়তা কাকে বলে? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> সাম্য ও অসাম্য বলের মধ্যে পার্থক্য লিখ। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> সংঘর্ষের পর গাড়ি দুটির মিলিত বেগ নির্ণয় করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol1c')">উত্তর দেখুন</button>
+                        <div id="sol1c" class="solution-box">
+                            <strong>উত্তর:</strong> সূত্র: $m_1u_1 + m_2u_2 = (m_1+m_2)v$ <br>
+                            এখানে, $m_1=600, u_1=20, m_2=1400, u_2=0$ <br>
+                            হিসাব করে পাই, $v = 6 \ ms^{-1}$
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> উদ্দীপকের ঘটনায় ভরবেগ সংরক্ষিত হলেও গতিশক্তি সংরক্ষিত হবে কি? গাণিতিকভাবে বিশ্লেষণ করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol1d')">উত্তর দেখুন</button>
+                        <div id="sol1d" class="solution-box">
+                            <strong>হিন্টস:</strong> আগের গতিশক্তি $\frac{1}{2}m_1u_1^2 + \frac{1}{2}m_2u_2^2$ এবং পরের গতিশক্তি $\frac{1}{2}(m_1+m_2)v^2$ বের করে তুলনা করো। সাধারণত মিলিত হলে গতিশক্তি কমে যায়।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #303f9f;">প্রশ্ন নং - ০২ [রাজশাহী বোর্ড ২০২১]</div>
+                
+                <div class="stem-box">
+                    একটি বন্দুক থেকে $10 \ gm$ ভরের একটি গুলি $300 \ ms^{-1}$ বেগে ছোড়া হলো। বন্দুকের ভর $2 \ kg$। গুলিটি একটি তক্তাকে ভেদ করতে পারে।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> নিউটনের ২য় সূত্রটি লিখ। <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> রাস্তার ব্যাংকিং কেন করা হয়? ব্যাখ্যা করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> বন্দুকের পশ্চাৎবেগ নির্ণয় করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol2c')">উত্তর দেখুন</button>
+                        <div id="sol2c" class="solution-box">
+                            <strong>উত্তর:</strong> সূত্র: $V = -\frac{mu}{M}$ <br>
+                            $V = -\frac{0.01 \times 300}{2} = -1.5 \ ms^{-1}$
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> যদি গুলির বেগ দ্বিগুণ করা হয়, তবে সেটি কয়টি তক্তা ভেদ করতে পারবে? গাণিতিক যুক্তি দাও। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol2d')">উত্তর দেখুন</button>
+                        <div id="sol2d" class="solution-box">
+                            <strong>হিন্টস:</strong> ভেদন ক্ষমতা গতিশক্তির সমানুপাতিক ($E_k \propto v^2$)। বেগ ২ গুণ হলে গতিশক্তি $2^2=4$ গুণ হবে। তাই ৪টি তক্তা ভেদ করবে।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #303f9f;">প্রশ্ন নং - ০৩ [সিলেট বোর্ড ২০২০]</div>
+                
+                <div class="stem-box">
+                    স্থির অবস্থান থেকে $4 \ kg$ ভরের একটি বস্তু যাত্রা শুরু করে। বস্তুর উপর $12 \ N$ বল $4 \ sec$ ধরে ক্রিয়া করে। এরপর বস্তুটি সুষম বেগে চলে এবং মোট $8 \ sec$ পর থেমে যায় (ঘর্ষণ বা বাধার কারণে)।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> ঘর্ষণ বল কাকে বলে? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> চলন্ত ফ্যান সুইচ বন্ধ করার পরও কিছুক্ষণ ঘোরে কেন? <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> প্রথম $4 \ sec$ এ অতিক্রান্ত দূরত্ব নির্ণয় করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol3c')">উত্তর দেখুন</button>
+                        <div id="sol3c" class="solution-box">
+                            <strong>উত্তর:</strong> ত্বরণ $a = F/m = 12/4 = 3 \ ms^{-2}$ <br>
+                            দূরত্ব $s = ut + \frac{1}{2}at^2 = 0 + 0.5 \times 3 \times 4^2 = 24 \ m$
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> উদ্দীপকের তথ্যের আলোকে বেগ-সময় লেখচিত্র অঙ্কন করে গতির প্রকৃতি বিশ্লেষণ করো। <span class="mark">৪</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2026 Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+    <script>
+        // টাইমার সেটআপ
+        let timeLeft = 60 * 60; 
+        const timerElement = document.getElementById('timer');
+        
+        const countdown = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "সময় শেষ!";
+                alert("পরীক্ষার সময় শেষ হয়েছে!");
+            }
+            timeLeft--;
+        }, 1000);
+
+        // উত্তর দেখানোর ফাংশন
+        function toggleSol(id) {
+            const x = document.getElementById(id);
+            if (x.style.display === "none" || x.style.display === "") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অধ্যায় ৩ - মূল্যায়ন টেস্ট</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e8f5e9; 
+            margin: 0; 
+            padding: 0; 
+            color: #333;
+        }
+        .container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background: #f9fbe7; 
+            min-height: 100vh; 
+            padding-bottom: 20px;
+        }
+        
+        /* ১. হেডার ডিজাইন */
+        .header {
+            background: linear-gradient(135deg, #00695c 0%, #004d40 100%);
+            color: white;
+            padding: 35px 20px;
+            text-align: center;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            position: relative;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .header h1 { font-size: 26px; margin: 10px 0 5px; font-weight: 700; }
+        .header p { font-size: 14px; color: #b2dfdb; margin-top: 5px; }
+        
+        /* ব্যাক বাটন */
+        .back-btn {
+            position: absolute; top: 20px; left: 20px;
+            color: white; font-size: 20px; text-decoration: none;
+            background: rgba(255,255,255,0.2);
+            width: 35px; height: 35px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.3); }
+
+        /* ২. বাণী সেকশন */
+        .quote-box {
+            background: #e0f2f1;
+            padding: 15px;
+            margin: 0 20px 25px 20px;
+            border-radius: 10px;
+            border-left: 5px solid #2e7d32;
+            color: #00695c;
+            font-size: 14px;
+            text-align: center;
+            font-style: italic;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* ৩. পেজ টাইটেল */
+        .title-wrapper { text-align: center; margin-bottom: 20px; }
+        .page-title {
+            text-align: center; font-size: 20px; font-weight: bold; color: #2e7d32;
+            border-bottom: 2px dashed #a5d6a7;
+            display: inline-block; padding-bottom: 5px;
+        }
+
+        /* টেস্ট কার্ড ডিজাইন */
+        .test-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 0 20px;
+        }
+
+        /* সূত্র বাটন ডিজাইন (নতুন) */
+        .formula-link {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-left: 6px solid #ff6f00; /* কমলা বর্ডার */
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 5px;
+        }
+        .formula-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+        .f-icon-box {
+            width: 45px; height: 45px;
+            background: #fff3e0;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin-right: 15px;
+            color: #ff6f00;
+            font-size: 20px;
+        }
+        .f-content h3 { margin: 0; font-size: 18px; color: #333; font-weight: 700; }
+        .f-content p { margin: 2px 0 0; font-size: 13px; color: #666; }
+        .f-arrow { margin-left: auto; color: #bbb; }
+
+        /* সাধারণ টেস্ট কার্ড */
+        .test-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-top: 5px solid #2e7d32;
+        }
+        
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+        .test-name { font-size: 20px; font-weight: 700; color: #333; }
+        .test-info { font-size: 13px; color: #666; background: #eee; padding: 3px 8px; border-radius: 4px;}
+
+        /* বাটন গ্রুপ */
+        .btn-group { display: flex; gap: 10px; }
+        
+        .action-btn {
+            flex: 1; padding: 12px; border-radius: 8px;
+            text-decoration: none; text-align: center;
+            font-weight: 600; font-size: 15px; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column;
+        }
+
+        .btn-cq { background: #fff3e0; color: #e65100; border: 1px solid #ffe0b2; }
+        .btn-cq:hover { background: #ffe0b2; }
+
+        .btn-mcq { background: #e3f2fd; color: #1565c0; border: 1px solid #bbdefb; }
+        .btn-mcq:hover { background: #bbdefb; }
+
+        .btn-icon { font-size: 20px; margin-bottom: 5px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="header">
+            <a href="math_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-graduation-cap" style="font-size: 45px; color: #ffeb3b; margin-bottom: 10px;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>"তোমার স্বপ্ন, আমাদের দিকনির্দেশনা"</p>
+        </div>
+
+        <div class="quote-box">
+            <i class="fas fa-quote-left"></i> 
+            পদার্থ বিজ্ঞান মুখস্থ করার বিষয় নয়, এটি বোঝার ও চর্চা করার বিষয়।
+        </div>
+
+        <div class="title-wrapper">
+            <div class="page-title">অধ্যায় ৩: বল</div>
+        </div>
+
+        <div class="test-wrapper">
+
+            <a href="math1_shortcut.html" class="formula-link">
+                <div class="f-icon-box">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <div class="f-content">
+                    <h3>প্রয়োজনীয় সূত্র ও শর্টকাট</h3>
+                    <p>পরীক্ষার আগে এক নজরে দেখে নাও</p>
+                </div>
+                <div class="f-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </a>
+
+            <div class="test-card">
+                <div class="test-header">
+                    <div class="test-name"> মডেল টেস্ট ১</div>
+                    <div class="test-info">পূর্ণমান: ৬০</div>
+                </div>
+
+                <div class="btn-group">
+                    <a href="phy3_cq_model1.html" class="action-btn btn-cq">
+                        <i class="fas fa-file-alt btn-icon"></i>
+                        সৃজনশীল (CQ)
+                    </a>
+
+                    <a href="phy3_mcq_model1.html" class="action-btn btn-mcq">
+                        <i class="fas fa-list-ul btn-icon"></i>
+                      বহুনির্বাচনি (MCQ)
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
