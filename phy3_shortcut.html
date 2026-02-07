@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>বল (Force) - সূত্র ও শর্টকাট</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        :root {
+            --primary: #283593; /* Indigo Theme */
+            --secondary: #1a237e;
+            --accent: #ff4081;
+            --bg: #e8eaf6;
+            --text-dark: #263238;
+        }
+
+        body {
+            font-family: 'Noto Sans Bengali', sans-serif;
+            background-color: var(--bg);
+            margin: 0; padding: 0; color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3; border-top: 4px solid var(--primary);
+            border-radius: 50%; width: 45px; height: 45px; animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #283593 0%, #1a237e 100%);
+            color: white; padding: 35px 20px; text-align: center;
+            border-radius: 20px; margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            position: relative; overflow: hidden;
+        }
+        .header h1 { margin: 5px 0; font-size: 26px; font-weight: 700; text-shadow: 1px 2px 3px rgba(0,0,0,0.2); }
+        .header p { margin: 5px 0 0; font-size: 16px; opacity: 0.95; font-weight: 500; }
+        .quote-box {
+            background: rgba(255,255,255,0.15);
+            padding: 8px 20px; border-radius: 50px;
+            font-size: 14px; display: inline-block; margin-top: 15px; font-style: italic;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .back-btn {
+            position: absolute; top: 20px; left: 20px;
+            color: white; font-size: 18px; text-decoration: none;
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.4); transform: scale(1.1); }
+
+        /* সেকশন হেডার */
+        .section-header {
+            display: flex; align-items: center; gap: 10px; margin: 30px 0 15px;
+            border-bottom: 3px solid #c5cae9; padding-bottom: 8px;
+        }
+        .section-title { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
+        .section-icon { font-size: 1.4rem; color: var(--accent); }
+        
+        /* গ্রিড */
+        .grid-container {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;
+        }
+
+        /* ফর্মুলা কার্ড */
+        .formula-card {
+            background: white; border-radius: 15px; padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--primary);
+            transition: transform 0.3s;
+        }
+        .formula-card:hover { transform: translateY(-5px); }
+        
+        .card-label {
+            font-weight: 700; color: #455a64; font-size: 1.15rem; margin-bottom: 12px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .badge { font-size: 0.8rem; background: #e8eaf6; padding: 4px 10px; border-radius: 4px; color: #283593; }
+
+        /* ফর্মুলা বক্স (CSS Based) */
+        .formula-box {
+            background: #e8eaf6; padding: 15px; border-radius: 10px;
+            text-align: center; color: #1a237e; margin-bottom: 10px;
+            border: 1px dashed #7986cb;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 50px; font-size: 1.1rem;
+        }
+        
+        /* ভগ্নাংশ ডিজাইন */
+        .fraction { display: inline-block; text-align: center; vertical-align: middle; margin: 0 5px; }
+        .fraction .top { border-bottom: 2px solid #1a237e; display: block; padding: 0 5px; font-weight: bold; }
+        .fraction .bottom { display: block; padding: 0 5px; font-weight: bold; }
+
+        .equal-sign { font-size: 1.2rem; margin: 0 8px; color: #ff4081; font-weight: bold; }
+        .note { font-size: 0.95rem; color: #607d8b; background: #fafafa; padding: 10px; border-radius: 6px; border-left: 3px solid #cfd8dc; }
+        .example { color: #2e7d32; font-weight: 600; display: block; margin-top: 5px; }
+
+        /* কালার ভেরিয়েশন */
+        .pink-style .formula-card { border-top-color: #c2185b; }
+        .pink-style .section-title { color: #c2185b; border-color: #f48fb1; }
+        .pink-style .formula-box { background: #fce4ec; color: #880e4f; border-color: #f06292; }
+        .pink-style .fraction .top { border-bottom-color: #880e4f; }
+        .pink-style .section-icon { color: #ec407a; }
+
+        .footer { text-align: center; margin-top: 40px; color: #90a4ae; font-size: 14px; }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 22px; }
+            .grid-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="loader"><div class="spinner"></div></div>
+
+<div class="container" id="mainContent" style="display:none;">
+    
+    <div class="header">
+        <a href="physics_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+        <h1>Self Study with Sujon Sir</h1>
+        <p>অধ্যায় ৩: বল (Force) - সূত্র ও শর্টকাট</p>
+        <div class="quote-box">"ক্রিয়া থাকলেই তার সমান ও বিপরীত প্রতিক্রিয়া আছে"</div>
+    </div>
+
+    <div class="section-header">
+        <i class="fas fa-rocket section-icon"></i>
+        <div class="section-title">মৌলিক সূত্রাবলী</div>
+    </div>
+
+    <div class="grid-container">
+        <div class="formula-card">
+            <div class="card-label">১. নিউটনের ২য় সূত্র <span class="badge">Basic</span></div>
+            <div class="formula-box">
+                <div>বল ($F$) <span class="equal-sign">=</span> $ma$</div>
+            </div>
+            <div class="note">
+                <span class="example">উদা:</span> 5kg ভরের বস্তুর ত্বরণ 2ms⁻² হলে বল 10N।
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">২. থামানোর দূরত্ব <span class="badge">MCQ Special</span></div>
+            <div class="formula-box">
+                <div>
+                    দূরত্ব ($s$) <span class="equal-sign">=</span>
+                    <div class="fraction">
+                        <span class="top">$mu^2$</span>
+                        <span class="bottom">$2F$</span>
+                    </div>
+                </div>
+            </div>
+            <div class="note">
+                <strong>শর্টকাট:</strong> বেগ দ্বিগুণ হলে দূরত্ব ৪ গুণ হবে। ($s \propto u^2$)
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">৩. কার্যকরী বল (ঘর্ষণ থাকলে)</div>
+            <div class="formula-box">
+                <div>
+                    কার্যকরী বল <span class="equal-sign">=</span> প্রযুক্ত বল - ঘর্ষণ বল
+                </div>
+                <div style="font-size: 0.9rem; margin-top:5px;">$ma = F - F_k$</div>
+            </div>
+            <div class="note">
+                ত্বরণ বের করার সময় ঘর্ষণ বল বিয়োগ করতে হয়।
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header pink-style">
+        <i class="fas fa-atom section-icon"></i>
+        <div class="section-title">ভরবেগ ও সংঘর্ষ (Collision)</div>
+    </div>
+
+    <div class="grid-container pink-style">
+        <div class="formula-card">
+            <div class="card-label">৪. ভরবেগের সংরক্ষণ সূত্র</div>
+            <div class="formula-box">
+                <div>$m_1u_1 + m_2u_2 = m_1v_1 + m_2v_2$</div>
+            </div>
+            <div class="note">
+                সংঘর্ষের আগের ও পরের মোট ভরবেগ সর্বদা সমান।
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">৫. বন্দুকের পশ্চাৎবেগ <span class="badge" style="background:white; border:1px solid #c2185b;">HOT</span></div>
+            <div class="formula-box">
+                <div>
+                    বন্দুকের বেগ ($V$) <span class="equal-sign">=</span>
+                    <span style="font-size:1.5rem; margin-right:5px;">-</span>
+                    <div class="fraction">
+                        <span class="top">গুলির ভর $\times$ গুলির বেগ</span>
+                        <span class="bottom">বন্দুকের ভর</span>
+                    </div>
+                </div>
+            </div>
+            <div class="note">
+                <span class="example">উদা:</span> উত্তর মাইনাস আসবে, যা বিপরীত দিক বোঝায়।
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">৬. সংঘর্ষের পর মিলিত বেগ</div>
+            <div class="formula-box">
+                <div>
+                    মিলিত বেগ ($v$) <span class="equal-sign">=</span>
+                    <div class="fraction">
+                        <span class="top">$m_1u_1 + m_2u_2$</span>
+                        <span class="bottom">$m_1 + m_2$</span>
+                    </div>
+                </div>
+            </div>
+            <div class="note">
+                বিপরীত দিক থেকে আসলে একটার বেগ মাইনাস (-) ধরবে।
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">৭. বলের ঘাত (Impulse)</div>
+            <div class="formula-box">
+                <div>ঘাত <span class="equal-sign">=</span> $F \times t$ <span class="equal-sign">=</span> $P_f - P_i$</div>
+            </div>
+            <div class="note">
+                বলের ঘাত = ভরবেগের পরিবর্তন।
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header" style="border-bottom-color: #9575cd;">
+        <i class="fas fa-magic section-icon" style="color: #673ab7;"></i>
+        <div class="section-title" style="color: #512da8;">সুপার হ্যাকস</div>
+    </div>
+
+    <div class="grid-container">
+        <div class="formula-card">
+            <div class="card-label">৮. লিফটের ওজন (Apparent Weight)</div>
+            <div class="formula-box">
+                <div style="text-align:left;">
+                    উপরে উঠলে: $W = m(g+a)$<br>
+                    নিচে নামলে: $W = m(g-a)$
+                </div>
+            </div>
+            <div class="note">
+                দড়ি ছিঁড়ে পড়লে ওজন শূন্য ($g=a$)।
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">৯. গতিশক্তি ও ভরবেগ</div>
+            <div class="formula-box">
+                <div>
+                    $E_k$ <span class="equal-sign">=</span>
+                    <div class="fraction">
+                        <span class="top">$P^2$</span>
+                        <span class="bottom">$2m$</span>
+                    </div>
+                </div>
+            </div>
+            <div class="note">
+                <strong>শর্টকাট:</strong> ভরবেগ দ্বিগুণ করলে গতিশক্তি ৪ গুণ হবে।
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">১০. রাস্তার ব্যাংকিং কোণ</div>
+            <div class="formula-box">
+                <div>
+                    $\tan \theta$ <span class="equal-sign">=</span>
+                    <div class="fraction">
+                        <span class="top">$v^2$</span>
+                        <span class="bottom">$rg$</span>
+                    </div>
+                </div>
+            </div>
+            <div class="note">
+                এখানে গাড়ির ভর ($m$) লাগে না।
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2024 Self Study with Sujon Sir | All Rights Reserved
+    </div>
+
+</div>
+
+</body>
+</html>
