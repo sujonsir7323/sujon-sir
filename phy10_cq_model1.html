@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>পদার্থবিজ্ঞান CQ - অধ্যায় ১০ (মডেল ১)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e8eaf6; 
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 60px; 
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #303f9f;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #303f9f 0%, #1a237e 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ইনফো বক্স */
+        .info-box {
+            padding: 15px; margin: 0 20px 20px; background: #e8eaf6;
+            border-radius: 10px; border: 1px solid #c5cae9;
+            text-align: center;
+        }
+        .timer { font-size: 22px; font-weight: bold; color: #c62828; margin-top: 5px; }
+
+        /* সৃজনশীল প্রশ্ন কার্ড */
+        .cq-container { padding: 0 20px; }
+        .question-card {
+            background: #fff; padding: 20px; margin-bottom: 25px;
+            border-radius: 12px; border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-top: 5px solid #303f9f;
+        }
+        .stem-box {
+            background: #f5f5f5; padding: 15px; border-radius: 8px;
+            margin-bottom: 15px; border-left: 4px solid #ff4081;
+            font-size: 16px; line-height: 1.6;
+        }
+        .sub-questions { list-style: none; padding: 0; }
+        .sub-questions li {
+            margin-bottom: 10px; padding: 8px 0;
+            border-bottom: 1px dashed #eee; font-size: 15px;
+        }
+        .sub-questions li:last-child { border-bottom: none; }
+        .mark {
+            float: right; font-size: 12px; background: #303f9f;
+            color: white; padding: 2px 8px; border-radius: 10px;
+        }
+        
+        /* উত্তর বাটন (প্র্যাকটিসের জন্য) */
+        .solution-btn {
+            background: white; border: 1px solid #303f9f; color: #303f9f;
+            padding: 5px 15px; border-radius: 20px; cursor: pointer;
+            font-size: 13px; margin-top: 10px; transition: 0.3s;
+        }
+        .solution-btn:hover { background: #303f9f; color: white; }
+        
+        .solution-box {
+            display: none; margin-top: 10px; padding: 10px;
+            background: #e8f5e9; border-radius: 8px; color: #2e7d32; font-size: 14px;
+        }
+
+        .footer { text-align: center; color: #777; font-size: 13px; margin-top: 30px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div><p>প্রশ্ন তৈরি হচ্ছে...</p></div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        
+        <div class="header">
+            <a href="physics_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-bolt" style="font-size: 40px; margin-bottom: 10px; color: #ffeb3b;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>অধ্যায় ১০: স্থির তড়িৎ (Static Electricity) - CQ মডেল ১</p>
+        </div>
+
+        <div class="info-box">
+            <h3 style="margin:0;">সৃজনশীল পরীক্ষা (CQ)</h3>
+            <p style="font-size: 13px; color: #555; margin: 5px 0;">পূর্ণমান: ৩০ | সময়: ৩০ মিনিট</p>
+            <div class="timer" id="timer">সময় বাকি: ৩০:০০ মিনিট</div>
+        </div>
+
+        <div class="cq-container">
+            
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #303f9f;">প্রশ্ন নং - ০১ [ঢাকা বোর্ড ২০২২]</div>
+                
+                <div class="stem-box">
+                    বায়ু মাধ্যমে দুটি আধান $A$ ও $B$ পরস্পর হতে $40 \ cm$ দূরে অবস্থিত। $A$ বস্তুর আধান $+20 \ \mu C$ এবং $B$ বস্তুর আধান $+40 \ \mu C$। কুলম্ব ধ্রুবক $K = 9 \times 10^9 \ N m^2 C^{-2}$।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> তড়িৎ বিভব কাকে বলে? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> পৃথিবীর বিভব শূন্য ধরা হয় কেন? ব্যাখ্যা করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> উদ্দীপকের আধানদ্বয়ের মধ্যবর্তী বিকর্ষণ বলের মান নির্ণয় করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol1c')">উত্তর দেখুন</button>
+                        <div id="sol1c" class="solution-box">
+                            <strong>উত্তর:</strong> সূত্র: $F = K \frac{q_1 q_2}{d^2}$ <br>
+                            $q_1 = 20 \times 10^{-6} C, q_2 = 40 \times 10^{-6} C, d = 0.4 m$ <br>
+                            হিসাব করে পাই, $F = 45 \ N$
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> আধানদ্বয়ের সংযোগ রেখার কোথায় তড়িৎ প্রাবল্য শূন্য হবে? গাণিতিকভাবে বিশ্লেষণ করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol1d')">উত্তর দেখুন</button>
+                        <div id="sol1d" class="solution-box">
+                            <strong>হিন্টস:</strong> ধরি, $+20 \mu C$ আধান হতে $x$ দূরত্বে প্রাবল্য শূন্য হবে। <br>
+                            শর্তমতে, $E_1 = E_2$ বা, $\frac{q_1}{x^2} = \frac{q_2}{(d-x)^2}$। সমাধান করে $x$ এর মান বের করো।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #303f9f;">প্রশ্ন নং - ০২ [রাজশাহী বোর্ড ২০২১]</div>
+                
+                <div class="stem-box">
+                    $P$ ও $Q$ দুটি গোলকের আধান যথাক্রমে $+50 \ C$ এবং $-20 \ C$। এদের মধ্যবর্তী দূরত্ব $2 \ m$। গোলকদ্বয়কে একটি পরিবাহী তার দ্বারা সংযুক্ত করে আবার বিচ্ছিন্ন করা হলো।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> কুলম্বের সূত্রটি বিবৃত করো। <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> শুকনো চুলে চিরুনি দিয়ে আঁচড়ালে কাগজকে আকর্ষণ করে কেন? <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> উদ্দীপকের গোলক দুটির সংযোগ রেখার মধ্যবিন্দুতে তড়িৎ বিভব নির্ণয় করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol2c')">উত্তর দেখুন</button>
+                        <div id="sol2c" class="solution-box">
+                            <strong>উত্তর:</strong> মধ্যবিন্দুতে দূরত্ব $r = 1m$। <br>
+                            বিভব $V = V_1 + V_2 = K(\frac{q_1}{r} + \frac{q_2}{r})$ <br>
+                            মান বসিয়ে পাই, $V = 2.7 \times 10^{11} \ Volt$
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> তার দ্বারা সংযুক্ত করার আগে ও পরে বলের প্রকৃতির কোনো পরিবর্তন হবে কি? গাণিতিক যুক্তিসহ মতামত দাও। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol2d')">উত্তর দেখুন</button>
+                        <div id="sol2d" class="solution-box">
+                            <strong>হিন্টস:</strong> আগে বল ছিল আকর্ষণধর্মী (বিপরীত আধান)। <br>
+                            সংযুক্ত করলে মোট আধান $(50-20)=30C$ সমানভাবে ভাগ হয়ে প্রত্যেকে $+15C$ পাবে। <br>
+                            উভয়েই ধনাত্মক হওয়ায় পরের বল হবে বিকর্ষণধর্মী।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #303f9f;">প্রশ্ন নং - ০৩ [সিলেট বোর্ড ২০২০]</div>
+                
+                <div class="stem-box">
+                    দুটি ক্ষুদ্র গোলকের প্রত্যেকটির ভর $10 \ mg$ এবং এরা সমান আধানে আহিত। $0.1 \ m$ দৈর্ঘ্যের দুটি সিল্কের সুতার সাহায্যে গোলক দুটিকে একই বিন্দু হতে ঝুলালে বিকর্ষণের কারণে তারা পরস্পর হতে $0.1 \ m$ দূরে অবস্থান করে স্থির হয়।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> তড়িৎ আবেশ কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> ধারক কেন ব্যবহার করা হয়? <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> গোলক দুটির মধ্যবর্তী কুলম্ব বলের মান যদি এদের ওজনের সমান হয়, তবে বলটি নির্ণয় করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol3c')">উত্তর দেখুন</button>
+                        <div id="sol3c" class="solution-box">
+                            <strong>উত্তর:</strong> বল = ওজন = $mg$ <br>
+                            $m = 10 \times 10^{-6} kg$ <br>
+                            $F = 10 \times 10^{-6} \times 9.8 = 9.8 \times 10^{-5} N$
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> গোলক দুটির প্রত্যেকটিতে আধানের পরিমাণ কত ছিল? নির্ণয় করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol3d')">উত্তর দেখুন</button>
+                        <div id="sol3d" class="solution-box">
+                            <strong>হিন্টস:</strong> আমরা জানি, $F = K \frac{q^2}{d^2}$ (যেহেতু $q_1=q_2=q$)। <br>
+                            এখানে $F$ এর মান (গ) হতে বসিয়ে এবং $d=0.1m$ ধরে $q$ এর মান বের করো।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2024 Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+    <script>
+        // টাইমার সেটআপ
+        let timeLeft = 30 * 60; 
+        const timerElement = document.getElementById('timer');
+        
+        const countdown = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "সময় শেষ!";
+                alert("পরীক্ষার সময় শেষ হয়েছে!");
+            }
+            timeLeft--;
+        }, 1000);
+
+        // উত্তর দেখানোর ফাংশন
+        function toggleSol(id) {
+            const x = document.getElementById(id);
+            if (x.style.display === "none" || x.style.display === "") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>স্থির তড়িৎ - সূত্র ও শর্টকাট</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        :root {
+            --primary: #512da8; /* Deep Purple Theme for Static Electricity */
+            --secondary: #311b92;
+            --accent: #ffab00; /* Amber Accent */
+            --bg: #f3e5f5;
+            --text-dark: #263238;
+        }
+
+        body {
+            font-family: 'Noto Sans Bengali', sans-serif;
+            background-color: var(--bg);
+            margin: 0; padding: 0; color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3; border-top: 4px solid var(--primary);
+            border-radius: 50%; width: 45px; height: 45px; animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #512da8 0%, #311b92 100%);
+            color: white; padding: 35px 20px; text-align: center;
+            border-radius: 20px; margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            position: relative; overflow: hidden;
+        }
+        .header h1 { margin: 5px 0; font-size: 26px; font-weight: 700; text-shadow: 1px 2px 3px rgba(0,0,0,0.2); }
+        .header p { margin: 5px 0 0; font-size: 16px; opacity: 0.95; font-weight: 500; }
+        .quote-box {
+            background: rgba(255,255,255,0.15);
+            padding: 8px 20px; border-radius: 50px;
+            font-size: 14px; display: inline-block; margin-top: 15px; font-style: italic;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .back-btn {
+            position: absolute; top: 20px; left: 20px;
+            color: white; font-size: 18px; text-decoration: none;
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.4); transform: scale(1.1); }
+
+        /* সেকশন হেডার */
+        .section-header {
+            display: flex; align-items: center; gap: 10px; margin: 30px 0 15px;
+            border-bottom: 3px solid #d1c4e9; padding-bottom: 8px;
+        }
+        .section-title { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
+        .section-icon { font-size: 1.4rem; color: var(--accent); }
+        
+        /* গ্রিড */
+        .grid-container {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;
+        }
+
+        /* ফর্মুলা কার্ড */
+        .formula-card {
+            background: white; border-radius: 15px; padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--primary);
+            transition: transform 0.3s;
+        }
+        .formula-card:hover { transform: translateY(-5px); }
+        
+        .card-label {
+            font-weight: 700; color: #455a64; font-size: 1.15rem; margin-bottom: 12px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .badge { font-size: 0.8rem; background: #ede7f6; padding: 4px 10px; border-radius: 4px; color: #311b92; }
+
+        /* ফর্মুলা বক্স (CSS Based) */
+        .formula-box {
+            background: #ede7f6; padding: 15px; border-radius: 10px;
+            text-align: center; color: #311b92; margin-bottom: 10px;
+            border: 1px dashed #b39ddb;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 50px; font-size: 1.1rem;
+        }
+        
+        /* ভগ্নাংশ ডিজাইন */
+        .fraction { display: inline-block; text-align: center; vertical-align: middle; margin: 0 5px; }
+        .fraction .top { border-bottom: 2px solid #311b92; display: block; padding: 0 5px; font-weight: bold; }
+        .fraction .bottom { display: block; padding: 0 5px; font-weight: bold; }
+
+        .equal-sign { font-size: 1.2rem; margin: 0 8px; color: #ffab00; font-weight: bold; }
+        .note { font-size: 0.95rem; color: #607d8b; background: #fafafa; padding: 10px; border-radius: 6px; border-left: 3px solid #cfd8dc; }
+        .example { color: #2e7d32; font-weight: 600; display: block; margin-top: 5px; }
+
+        /* কালার ভেরিয়েশন (Electric Teal) */
+        .teal-style .formula-card { border-top-color: #00897b; }
+        .teal-style .section-title { color: #00897b; border-color: #80cbc4; }
+        .teal-style .formula-box { background: #e0f2f1; color: #00695c; border-color: #4db6ac; }
+        .teal-style .fraction .top { border-bottom-color: #00695c; }
+        .teal-style .section-icon { color: #009688; }
+
+        .footer { text-align: center; margin-top: 40px; color: #90a4ae; font-size: 14px; }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 22px; }
+            .grid-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="loader"><div class="spinner"></div></div>
+
+<div class="container" id="mainContent" style="display:none;">
+    
+    <div class="header">
+        <a href="physics_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+        <h1>Self Study with Sujon Sir</h1>
+        <p>অধ্যায় ১০: স্থির তড়িৎ (Static Electricity) - সূত্র ও শর্টকাট</p>
+        <div class="quote-box">"আধানের প্রবাহই বিদ্যুৎ, আর স্থির আধানই শক্তি"</div>
+    </div>
+
+    <div class="section-header">
+        <i class="fas fa-bolt section-icon"></i>
+        <div class="section-title">কুলম্বের সূত্র ও বল</div>
+    </div>
+
+    <div class="grid-container">
+        <div class="formula-card">
+            <div class="card-label">১. কুলম্বের সূত্র (Coulomb's Law)</div>
+            <div class="formula-box">
+                <div>
+                    $F$ <span class="equal-sign">=</span>
+                    $K$
+                    <div class="fraction">
+                        <span class="top">$q_1 q_2$</span>
+                        <span class="bottom">$d^2$</span>
+                    </div>
+                </div>
+            </div>
+            <div class="note">
+                $K = 9 \times 10^9 Nm^2C^{-2}$ (শূন্য মাধ্যমে)।
+                <br><span class="example">টিপস:</span> দূরত্ব দ্বিগুণ করলে বল $\frac{1}{4}$ গুণ হবে।
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">২. তড়িৎ প্রাবল্য (Electric Intensity)</div>
+            <div class="formula-box">
+                <div>
+                    $E$ <span class="equal-sign">=</span>
+                    <div class="fraction">
+                        <span class="top">$F$</span>
+                        <span class="bottom">$q$</span>
+                    </div>
+                    <span class="equal-sign">=</span>
+                    $K$
+                    <div class="fraction">
+                        <span class="top">$Q$</span>
+                        <span class="bottom">$d^2$</span>
+                    </div>
+                </div>
+            </div>
+            <div class="note">
+                $Q$ হলো উৎসের আধান, $q$ হলো পরীক্ষাধীন আধান।
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">৩. বলের প্রকৃতি নির্ণয়</div>
+            <div class="formula-box">
+                <div style="font-size: 0.95rem; text-align: left;">
+                    সমধর্মী (++ বা --) $\to$ বিকর্ষণ<br>
+                    বিপরীতধর্মী (+-) $\to$ আকর্ষণ
+                </div>
+            </div>
+            <div class="note">
+                আধানের গুণফল ধনাত্মক হলে বিকর্ষণ, ঋণাত্মক হলে আকর্ষণ।
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header teal-style">
+        <i class="fas fa-battery-full section-icon"></i>
+        <div class="section-title">তড়িৎ বিভব ও ধারক</div>
+    </div>
+
+    <div class="grid-container teal-style">
+        <div class="formula-card">
+            <div class="card-label">৪. তড়িৎ বিভব (Electric Potential)</div>
+            <div class="formula-box">
+                <div>
+                    $V$ <span class="equal-sign">=</span>
+                    <div class="fraction">
+                        <span class="top">$W$</span>
+                        <span class="bottom">$q$</span>
+                    </div>
+                    <span class="equal-sign">=</span>
+                    $K$
+                    <div class="fraction">
+                        <span class="top">$Q$</span>
+                        <span class="bottom">$r$</span>
+                    </div>
+                </div>
+            </div>
+            <div class="note">
+                পৃথিবীর বিভব সর্বদা শূন্য ($0V$) ধরা হয়।
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">৫. ধারকত্ব (Capacitance)</div>
+            <div class="formula-box">
+                <div>
+                    $C$ <span class="equal-sign">=</span>
+                    <div class="fraction">
+                        <span class="top">$Q$</span>
+                        <span class="bottom">$V$</span>
+                    </div>
+                </div>
+            </div>
+            <div class="note">
+                একক: ফ্যারাড ($F$)। সাধারণত $\mu F$ বা $pF$ এ থাকে।
+                <br> $1 \mu F = 10^{-6} F$
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">৬. সমান্তরাল পাত ধারক</div>
+            <div class="formula-box">
+                <div>
+                    $C$ <span class="equal-sign">=</span>
+                    <div class="fraction">
+                        <span class="top">$\epsilon_0 A$</span>
+                        <span class="bottom">$d$</span>
+                    </div>
+                </div>
+            </div>
+            <div class="note">
+                $A$ = পাতের ক্ষেত্রফল, $d$ = দূরত্ব।
+                <br> দূরত্ব কমালে ধারকত্ব বাড়ে।
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header" style="border-bottom-color: #ffca28;">
+        <i class="fas fa-magic section-icon" style="color: #ff6f00;"></i>
+        <div class="section-title" style="color: #ff6f00;">MCQ হ্যাকস</div>
+    </div>
+
+    <div class="grid-container">
+        <div class="formula-card">
+            <div class="card-label">৭. প্রাবল্য কোথায় শূন্য হবে?</div>
+            <div class="formula-box">
+                <div>
+                    $x$ <span class="equal-sign">=</span>
+                    <div class="fraction">
+                        <span class="top">$d$</span>
+                        <span class="bottom">$\sqrt{\frac{q_2}{q_1}} \pm 1$</span>
+                    </div>
+                </div>
+            </div>
+            <div class="note">
+                
+                সমধর্মী হলে মাঝে (+1), বিপরীত হলে বাইরে (-1)। ছোট আধান থেকে দূরত্ব $x$।
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">৮. আধানের কোয়ান্টায়ন</div>
+            <div class="formula-box">
+                <div>$Q = ne$</div>
+            </div>
+            <div class="note">
+                $e = 1.6 \times 10^{-19} C$।
+                <br> যে কোনো বস্তুর আধান $e$ এর পূর্ণ গুণিতক হবে।
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">৯. ধারকে সঞ্চিত শক্তি</div>
+            <div class="formula-box">
+                <div>
+                    $U$ <span class="equal-sign">=</span>
+                    <div class="fraction">
+                        <span class="top">$1$</span>
+                        <span class="bottom">$2$</span>
+                    </div>
+                    $CV^2$
+                </div>
+            </div>
+            <div class="note">
+                বিভব দ্বিগুণ করলে শক্তি ৪ গুণ হবে।
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2024 Self Study with Sujon Sir | All Rights Reserved
+    </div>
+
+</div>
+
+</body>
+</html>
