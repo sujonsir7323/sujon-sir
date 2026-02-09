@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICT CQ - অধ্যায় ৩ (মডেল ১)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e0f7fa; /* Light Cyan Background */
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 60px; 
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #00838f;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #00838f 0%, #006064 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ইনফো বক্স */
+        .info-box {
+            padding: 15px; margin: 0 20px 20px; background: #e0f2f1;
+            border-radius: 10px; border: 1px solid #b2dfdb;
+            text-align: center;
+        }
+        .timer { font-size: 22px; font-weight: bold; color: #c62828; margin-top: 5px; }
+
+        /* সৃজনশীল প্রশ্ন কার্ড */
+        .cq-container { padding: 0 20px; }
+        .question-card {
+            background: #fff; padding: 20px; margin-bottom: 25px;
+            border-radius: 12px; border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-top: 5px solid #00838f;
+        }
+        .stem-box {
+            background: #f5f5f5; padding: 15px; border-radius: 8px;
+            margin-bottom: 15px; border-left: 4px solid #ff6f00;
+            font-size: 16px; line-height: 1.6;
+        }
+        .sub-questions { list-style: none; padding: 0; }
+        .sub-questions li {
+            margin-bottom: 10px; padding: 8px 0;
+            border-bottom: 1px dashed #eee; font-size: 15px;
+        }
+        .sub-questions li:last-child { border-bottom: none; }
+        .mark {
+            float: right; font-size: 12px; background: #00838f;
+            color: white; padding: 2px 8px; border-radius: 10px;
+        }
+        
+        /* উত্তর বাটন (প্র্যাকটিসের জন্য) */
+        .solution-btn {
+            background: white; border: 1px solid #00838f; color: #00838f;
+            padding: 5px 15px; border-radius: 20px; cursor: pointer;
+            font-size: 13px; margin-top: 10px; transition: 0.3s;
+        }
+        .solution-btn:hover { background: #00838f; color: white; }
+        
+        .solution-box {
+            display: none; margin-top: 10px; padding: 10px;
+            background: #e0f7fa; border-radius: 8px; color: #006064; font-size: 14px;
+        }
+
+        .footer { text-align: center; color: #777; font-size: 13px; margin-top: 30px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div><p>প্রশ্ন তৈরি হচ্ছে...</p></div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        
+        <div class="header">
+            <a href="ict_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-microchip" style="font-size: 40px; margin-bottom: 10px; color: #ffeb3b;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>অধ্যায় ৩: সংখ্যা পদ্ধতি ও ডিজিটাল ডিভাইস - CQ মডেল ১</p>
+        </div>
+
+        <div class="info-box">
+            <h3 style="margin:0;">সৃজনশীল পরীক্ষা (CQ)</h3>
+            <p style="font-size: 13px; color: #555; margin: 5px 0;">পূর্ণমান: ৩০ | সময়: ৩০ মিনিট</p>
+            <div class="timer" id="timer">সময় বাকি: ৩০:০০ মিনিট</div>
+        </div>
+
+        <div class="cq-container">
+            
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #00838f;">প্রশ্ন নং - ০১ [সংখ্যা পদ্ধতি]</div>
+                
+                <div class="stem-box">
+                    একাদশ শ্রেণীর আইসিটি শিক্ষক বোর্ডে দুইটি সংখ্যা লিখলেন: $(110110.11)_2$ এবং $(4B)_{16}$। তিনি বললেন, "কম্পিউটার অভ্যন্তরীণ কাজ করতে বাইনারি পদ্ধতি ব্যবহার করে।"
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> রেডিক্স পয়েন্ট কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> $3+5=10$ কেন হয়? ব্যাখ্যা করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> উদ্দীপকের ২য় সংখ্যাটিকে দশমিকে রূপান্তর করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol1c')">উত্তর দেখুন</button>
+                        <div id="sol1c" class="solution-box">
+                            <strong>সমাধান:</strong> $(4B)_{16} = 4 \times 16^1 + 11 \times 16^0 = 64 + 11 = (75)_{10}$
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> ২ এর পরিপূরক পদ্ধতিতে উদ্দীপকের সংখ্যাদ্বয়ের পার্থক্য নির্ণয় করা সম্ভব কি না? বিশ্লেষণ করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol1d')">উত্তর দেখুন</button>
+                        <div id="sol1d" class="solution-box">
+                            <strong>হিন্টস:</strong> প্রথমে দুটি সংখ্যাকেই দশমিকে নিয়ে তুলনা করবে। তারপর বাইনারিতে রূপান্তর করে ছোট সংখ্যাটির ২ এর পরিপূরক করে বড়টির সাথে যোগ করবে।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #00838f;">প্রশ্ন নং - ০২ [বুলিয়ান অ্যালজেবরা ও লজিক গেট]</div>
+                
+                <div class="stem-box">
+                    দৃশ্যকল্প-১: $F = \overline{A+B} + C$ <br>
+                    দৃশ্যকল্প-২: শিক্ষক ক্লাসে এমন একটি লজিক গেট দেখালেন যা যেকোনো লজিক সার্কিট তৈরি করতে পারে (যেমন NAND)।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> লজিক গেট কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> "XOR গেট সকল মৌলিক গেটের সমন্বিত গেট"—ব্যাখ্যা করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> দৃশ্যকল্প-১ এর সমীকরণটি লজিক গেটের মাধ্যমে বাস্তবায়ন করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol2c')">উত্তর দেখুন</button>
+                        <div id="sol2c" class="solution-box">
+                            <strong>হিন্টস:</strong> এখানে একটি OR গেট, একটি NOT গেট (বা একত্রে NOR) এবং শেষে একটি OR গেট লাগবে। ইনপুট হবে A, B, C।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> দৃশ্যকল্প-২ এ নির্দেশিত গেট দ্বারা $XOR$ গেট বাস্তবায়ন সম্ভব কি? সত্যক সারণিসহ বিশ্লেষণ করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol2d')">উত্তর দেখুন</button>
+                        <div id="sol2d" class="solution-box">
+                            <strong>হিন্টস:</strong> NAND বা NOR হলো সার্বজনীন গেট। NAND গেট দিয়ে XOR গেট তৈরি করতে ৪টি NAND গেট প্রয়োজন হয়। চিত্রসহ দেখাও।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #00838f;">প্রশ্ন নং - ০৩ [ডিজিটাল ডিভাইস]</div>
+                
+                <div class="stem-box">
+                    রহিম তার কম্পিউটারের কিবোর্ডে 'A' প্রেস করল। সিপিইউ সেটিকে যান্ত্রিক ভাষায় রূপান্তর করে প্রসেস করল এবং মনিটরে আবার 'A' দেখাল।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> রেজিস্টার কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> $n$ বিট এনকোডারের আউটপুট লাইন সংখ্যা কতটি? ব্যাখ্যা করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> উদ্দীপকে কিবোর্ডে চাপ দেওয়ার পর সিপিইউতে সংকেত পাঠানোর প্রক্রিয়াটি কোন লজিক সার্কিটের মাধ্যমে হয়? ব্যাখ্যা করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol3c')">উত্তর দেখুন</button>
+                        <div id="sol3c" class="solution-box">
+                            <strong>উত্তর:</strong> এটি এনকোডার (Encoder) এর কাজ। এনকোডার মানুষের ভাষাকে কম্পিউটারের বোধগম্য ভাষায় রূপান্তর করে।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> মনিটরে ফলাফল প্রদর্শনের জন্য ব্যবহৃত লজিক সার্কিট এবং (গ) এর সার্কিটের মধ্যে পার্থক্য বিশ্লেষণ করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol3d')">উত্তর দেখুন</button>
+                        <div id="sol3d" class="solution-box">
+                            <strong>হিন্টস:</strong> মনিটরে দেখানোর জন্য ডিকোডার ব্যবহৃত হয়। এনকোডার ও ডিকোডারের পার্থক্য ছক আকারে লিখবে (ইনপুট/আউটপুট লাইন, কাজ, ব্যবহার)।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2024 Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+    <script>
+        // টাইমার সেটআপ
+        let timeLeft = 30 * 60; 
+        const timerElement = document.getElementById('timer');
+        
+        const countdown = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "সময় শেষ!";
+                alert("পরীক্ষার সময় শেষ হয়েছে!");
+            }
+            timeLeft--;
+        }, 1000);
+
+        // উত্তর দেখানোর ফাংশন
+        function toggleSol(id) {
+            const x = document.getElementById(id);
+            if (x.style.display === "none" || x.style.display === "") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>

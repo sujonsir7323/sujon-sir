@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICT CQ - অধ্যায় ৩ (মডেল ২)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e0f2f1; /* Teal Background */
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 60px; 
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #00695c;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #00695c 0%, #004d40 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ইনফো বক্স */
+        .info-box {
+            padding: 15px; margin: 0 20px 20px; background: #e0f2f1;
+            border-radius: 10px; border: 1px solid #80cbc4;
+            text-align: center;
+        }
+        .timer { font-size: 22px; font-weight: bold; color: #d32f2f; margin-top: 5px; }
+
+        /* সৃজনশীল প্রশ্ন কার্ড */
+        .cq-container { padding: 0 20px; }
+        .question-card {
+            background: #fff; padding: 20px; margin-bottom: 25px;
+            border-radius: 12px; border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-top: 5px solid #00695c;
+        }
+        .stem-box {
+            background: #f5f5f5; padding: 20px; border-radius: 8px;
+            margin-bottom: 15px; border-left: 5px solid #ff6f00;
+            font-size: 16px; line-height: 1.6;
+            text-align: center; /* Center diagrams */
+        }
+        .diagram {
+            display: inline-block; margin: 10px 0;
+            background: white; padding: 10px; border-radius: 8px;
+            border: 1px solid #eee;
+        }
+        .sub-questions { list-style: none; padding: 0; }
+        .sub-questions li {
+            margin-bottom: 10px; padding: 8px 0;
+            border-bottom: 1px dashed #eee; font-size: 15px; text-align: left;
+        }
+        .sub-questions li:last-child { border-bottom: none; }
+        .mark {
+            float: right; font-size: 12px; background: #00695c;
+            color: white; padding: 2px 8px; border-radius: 10px;
+        }
+        
+        /* উত্তর বাটন */
+        .solution-btn {
+            background: white; border: 1px solid #00695c; color: #00695c;
+            padding: 5px 15px; border-radius: 20px; cursor: pointer;
+            font-size: 13px; margin-top: 10px; transition: 0.3s;
+        }
+        .solution-btn:hover { background: #00695c; color: white; }
+        
+        .solution-box {
+            display: none; margin-top: 10px; padding: 10px;
+            background: #e0f2f1; border-radius: 8px; color: #004d40; font-size: 14px; text-align: left;
+        }
+
+        .footer { text-align: center; color: #777; font-size: 13px; margin-top: 30px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div><p>প্রশ্ন তৈরি হচ্ছে...</p></div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        
+        <div class="header">
+            <a href="ict_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-network-wired" style="font-size: 40px; margin-bottom: 10px; color: #ffeb3b;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>অধ্যায় ৩: ডিজিটাল ডিভাইস - CQ মডেল ২</p>
+        </div>
+
+        <div class="info-box">
+            <h3 style="margin:0;">সৃজনশীল পরীক্ষা (CQ)</h3>
+            <p style="font-size: 13px; color: #555; margin: 5px 0;">পূর্ণমান: ৩০ | সময়: ৩০ মিনিট</p>
+            <div class="timer" id="timer">সময় বাকি: ৩০:০০ মিনিট</div>
+        </div>
+
+        <div class="cq-container">
+            
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #00695c;">প্রশ্ন নং - ০১ [ঢাকা বোর্ড ২০১৯]</div>
+                
+                <div class="stem-box" style="text-align: left;">
+                    আবিরের বাবা তাকে আইসিটি বই কেনার জন্য $(110110)_2$ টাকা দিলেন। কিন্তু বইটির প্রকৃত দাম ছিল $(367)_8$ টাকা। দোকানদার আবিরকে বলল, "তোমার টাকা কম আছে।"
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> বিট কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> "বিশ্বের সকল ভাষাকে কোডভুক্ত করা সম্ভব"—ব্যাখ্যা করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> আবিরের বাবার দেওয়া টাকা দশমিকে রূপান্তর করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol1c')">উত্তর দেখুন</button>
+                        <div id="sol1c" class="solution-box">
+                            <strong>সমাধান:</strong> $(110110)_2 = 54$ টাকা।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> বই কিনতে আবিরের আরও কত টাকা লাগবে তা ২-এর পরিপূরক পদ্ধতিতে নির্ণয় করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol1d')">উত্তর দেখুন</button>
+                        <div id="sol1d" class="solution-box">
+                            <strong>হিন্টস:</strong> পার্থক্য = $(247)_{10} - (54)_{10}$। এখানে $54$ এর ২-এর পরিপূরক করে যোগ করতে হবে।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #00695c;">প্রশ্ন নং - ০২ [রাজশাহী বোর্ড ২০২৩]</div>
+                
+                <div class="stem-box">
+                    নিচের লজিক বর্তনীটি লক্ষ্য করো:<br>
+                    <div class="diagram">
+                        <svg width="320" height="160" viewBox="0 0 320 160">
+                            <defs>
+                                <g id="nand">
+                                    <path d="M0,0 h20 a20,20 0 0 1 0,40 h-20 v-40" fill="white" stroke="black" stroke-width="2"/>
+                                    <circle cx="44" cy="20" r="4" fill="white" stroke="black" stroke-width="2"/>
+                                    <line x1="-10" y1="10" x2="0" y2="10" stroke="black" stroke-width="2"/>
+                                    <line x1="-10" y1="30" x2="0" y2="30" stroke="black" stroke-width="2"/>
+                                </g>
+                            </defs>
+
+                            <text x="5" y="45" font-family="Arial" font-size="14" font-weight="bold">A</text>
+                            <text x="5" y="125" font-family="Arial" font-size="14" font-weight="bold">B</text>
+
+                            <line x1="20" y1="40" x2="50" y2="40" stroke="black" stroke-width="2"/>
+                            <line x1="20" y1="120" x2="50" y2="120" stroke="black" stroke-width="2"/>
+
+                            <use href="#nand" x="50" y="60"/>
+                            <line x1="40" y1="40" x2="40" y2="70" stroke="black" stroke-width="2"/>
+                            <circle cx="40" cy="40" r="3" fill="black"/> <line x1="40" y1="120" x2="40" y2="90" stroke="black" stroke-width="2"/>
+                            <circle cx="40" cy="120" r="3" fill="black"/> <use href="#nand" x="160" y="20"/>
+                            <line x1="50" y1="40" x2="150" y2="40" stroke="black" stroke-width="2"/>
+                            <line x1="150" y1="40" x2="150" y2="30" stroke="black" stroke-width="2"/>
+
+                            <use href="#nand" x="160" y="100"/>
+                            <line x1="50" y1="120" x2="150" y2="120" stroke="black" stroke-width="2"/>
+                            <line x1="150" y1="120" x2="150" y2="130" stroke="black" stroke-width="2"/>
+
+                            <line x1="98" y1="80" x2="130" y2="80" stroke="black" stroke-width="2"/>
+                            <line x1="130" y1="80" x2="130" y2="50" stroke="black" stroke-width="2"/> <line x1="130" y1="50" x2="150" y2="50" stroke="black" stroke-width="2"/>
+
+                            <line x1="130" y1="80" x2="130" y2="110" stroke="black" stroke-width="2"/> <line x1="130" y1="110" x2="150" y2="110" stroke="black" stroke-width="2"/>
+
+                            <use href="#nand" x="250" y="60"/>
+                            
+                            <line x1="208" y1="40" x2="230" y2="40" stroke="black" stroke-width="2"/>
+                            <line x1="230" y1="40" x2="230" y2="70" stroke="black" stroke-width="2"/>
+                            <line x1="230" y1="70" x2="240" y2="70" stroke="black" stroke-width="2"/>
+
+                            <line x1="208" y1="120" x2="230" y2="120" stroke="black" stroke-width="2"/>
+                            <line x1="230" y1="120" x2="230" y2="90" stroke="black" stroke-width="2"/>
+                            <line x1="230" y1="90" x2="240" y2="90" stroke="black" stroke-width="2"/>
+
+                            <line x1="298" y1="80" x2="315" y2="80" stroke="black" stroke-width="2"/>
+                            <text x="310" y="75" font-family="Arial" font-size="14" font-weight="bold">Y</text>
+                        </svg>
+                        <p style="font-size:13px; color:#555; margin-top:5px;">চিত্র: NAND গেইট দ্বারা গঠিত বর্তনী</p>
+                    </div>
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> আসকি (ASCII) কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> $A+B+C = 1$ কখন হয়? ব্যাখ্যা করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> উদ্দীপকের বর্তনীটির আউটপুট সমীকরণ $Y$ এর মান নির্ণয় করে সরল করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol2c')">উত্তর দেখুন</button>
+                        <div id="sol2c" class="solution-box">
+                            <strong>সমাধান:</strong> এটি NAND গেইট দিয়ে তৈরি XOR গেইট। <br>
+                            ১ম গেইট আউটপুট: $\overline{AB}$ <br>
+                            ২য় গেইট: $\overline{A \cdot \overline{AB}}$ <br>
+                            ৩য় গেইট: $\overline{B \cdot \overline{AB}}$ <br>
+                            আউটপুট $Y = \overline{ (\overline{A \cdot \overline{AB}}) \cdot (\overline{B \cdot \overline{AB}}) }$ <br>
+                            সরল করলে পাওয়া যায়: $Y = A \oplus B$
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> উদ্দীপকের বর্তনীটি যে বিশেষ গেইট নির্দেশ করে, সেটি দিয়ে হাফ অ্যাডার তৈরি সম্ভব কি? বিশ্লেষণ করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol2d')">উত্তর দেখুন</button>
+                        <div id="sol2d" class="solution-box">
+                            <strong>হিন্টস:</strong> বর্তনীটি XOR গেইট নির্দেশ করে। হাফ অ্যাডারের সাম (Sum) অংশটি XOR গেইট দিয়েই তৈরি ($S = A \oplus B$)। ক্যারি ($C = AB$) এর জন্য একটি AND গেইট লাগবে। সুতরাং এটি হাফ অ্যাডারের একটি অপরিহার্য অংশ।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #00695c;">প্রশ্ন নং - ০৩ [কুমিল্লা বোর্ড ২০১৯]</div>
+                
+                <div class="stem-box">
+                    <div class="diagram" style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+                        <div style="text-align:center;">
+                            <svg width="100" height="80">
+                                <rect x="10" y="10" width="80" height="60" rx="5" fill="white" stroke="#333" stroke-width="2"/>
+                                <text x="50" y="45" text-anchor="middle" font-weight="bold">HA</text>
+                                <line x1="0" y1="25" x2="10" y2="25" stroke="black" stroke-width="2"/>
+                                <line x1="0" y1="55" x2="10" y2="55" stroke="black" stroke-width="2"/>
+                                <text x="2" y="20" font-size="10">A</text>
+                                <text x="2" y="50" font-size="10">B</text>
+                                <line x1="90" y1="25" x2="100" y2="25" stroke="black" stroke-width="2"/>
+                                <line x1="90" y1="55" x2="100" y2="55" stroke="black" stroke-width="2"/>
+                                <text x="92" y="20" font-size="10">S</text>
+                                <text x="92" y="50" font-size="10">C</text>
+                            </svg>
+                            <p>চিত্র-১</p>
+                        </div>
+                        
+                        <div style="text-align:center;">
+                            <svg width="100" height="80">
+                                <rect x="10" y="10" width="80" height="60" rx="5" fill="white" stroke="#333" stroke-width="2"/>
+                                <text x="50" y="45" text-anchor="middle" font-weight="bold">FA</text>
+                                <line x1="0" y1="20" x2="10" y2="20" stroke="black" stroke-width="2"/>
+                                <line x1="0" y1="40" x2="10" y2="40" stroke="black" stroke-width="2"/>
+                                <line x1="0" y1="60" x2="10" y2="60" stroke="black" stroke-width="2"/>
+                                <text x="2" y="15" font-size="10">A</text>
+                                <text x="2" y="35" font-size="10">B</text>
+                                <text x="2" y="55" font-size="10">Ci</text>
+                                <line x1="90" y1="30" x2="100" y2="30" stroke="black" stroke-width="2"/>
+                                <line x1="90" y1="50" x2="100" y2="50" stroke="black" stroke-width="2"/>
+                                <text x="92" y="25" font-size="10">S</text>
+                                <text x="92" y="45" font-size="10">Co</text>
+                            </svg>
+                            <p>চিত্র-২</p>
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> ফ্লিপ-ফ্লপ কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> এনকোডার ও ডিকোডারের মধ্যে পার্থক্য লিখ। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> চিত্র-১ এর বর্তনীটি মৌলিক গেইট দিয়ে বাস্তবায়ন করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol3c')">উত্তর দেখুন</button>
+                        <div id="sol3c" class="solution-box">
+                            <strong>সমাধান:</strong> চিত্র-১ হলো হাফ অ্যাডার। <br>
+                            $S = \overline{A}B + A\overline{B}$ (AND, OR, NOT গেইট দিয়ে আঁকতে হবে)<br>
+                            $C = AB$ (AND গেইট দিয়ে আঁকতে হবে)।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> চিত্র-১ ব্যবহার করে কীভাবে চিত্র-২ বাস্তবায়ন করা যায়? লজিক চিত্রসহ বিশ্লেষণ করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol3d')">উত্তর দেখুন</button>
+                        <div id="sol3d" class="solution-box">
+                            <strong>হিন্টস:</strong> এটি "দুটি হাফ অ্যাডার দিয়ে একটি ফুল অ্যাডার বাস্তবায়ন" এর প্রশ্ন। <br>
+                            ১ম হাফ অ্যাডারের Sum এবং ৩য় ইনপুট ($C_i$) ২য় হাফ অ্যাডারে দিতে হবে। উভয় হাফ অ্যাডারের Carry কে OR গেইট দিয়ে যুক্ত করতে হবে।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2024 Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+    <script>
+        // টাইমার সেটআপ
+        let timeLeft = 30 * 60; 
+        const timerElement = document.getElementById('timer');
+        
+        const countdown = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "সময় শেষ!";
+                alert("পরীক্ষার সময় শেষ হয়েছে!");
+            }
+            timeLeft--;
+        }, 1000);
+
+        // উত্তর দেখানোর ফাংশন
+        function toggleSol(id) {
+            const x = document.getElementById(id);
+            if (x.style.display === "none" || x.style.display === "") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
