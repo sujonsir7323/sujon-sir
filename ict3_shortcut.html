@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICT অধ্যায় ৩ - সূত্র ও শর্টকাট</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        :root {
+            --primary: #0097a7; /* Cyan Theme for ICT */
+            --secondary: #006064;
+            --accent: #ff6f00; /* Amber Accent */
+            --bg: #e0f7fa;
+            --text-dark: #263238;
+        }
+
+        body {
+            font-family: 'Noto Sans Bengali', sans-serif;
+            background-color: var(--bg);
+            margin: 0; padding: 0; color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3; border-top: 4px solid var(--primary);
+            border-radius: 50%; width: 45px; height: 45px; animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #0097a7 0%, #006064 100%);
+            color: white; padding: 35px 20px; text-align: center;
+            border-radius: 20px; margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            position: relative; overflow: hidden;
+        }
+        .header h1 { margin: 5px 0; font-size: 26px; font-weight: 700; text-shadow: 1px 2px 3px rgba(0,0,0,0.2); }
+        .header p { margin: 5px 0 0; font-size: 16px; opacity: 0.95; font-weight: 500; }
+        .quote-box {
+            background: rgba(255,255,255,0.15);
+            padding: 8px 20px; border-radius: 50px;
+            font-size: 14px; display: inline-block; margin-top: 15px; font-style: italic;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .back-btn {
+            position: absolute; top: 20px; left: 20px;
+            color: white; font-size: 18px; text-decoration: none;
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.4); transform: scale(1.1); }
+
+        /* সেকশন হেডার */
+        .section-header {
+            display: flex; align-items: center; gap: 10px; margin: 30px 0 15px;
+            border-bottom: 3px solid #b2ebf2; padding-bottom: 8px;
+        }
+        .section-title { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
+        .section-icon { font-size: 1.4rem; color: var(--accent); }
+        
+        /* গ্রিড */
+        .grid-container {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;
+        }
+
+        /* ফর্মুলা কার্ড */
+        .formula-card {
+            background: white; border-radius: 15px; padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--primary);
+            transition: transform 0.3s;
+        }
+        .formula-card:hover { transform: translateY(-5px); }
+        
+        .card-label {
+            font-weight: 700; color: #455a64; font-size: 1.15rem; margin-bottom: 12px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .badge { font-size: 0.8rem; background: #e0f7fa; padding: 4px 10px; border-radius: 4px; color: #006064; }
+
+        /* ফর্মুলা বক্স */
+        .formula-box {
+            background: #e0f7fa; padding: 15px; border-radius: 10px;
+            text-align: center; color: #006064; margin-bottom: 10px;
+            border: 1px dashed #4dd0e1;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 50px; font-size: 1.1rem;
+        }
+        
+        /* ভগ্নাংশ ডিজাইন */
+        .fraction { display: inline-block; text-align: center; vertical-align: middle; margin: 0 5px; }
+        .fraction .top { border-bottom: 2px solid #006064; display: block; padding: 0 5px; font-weight: bold; }
+        .fraction .bottom { display: block; padding: 0 5px; font-weight: bold; }
+
+        .equal-sign { font-size: 1.2rem; margin: 0 8px; color: #ff6f00; font-weight: bold; }
+        .note { font-size: 0.95rem; color: #607d8b; background: #fafafa; padding: 10px; border-radius: 6px; border-left: 3px solid #cfd8dc; }
+        .example { color: #2e7d32; font-weight: 600; display: block; margin-top: 5px; }
+
+        /* লজিক গেট স্টাইল (Purple) */
+        .logic-style .formula-card { border-top-color: #6a1b9a; }
+        .logic-style .section-title { color: #6a1b9a; border-color: #e1bee7; }
+        .logic-style .formula-box { background: #f3e5f5; color: #4a148c; border-color: #ce93d8; }
+        .logic-style .fraction .top { border-bottom-color: #4a148c; }
+        .logic-style .section-icon { color: #ab47bc; }
+
+        .footer { text-align: center; margin-top: 40px; color: #90a4ae; font-size: 14px; }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 22px; }
+            .grid-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="loader"><div class="spinner"></div></div>
+
+<div class="container" id="mainContent" style="display:none;">
+    
+    <div class="header">
+        <a href="ict_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+        <h1>Self Study with Sujon Sir</h1>
+        <p>অধ্যায় ৩: সংখ্যা পদ্ধতি ও ডিজিটাল ডিভাইস - সূত্র ও শর্টকাট</p>
+        <div class="quote-box">"Logic is the beginning of wisdom"</div>
+    </div>
+
+    <div class="section-header">
+        <i class="fas fa-calculator section-icon"></i>
+        <div class="section-title">সংখ্যা পদ্ধতি ও রূপান্তর</div>
+    </div>
+
+    <div class="grid-container">
+        <div class="formula-card">
+            <div class="card-label">১. ম্যাজিক কোড (বিসিডি/বাইনারি) <span class="badge">HOT</span></div>
+            <div class="formula-box">
+                <div>8 - 4 - 2 - 1</div>
+            </div>
+            <div class="note">
+                Decimal থেকে Binary করতে এই কোড ব্যবহার করো।
+                <br><span class="example">উদা:</span> 5 = 4+1 = 0101
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">২. বাইনারি $\leftrightarrow$ অক্টাল/হেক্সা</div>
+            <div class="formula-box">
+                <div style="text-align: left; font-size: 1rem;">
+                    অক্টাল (Octal) $\to$ ৩ বিট (Example: 4-2-1)<br>
+                    হেক্সা (Hex) $\to$ ৪ বিট (Example: 8-4-2-1)
+                </div>
+            </div>
+            <div class="note">
+                দশমিক বিন্দুর বামে $\leftarrow$ এবং ডানে $\to$ গ্রুপিং করতে হয়।
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">৩. ২-এর পরিপূরক (2's Complement)</div>
+            <div class="formula-box">
+                <div>
+                    2's Comp <span class="equal-sign">=</span> 1's Comp + 1
+                </div>
+            </div>
+            <div class="note">
+                বিট উল্টিয়ে (0 $\to$ 1, 1 $\to$ 0) তার সাথে ১ যোগ করলেই ঋণাত্মক সংখ্যা পাওয়া যায়।
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header logic-style">
+        <i class="fas fa-microchip section-icon"></i>
+        <div class="section-title">লজিক গেট ও ডিজিটাল ডিভাইস</div>
+    </div>
+
+    <div class="grid-container logic-style">
+        <div class="formula-card">
+            <div class="card-label">৪. ডি-মরগানের উপপাদ্য (De Morgan)</div>
+            <div class="formula-box" style="font-size: 1.2rem;">
+                <div>
+                    $\overline{A + B} = \overline{A} \cdot \overline{B}$
+                </div>
+                <div style="margin-top: 8px;">
+                    $\overline{A \cdot B} = \overline{A} + \overline{B}$
+                </div>
+            </div>
+            <div class="note">
+                "Break the bar, change the sign." (বার ভাঙলে চিহ্ন পাল্টে যায়)।
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">৫. বিশেষ গেট (XOR & XNOR)</div>
+            <div class="formula-box">
+                <div style="text-align: left;">
+                    XOR: $A \oplus B = \overline{A}B + A\overline{B}$<br>
+                    XNOR: $A \odot B = AB + \overline{A}\overline{B}$
+                </div>
+            </div>
+            <div class="note">
+                
+
+[Image of logic gate symbols]
+
+                XOR: বিজোড় সংখ্যক 1 থাকলে আউটপুট 1।<br>
+                XNOR: ইনপুট একই হলে আউটপুট 1।
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">৬. অ্যাডার (Adder) এর সূত্র</div>
+            <div class="formula-box">
+                <div style="text-align: left; font-size: 0.95rem;">
+                    <strong>Half Adder:</strong><br>
+                    $S = A \oplus B$, $C = AB$<br>
+                    <strong>Full Adder:</strong><br>
+                    $S = A \oplus B \oplus C_i$
+                </div>
+            </div>
+            <div class="note">
+                ২টি হাফ অ্যাডার + ১টি OR গেট = ১টি ফুল অ্যাডার।
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header" style="border-bottom-color: #ffca28;">
+        <i class="fas fa-network-wired section-icon" style="color: #ff6f00;"></i>
+        <div class="section-title" style="color: #ef6c00;">এনকোডার ও ডিকোডার</div>
+    </div>
+
+    <div class="grid-container">
+        <div class="formula-card">
+            <div class="card-label">৭. এনকোডার (Encoder)</div>
+            <div class="formula-box">
+                <div>
+                    ইনপুট $2^n$ <span class="equal-sign">$\to$</span> আউটপুট $n$
+                </div>
+            </div>
+            <div class="note">
+                মানুষের ভাষাকে কম্পিউটারের ভাষায় (যান্ত্রিক) রূপান্তর করে।
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">৮. ডিকোডার (Decoder)</div>
+            <div class="formula-box">
+                <div>
+                    ইনপুট $n$ <span class="equal-sign">$\to$</span> আউটপুট $2^n$
+                </div>
+            </div>
+            <div class="note">
+                কম্পিউটারের ভাষাকে মানুষের ভাষায় রূপান্তর করে।
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="card-label">৯. রেজিস্টার ও কাউন্টার</div>
+            <div class="formula-box">
+                <div>
+                    n-বিটের জন্য $n$ টি ফ্লিপ-ফ্লপ লাগে
+                </div>
+            </div>
+            <div class="note">
+                কাউন্টার: $n$ বিট কাউন্টার $2^n$ টি সংখ্যা গুণতে পারে (0 থেকে $2^n-1$)।
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2024 Self Study with Sujon Sir | All Rights Reserved
+    </div>
+
+</div>
+
+</body>
+</html>
