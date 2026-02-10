@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics CQ - অধ্যায় ১০ (মডেল ৩)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #eceff1; /* Blue Grey Light Background */
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 60px; 
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #607d8b;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #607d8b 0%, #455a64 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ইনফো বক্স */
+        .info-box {
+            padding: 15px; margin: 0 20px 20px; background: #eceff1;
+            border-radius: 10px; border: 1px solid #cfd8dc;
+            text-align: center;
+        }
+        .timer { font-size: 22px; font-weight: bold; color: #d32f2f; margin-top: 5px; }
+
+        /* সৃজনশীল প্রশ্ন কার্ড */
+        .cq-container { padding: 0 20px; }
+        .question-card {
+            background: #fff; padding: 20px; margin-bottom: 25px;
+            border-radius: 12px; border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-top: 5px solid #607d8b;
+        }
+        .stem-box {
+            background: #f5f5f5; padding: 15px; border-radius: 8px;
+            margin-bottom: 15px; border-left: 4px solid #00acc1;
+            font-size: 16px; line-height: 1.6;
+        }
+        .sub-questions { list-style: none; padding: 0; }
+        .sub-questions li {
+            margin-bottom: 10px; padding: 8px 0;
+            border-bottom: 1px dashed #eee; font-size: 15px;
+        }
+        .sub-questions li:last-child { border-bottom: none; }
+        .mark {
+            float: right; font-size: 12px; background: #607d8b;
+            color: white; padding: 2px 8px; border-radius: 10px;
+        }
+        
+        /* উত্তর বাটন */
+        .solution-btn {
+            background: white; border: 1px solid #607d8b; color: #607d8b;
+            padding: 5px 15px; border-radius: 20px; cursor: pointer;
+            font-size: 13px; margin-top: 10px; transition: 0.3s;
+        }
+        .solution-btn:hover { background: #607d8b; color: white; }
+        
+        .solution-box {
+            display: none; margin-top: 10px; padding: 10px;
+            background: #eceff1; border-radius: 8px; color: #37474f; font-size: 14px;
+        }
+
+        .footer { text-align: center; color: #777; font-size: 13px; margin-top: 30px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div><p>প্রশ্ন তৈরি হচ্ছে...</p></div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        
+        <div class="header">
+            <a href="ict_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-flask" style="font-size: 40px; margin-bottom: 10px; color: #ffeb3b;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>পদার্থবিজ্ঞান ১ম পত্র | অধ্যায় ১০: আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব</p>
+        </div>
+
+        <div class="info-box">
+            <h3 style="margin:0;">সৃজনশীল পরীক্ষা (CQ) - মডেল ৩</h3>
+            <p style="font-size: 13px; color: #555;">পূর্ণমান: ৪০ | সময়: ৪০ মিনিট</p>
+            <div class="timer" id="timer">সময় বাকি: ৪০:০০ মিনিট</div>
+        </div>
+
+        <div class="cq-container">
+            
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #607d8b;">প্রশ্ন নং - ০১ [গ্যাসের সূত্র]</div>
+                
+                <div class="stem-box">
+                    একটি হ্রদের তলদেশ থেকে উপরিতলে উঠে আসায় একটি বায়ু বুদবুদের ব্যাস ৩ গুণ হয়। হ্রদের উপরিতলে বায়ুমণ্ডলের চাপ $10^5 \text{ N/m}^2$। হ্রদের পানির ঘনত্ব $1000 \text{ kg/m}^3$। (তাপমাত্রা স্থির বিবেচনা করো)
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> প্রমাণ চাপ কাকে বলে? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> মহাকাশে একজন নভোচারীর রক্তচাপ স্বাভাবিকের চেয়ে বেশি না কম হবে? ব্যাখ্যা করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> হ্রদের গভীরতা নির্ণয় করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol1c')">উত্তর দেখুন</button>
+                        <div id="sol1c" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            ব্যাস ৩ গুণ $\Rightarrow$ ব্যাসার্ধ $r_2 = 3r_1$। <br>
+                            আয়তন $V_2 = (3)^3 V_1 = 27 V_1$। <br>
+                            বয়েলের সূত্র: $P_1V_1 = P_2V_2$ <br>
+                            $\Rightarrow (P_{atm} + h\rho g)V_1 = P_{atm}(27 V_1)$ <br>
+                            $\Rightarrow h\rho g = 26 P_{atm}$ <br>
+                            $\Rightarrow h = \frac{26 \times 10^5}{1000 \times 9.8} = 265.3 \text{ m}$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> হ্রদের তলদেশের তাপমাত্রা $10^\circ\text{C}$ এবং উপরিতলের তাপমাত্রা $30^\circ\text{C}$ হলে গভীরতার মানের কী পরিবর্তন হবে? গাণিতিকভাবে যাচাই করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol1d')">উত্তর দেখুন</button>
+                        <div id="sol1d" class="solution-box">
+                            <strong>হিন্টস:</strong> <br>
+                            সূত্র: $\frac{P_1V_1}{T_1} = \frac{P_2V_2}{T_2}$ <br>
+                            এখানে $T_1 = 283 \text{ K}, T_2 = 303 \text{ K}$। <br>
+                            $\frac{(P_{atm}+h'\rho g)V_1}{283} = \frac{P_{atm}(27V_1)}{303}$ <br>
+                            সমীকরণ সমাধান করে নতুন গভীরতা $h'$ বের করো এবং আগের মানের সাথে তুলনা করো।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #607d8b;">প্রশ্ন নং - ০২ [আর্দ্রতা ও স্বস্তি]</div>
+                
+                <div class="stem-box">
+                    বর্ষাকালে একদিন ঢাকার বাতাসের তাপমাত্রা $32^\circ\text{C}$ এবং শিশিরাঙ্ক $28^\circ\text{C}$। রাজশাহীর তাপমাত্রা $35^\circ\text{C}$ এবং আপেক্ষিক আর্দ্রতা $40\%$। <br>
+                    $28^\circ\text{C}, 32^\circ\text{C}$ এবং $35^\circ\text{C}$ তাপমাত্রায় সম্পৃক্ত জলীয়বাষ্পের চাপ যথাক্রমে $28.35 \text{ mm}, 35.66 \text{ mm}$ এবং $42.18 \text{ mm Hg}$।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> হাইগ্রোমিটার কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> শিশিরাঙ্ক ও আপেক্ষিক আর্দ্রতার সম্পর্ক ব্যাখ্যা করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> ঢাকার বাতাসের আপেক্ষিক আর্দ্রতা নির্ণয় করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol2c')">উত্তর দেখুন</button>
+                        <div id="sol2c" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            শিশিরাঙ্কে বাষ্পচাপ $f = 28.35 \text{ mm}$। <br>
+                            বায়ুর তাপমাত্রায় বাষ্পচাপ $F = 35.66 \text{ mm}$। <br>
+                            $R = \frac{28.35}{35.66} \times 100\% = 79.5\%$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> উদ্দীপকের তথ্যানুসারে কোন স্থানে থাকা বেশি আরামদায়ক হবে? গাণিতিকভাবে বিশ্লেষণ করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol2d')">উত্তর দেখুন</button>
+                        <div id="sol2d" class="solution-box">
+                            <strong>হিন্টস:</strong> <br>
+                            ১. ঢাকার আপেক্ষিক আর্দ্রতা $79.5\%$ (অনেক বেশি, তাই ঘাম শুকাবে না, অস্বস্তি লাগবে)। <br>
+                            ২. রাজশাহীর আপেক্ষিক আর্দ্রতা $40\%$ (কম, তাই ঘাম দ্রুত শুকাবে)। <br>
+                            ৩. যদিও রাজশাহীর তাপমাত্রা বেশি, কিন্তু আপেক্ষিক আর্দ্রতা কম হওয়ায় সেখানে ঘাম শুকিয়ে শরীর ঠান্ডা হবে। তাই রাজশাহী বেশি আরামদায়ক।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #607d8b;">প্রশ্ন নং - ০৩ [RMS বেগ ও শক্তি]</div>
+                
+                <div class="stem-box">
+                    একটি সিলিন্ডারে $27^\circ\text{C}$ তাপমাত্রায় $7 \text{ gm}$ নাইট্রোজেন গ্যাস আছে। নাইট্রোজেনের মোলার ভর $28 \text{ gm/mol}$। <br>
+                    [$R = 8.314 \text{ Jmol}^{-1}\text{K}^{-1}$]
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> মোলার গ্যাস ধ্রুবক কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> গ্যাসের চাপ ও ঘনত্বের সম্পর্ক লিখ এবং ব্যাখ্যা করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> উদ্দীপকের গ্যাসের মোট গতিশক্তি নির্ণয় করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol3c')">উত্তর দেখুন</button>
+                        <div id="sol3c" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            মোল সংখ্যা $n = \frac{7}{28} = 0.25$। <br>
+                            গতিশক্তি $E_k = \frac{3}{2}nRT$ <br>
+                            $E_k = \frac{3}{2} \times 0.25 \times 8.314 \times 300 = 935.325 \text{ J}$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> গ্যাসটির RMS বেগ দ্বিগুণ করতে হলে তাপমাত্রার কী পরিবর্তন করতে হবে? গাণিতিকভাবে দেখাও। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol3d')">উত্তর দেখুন</button>
+                        <div id="sol3d" class="solution-box">
+                            <strong>হিন্টস:</strong> <br>
+                            আমরা জানি, $C_{rms} \propto \sqrt{T}$। <br>
+                            বেগ দ্বিগুণ ($2C$) করতে হলে তাপমাত্রা ৪ গুণ হতে হবে। <br>
+                            $T_2 = 4 T_1 = 4 \times 300 = 1200 \text{ K}$। <br>
+                            তাপমাত্রার পরিবর্তন = $1200 - 300 = 900 \text{ K}$ বা $900^\circ\text{C}$ বৃদ্ধি করতে হবে।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #607d8b;">প্রশ্ন নং - ০৪ [গ্যাসের চাপ ও তাপমাত্রা]</div>
+                
+                <div class="stem-box">
+                    একটি গ্যাস সিলিন্ডার সর্বোচ্চ $15 \text{ atm}$ চাপ সহ্য করতে পারে। সিলিন্ডারটিতে $27^\circ\text{C}$ তাপমাত্রায় $8 \text{ atm}$ চাপে গ্যাস ভর্তি আছে। হঠাৎ অগ্নিকাণ্ডের কারণে সিলিন্ডারের তাপমাত্রা বৃদ্ধি পেতে লাগল।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> পরম আর্দ্রতা কাকে বলে? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> স্থির তাপমাত্রায় গ্যাসের পিভি লেখচিত্র (PV graph) কেমন হবে? আঁকো ও ব্যাখ্যা করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> কত তাপমাত্রায় সিলিন্ডারের ভেতরের চাপ $12 \text{ atm}$ হবে? <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol4c')">উত্তর দেখুন</button>
+                        <div id="sol4c" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            গে-লুস্যাকের চাপের সূত্র: $\frac{P_1}{T_1} = \frac{P_2}{T_2}$ <br>
+                            $T_1 = 300 \text{ K}, P_1 = 8 \text{ atm}, P_2 = 12 \text{ atm}$। <br>
+                            $T_2 = \frac{P_2 T_1}{P_1} = \frac{12 \times 300}{8} = 450 \text{ K}$ বা $177^\circ\text{C}$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> সিলিন্ডারটি $300^\circ\text{C}$ তাপমাত্রায় বিস্ফোরিত হবে কি না? গাণিতিকভাবে যাচাই করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol4d')">উত্তর দেখুন</button>
+                        <div id="sol4d" class="solution-box">
+                            <strong>হিন্টস:</strong> <br>
+                            $T_{new} = 300 + 273 = 573 \text{ K}$। <br>
+                            এই তাপমাত্রায় চাপ বের করো: $P_{new} = \frac{P_1 T_{new}}{T_1}$। <br>
+                            $P_{new} = \frac{8 \times 573}{300} = 15.28 \text{ atm}$। <br>
+                            যেহেতু $15.28 \text{ atm} > 15 \text{ atm}$ (সহনক্ষমতা), তাই সিলিন্ডারটি বিস্ফোরিত হবে।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2024 Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+    <script>
+        // টাইমার সেটআপ
+        let timeLeft = 40 * 60; 
+        const timerElement = document.getElementById('timer');
+        
+        const countdown = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "সময় শেষ!";
+                alert("পরীক্ষার সময় শেষ হয়েছে!");
+            }
+            timeLeft--;
+        }, 1000);
+
+        // উত্তর দেখানোর ফাংশন
+        function toggleSol(id) {
+            const x = document.getElementById(id);
+            if (x.style.display === "none" || x.style.display === "") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>

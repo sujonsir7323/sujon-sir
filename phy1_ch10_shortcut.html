@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortcuts - আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব | Sujon Sir</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #fff3e0; /* Deep Orange Light Background */
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 60px; 
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #e65100;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #e65100 0%, #bf360c 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px; position: relative;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 26px; font-weight: 700; }
+        .header p { margin: 5px 0; font-size: 15px; opacity: 0.9; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.3); }
+
+        /* টপিক কার্ড */
+        .topic-card {
+            background: white; margin: 20px; padding: 20px;
+            border-radius: 15px; border-left: 5px solid #ff6f00;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .topic-card:hover { transform: translateY(-3px); }
+
+        .topic-title {
+            font-size: 18px; font-weight: 700; color: #e65100;
+            margin-bottom: 15px; border-bottom: 1px dashed #ffccbc;
+            padding-bottom: 8px; display: flex; align-items: center; gap: 10px;
+        }
+        
+        .formula-box {
+            background: #fff3e0; padding: 10px; border-radius: 8px;
+            margin-bottom: 10px; border: 1px solid #ffe0b2;
+            font-size: 15px;
+        }
+        .note { font-size: 13px; color: #666; font-style: italic; margin-top: 5px; }
+        
+        /* টেবিল ডিজাইন */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+        th, td { border: 1px solid #ffccbc; padding: 8px; text-align: center; }
+        th { background: #ffccbc; color: #bf360c; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div><p>সূত্র লোড হচ্ছে...</p></div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        
+        <div class="header">
+            <a href="hsc_phy_ch10_test.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-fire-alt" style="font-size: 40px; margin-bottom: 10px; color: #ffeb3b;"></i>
+            
+            <h1>Self Study with Sujon Sir</h1>
+            <p>পদার্থবিজ্ঞান ১ম পত্র | অধ্যায় ১০: শর্টকাট ও সূত্রাবলি</p>
+        </div>
+
+        <div class="topic-card">
+            <div class="topic-title"><i class="fas fa-flask"></i> ১. আদর্শ গ্যাসের সমীকরণ</div>
+            
+            <div class="formula-box">
+                $$ PV = nRT = \frac{g}{M}RT $$
+            </div>
+            <div class="formula-box">
+                বোলৎজম্যান ধ্রুবক দিয়ে: $$ PV = NkT $$
+            </div>
+            <p class="note">এখানে, $P$=চাপ, $V$=আয়তন, $n$=মোল সংখ্যা, $g$=গ্যাসের ভর (gm), $M$=আণবিক ভর (gm), $R$=8.314, $k$=1.38×10⁻²³, $N$=অণুর সংখ্যা।</p>
+        </div>
+
+        <div class="topic-card">
+            <div class="topic-title"><i class="fas fa-water"></i> ২. হ্রদের গভীরতা নির্ণয় (Magic Math)</div>
+            <p>বুদবুদ নিচ থেকে উপরে উঠলে আয়তন বাড়ে।</p>
+            
+            <div class="formula-box">
+                $$ (P_{atm} + h\rho g)V_{bottom} = P_{atm} V_{top} $$
+            </div>
+            
+            <p><strong>শর্টকাট (যদি তাপমাত্রা স্থির থাকে):</strong><br>
+            যদি আয়তন $n$ গুণ হয় ($V_{top} = n V_{bottom}$), তবে:</p>
+            <div class="formula-box">
+                $$ h = \frac{(n-1)P_{atm}}{\rho g} $$
+            </div>
+            <p class="note">সাধারণত $P_{atm} = 10^5 Pa$, $\rho = 1000 kg/m^3$</p>
+
+            <p><strong>শর্টকাট (যদি ব্যাস $n$ গুণ হয়):</strong><br>
+            আয়তন হবে $n^3$ গুণ। তখন:</p>
+            <div class="formula-box">
+                $$ h = \frac{(n^3-1)P_{atm}}{\rho g} $$
+            </div>
+        </div>
+
+        <div class="topic-card">
+            <div class="topic-title"><i class="fas fa-tachometer-alt"></i> ৩. RMS বেগ ও গতিশক্তি</div>
+            
+            <div class="formula-box">
+                RMS বেগ: $$ C_{rms} = \sqrt{\frac{3RT}{M}} = \sqrt{\frac{3P}{\rho}} $$
+            </div>
+            <p class="note">সতর্কতা: এই সূত্রে $M$ অবশ্যই kg এককে বসাতে হবে। (যেমন: $N_2$ এর জন্য $M=28 \times 10^{-3}$)</p>
+
+            <div class="formula-box">
+                গড় বর্গবেগ: $$ \bar{C^2} \propto T $$
+            </div>
+            
+            <div class="formula-box">
+                মোট গতিশক্তি (n মোল): $$ E = \frac{3}{2}nRT $$
+            </div>
+            <div class="formula-box">
+                প্রতিটি অণুর গতিশক্তি: $$ E = \frac{3}{2}kT $$
+            </div>
+        </div>
+
+        <div class="topic-card">
+            <div class="topic-title"><i class="fas fa-route"></i> ৪. গড় মুক্ত পথ ($\lambda$)</div>
+            
+            <div class="formula-box">
+                ক্লসিয়াস: $$ \lambda = \frac{1}{\frac{4}{3}\pi \sigma^2 n} $$
+            </div>
+            <div class="formula-box">
+                বোলৎজম্যান: $$ \lambda = \frac{1}{\pi \sigma^2 n} $$
+            </div>
+            <div class="formula-box" style="background: #ffe0b2; border: 1px solid #ff9800;">
+                ম্যাক্সওয়েল (সঠিক): $$ \lambda = \frac{1}{\sqrt{2}\pi \sigma^2 n} $$
+            </div>
+            <p class="note">এখানে $\sigma$ = অণুর ব্যাস, $n$ = একক আয়তনে অণুর সংখ্যা।</p>
+        </div>
+
+        <div class="topic-card">
+            <div class="topic-title"><i class="fas fa-atom"></i> ৫. স্বাধীনতার মাত্রা ($f$) ও $\gamma$</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>গ্যাস</th>
+                        <th>$f$</th>
+                        <th>$\gamma = 1 + \frac{2}{f}$</th>
+                        <th>উদাহরণ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>এক পারমাণবিক</td>
+                        <td>3</td>
+                        <td>1.67</td>
+                        <td>He, Ne, Ar</td>
+                    </tr>
+                    <tr>
+                        <td>দ্বি-পারমাণবিক</td>
+                        <td>5</td>
+                        <td>1.40</td>
+                        <td>$H_2, N_2, O_2$</td>
+                    </tr>
+                    <tr>
+                        <td>বহু পারমাণবিক</td>
+                        <td>6</td>
+                        <td>1.33</td>
+                        <td>$CH_4, NH_3$</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="topic-card">
+            <div class="topic-title"><i class="fas fa-cloud-rain"></i> ৬. আর্দ্রতা ও শিশিরাঙ্ক</div>
+            
+            <p><strong>শিশিরাঙ্ক নির্ণয় (গ্লেসারের সূত্র):</strong></p>
+            <div class="formula-box">
+                $$ \theta_d = \theta_1 - G(\theta_1 - \theta_2) $$
+            </div>
+            <p class="note">$\theta_1$ = শুষ্ক বাল্ব তাপমাত্রা, $\theta_2$ = সিক্ত বাল্ব তাপমাত্রা, $G$ = গ্লেসারের উৎপাদক।</p>
+
+            <p><strong>আপেক্ষিক আর্দ্রতা ($R$):</strong></p>
+            <div class="formula-box">
+                $$ R = \frac{f}{F} \times 100\% $$
+            </div>
+            <p class="note">$f$ = শিশিরাঙ্কে সম্পৃক্ত বাষ্পচাপ<br>$F$ = বায়ুর তাপমাত্রায় সম্পৃক্ত বাষ্পচাপ</p>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; color: #777; font-size: 13px; padding-bottom: 20px;">
+            &copy; 2024 Self Study with Sujon Sir | Physics Dept.
+        </div>
+
+    </div>
+
+</body>
+</html>

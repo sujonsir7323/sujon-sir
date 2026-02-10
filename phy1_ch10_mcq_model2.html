@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics MCQ - অধ্যায় ১০ (মডেল ২)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { font-family: 'Hind Siliguri', sans-serif; background: #e0f2f1; margin: 0; padding: 0; color: #333; user-select: none; }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; min-height: 100vh; padding-bottom: 60px; }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #009688; /* Teal Theme */
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #009688 0%, #00796b 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 22px; font-weight: 700; }
+        .back-btn { color: white; float: left; font-size: 20px; }
+
+        /* ইনপুট বক্স */
+        .info-box {
+            padding: 20px; margin: 0 20px; background: #e0f2f1;
+            border-radius: 10px; border: 1px solid #80cbc4;
+            text-align: center;
+        }
+        .input-field {
+            width: 80%; padding: 12px; border-radius: 5px; border: 1px solid #aaa;
+            font-family: 'Hind Siliguri', sans-serif; font-size: 16px; margin-top: 10px;
+            outline: none;
+        }
+        .timer { font-size: 20px; font-weight: bold; color: #d32f2f; margin-top: 10px; }
+
+        /* প্রশ্ন কার্ড */
+        .mcq-container { padding: 20px; }
+        .question-card {
+            background: #fff; padding: 15px; margin-bottom: 20px;
+            border-radius: 10px; border: 1px solid #eee;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+        .q-header { font-weight: 600; font-size: 17px; margin-bottom: 15px; display: flex; gap: 10px; align-items: flex-start; }
+        .board-tag { font-size: 11px; background: #eee; color: #555; padding: 2px 6px; border-radius: 4px; height: fit-content; white-space: nowrap; margin-top: 3px; }
+        
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .option {
+            display: flex; align-items: center; padding: 10px; border: 1px solid #ddd;
+            border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 15px;
+        }
+        .option:hover { background: #f9f9f9; }
+        .option input { margin-right: 10px; transform: scale(1.2); cursor: pointer; }
+
+        /* কালার স্কিম */
+        .correct-ans { background-color: #d4edda !important; border-color: #c3e6cb !important; color: #155724; }
+        .wrong-ans { background-color: #f8d7da !important; border-color: #f5c6cb !important; color: #721c24; }
+        .missed-ans { border: 2px solid #ffc107 !important; background-color: #fff3cd; }
+
+        /* বাটন */
+        .submit-btn {
+            display: block; width: 90%; margin: 20px auto; padding: 15px;
+            background: #009688; color: white; font-size: 18px; font-weight: bold;
+            border: none; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 150, 136, 0.3);
+            transition: 0.3s;
+        }
+        .submit-btn:hover { background: #00796b; transform: scale(1.02); }
+
+        /* রেজাল্ট পপআপ */
+        .result-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;
+        }
+        .result-box {
+            background: white; width: 90%; max-width: 400px; padding: 30px;
+            border-radius: 15px; text-align: center; position: relative; animation: popUp 0.4s ease;
+        }
+        @keyframes popUp { from {transform: scale(0.5);} to {transform: scale(1);} }
+        
+        .score-circle {
+            width: 120px; height: 120px; background: #e0f2f1; border-radius: 50%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin: 0 auto 20px; border: 5px solid #009688;
+        }
+        .score-number { font-size: 35px; font-weight: bold; color: #009688; }
+        .score-label { font-size: 12px; color: #666; }
+
+        .close-btn {
+            background: #d32f2f; color: white; border: none; padding: 10px 20px;
+            border-radius: 5px; margin-top: 15px; cursor: pointer; font-size: 14px;
+        }
+
+        @media (max-width: 500px) {
+            .options-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="spinner"></div>
+        <p>প্রশ্ন লোড হচ্ছে...</p>
+    </div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        <div class="header">
+            <a href="ict_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>পদার্থবিজ্ঞান ১ম পত্র | অধ্যায় ১০: আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব (মডেল ২)</p>
+        </div>
+
+        <div class="info-box">
+            <h3 style="margin:0 0 10px;">MCQ পরীক্ষা - মডেল ২</h3>
+            <p style="font-size: 13px; color: #555;">পূর্ণমান: ২৫ | সময়: ২৫ মিনিট</p>
+            <div class="timer" id="timer">সময় বাকি: ২৫:০০ মিনিট</div>
+        </div>
+
+        <form id="quizForm" class="mcq-container">
+            <input type="hidden" name="_subject" value="Physics MCQ Result: Chapter 10 (Model 2)">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="obtained_score" id="hiddenScore">
+
+            <div style="margin-bottom: 20px; text-align: center;">
+                <input type="text" name="Student_Name" id="studentName" class="input-field" placeholder="তোমার নাম লিখ (বাধ্যতামূলক)..." required>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০১.</span> <span class="board-tag">[রাজশাহী ২২]</span>
+                    <span>গড় মুক্ত পথ ($\lambda$) এবং অণুর ব্যাস ($\sigma$) এর সঠিক সম্পর্ক কোনটি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q1" value="a"> $\lambda \propto \sigma$</label>
+                    <label class="option"><input type="radio" name="q1" value="b"> $\lambda \propto \sigma^2$</label>
+                    <label class="option"><input type="radio" name="q1" value="c" data-correct="true"> $\lambda \propto \frac{1}{\sigma^2}$</label>
+                    <label class="option"><input type="radio" name="q1" value="d"> $\lambda \propto \frac{1}{\sigma}$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০২.</span> <span class="board-tag">[ঢাকা ২১]</span>
+                    <span>এক পরমাণুক গ্যাসের ক্ষেত্রে $C_p$ ও $C_v$ এর অনুপাত ($\gamma$) কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q2" value="a"> 1.40</label>
+                    <label class="option"><input type="radio" name="q2" value="b" data-correct="true"> 1.67</label>
+                    <label class="option"><input type="radio" name="q2" value="c"> 1.33</label>
+                    <label class="option"><input type="radio" name="q2" value="d"> 1.28</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৩.</span> <span class="board-tag">[সিলেট ২২]</span>
+                    <span>স্থির তাপমাত্রায় গ্যাসের চাপ ($P$) এবং ঘনত্ব ($\rho$) এর সম্পর্ক কী?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q3" value="a"> $P \propto \rho^2$</label>
+                    <label class="option"><input type="radio" name="q3" value="b" data-correct="true"> $P \propto \rho$</label>
+                    <label class="option"><input type="radio" name="q3" value="c"> $P \propto \frac{1}{\rho}$</label>
+                    <label class="option"><input type="radio" name="q3" value="d"> $P \propto \sqrt{\rho}$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৪.</span> <span class="board-tag">[কুমিল্লা ২০]</span>
+                    <span>কোন তাপমাত্রায় সেলসিয়াস ও ফারেনহাইট স্কেলের পাঠ সমান হয়?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q4" value="a"> $40^\circ$</label>
+                    <label class="option"><input type="radio" name="q4" value="b" data-correct="true"> $-40^\circ$</label>
+                    <label class="option"><input type="radio" name="q4" value="c"> $32^\circ$</label>
+                    <label class="option"><input type="radio" name="q4" value="d"> $0^\circ$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৫.</span> <span class="board-tag">[যশোর ২১]</span>
+                    <span>আদর্শ গ্যাসের অণুগুলোর মধ্যে আকর্ষণ বল কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q5" value="a"> অসীম</label>
+                    <label class="option"><input type="radio" name="q5" value="b"> খুব বেশি</label>
+                    <label class="option"><input type="radio" name="q5" value="c" data-correct="true"> শূন্য</label>
+                    <label class="option"><input type="radio" name="q5" value="d"> নগণ্য</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৬.</span> <span class="board-tag">[বরিশাল ২২]</span>
+                    <span>জলীয় বাষ্পের ঘনত্ব শুষ্ক বায়ুর ঘনত্বের তুলনায়—</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q6" value="a"> বেশি</label>
+                    <label class="option"><input type="radio" name="q6" value="b" data-correct="true"> কম</label>
+                    <label class="option"><input type="radio" name="q6" value="c"> সমান</label>
+                    <label class="option"><input type="radio" name="q6" value="d"> দ্বিগুণ</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৭.</span> <span class="board-tag">[দিনাজপুর ১৯]</span>
+                    <span>সম্পৃক্ত বাষ্পচাপ কিসের উপর নির্ভর করে?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q7" value="a"> আয়তন</label>
+                    <label class="option"><input type="radio" name="q7" value="b" data-correct="true"> তাপমাত্রা</label>
+                    <label class="option"><input type="radio" name="q7" value="c"> চাপ</label>
+                    <label class="option"><input type="radio" name="q7" value="d"> ভর</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৮.</span> <span class="board-tag">[চট্টগ্রাম ২১]</span>
+                    <span>গ্যাসের অণুর গড় মুক্ত পথ $\lambda$ এবং পরম তাপমাত্রা $T$ এর সম্পর্ক (চাপ স্থির থাকলে)?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q8" value="a"> $\lambda \propto \frac{1}{T}$</label>
+                    <label class="option"><input type="radio" name="q8" value="b" data-correct="true"> $\lambda \propto T$</label>
+                    <label class="option"><input type="radio" name="q8" value="c"> $\lambda \propto T^2$</label>
+                    <label class="option"><input type="radio" name="q8" value="d"> $\lambda \propto \sqrt{T}$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৯.</span> <span class="board-tag">[ঢাকা ২২]</span>
+                    <span>কোন সম্পর্কটি সঠিক?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q9" value="a"> $C_v - C_p = R$</label>
+                    <label class="option"><input type="radio" name="q9" value="b" data-correct="true"> $C_p - C_v = R$</label>
+                    <label class="option"><input type="radio" name="q9" value="c"> $C_p + C_v = R$</label>
+                    <label class="option"><input type="radio" name="q9" value="d"> $\frac{C_p}{C_v} = R$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১০.</span> <span class="board-tag">[ময়মনসিংহ ২০]</span>
+                    <span>স্থির চাপে গ্যাসের আয়তন ও তাপমাত্রার সম্পর্ক কোনটি? (চার্লসের সূত্র)</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q10" value="a"> $V \propto \frac{1}{T}$</label>
+                    <label class="option"><input type="radio" name="q10" value="b" data-correct="true"> $V \propto T$</label>
+                    <label class="option"><input type="radio" name="q10" value="c"> $V \propto T^2$</label>
+                    <label class="option"><input type="radio" name="q10" value="d"> $V \propto \sqrt{T}$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১১.</span> <span class="board-tag">[রাজশাহী ২০]</span>
+                    <span>অক্সিজেন (O₂) গ্যাসের স্বাধীনতার মাত্রা কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q11" value="a"> ৩</label>
+                    <label class="option"><input type="radio" name="q11" value="b" data-correct="true"> ৫</label>
+                    <label class="option"><input type="radio" name="q11" value="c"> ৬</label>
+                    <label class="option"><input type="radio" name="q11" value="d"> ৭</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১২.</span> <span class="board-tag">[সিলেট ২১]</span>
+                    <span>শিশিরাঙ্ক কী নির্দেশ করে?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q12" value="a"> আপেক্ষিক আর্দ্রতা</label>
+                    <label class="option"><input type="radio" name="q12" value="b" data-correct="true"> তাপমাত্রা</label>
+                    <label class="option"><input type="radio" name="q12" value="c"> বাষ্পচাপ</label>
+                    <label class="option"><input type="radio" name="q12" value="d"> আর্দ্রতা</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৩.</span> <span class="board-tag">[কুমিল্লা ২২]</span>
+                    <span>কোন স্থানে আপেক্ষিক আর্দ্রতা ১০০% হলে কী হবে?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q13" value="a"> আবহাওয়া খুব শুষ্ক হবে</label>
+                    <label class="option"><input type="radio" name="q13" value="b"> ঘাম দ্রুত শুকাবে</label>
+                    <label class="option"><input type="radio" name="q13" value="c" data-correct="true"> ভেজা কাপড় শুকাতে চাইবে না</label>
+                    <label class="option"><input type="radio" name="q13" value="d"> খুব গরম লাগবে</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৪.</span> <span class="board-tag">[যশোর ২০]</span>
+                    <span>গ্যাসের গতিতত্ত্ব অনুসারে গ্যাস অণুগুলোর সংঘর্ষ কেমন হয়?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q14" value="a" data-correct="true"> সম্পূর্ণ স্থিতিস্থাপক</label>
+                    <label class="option"><input type="radio" name="q14" value="b"> অস্থিতিস্থাপক</label>
+                    <label class="option"><input type="radio" name="q14" value="c"> আংশিক স্থিতিস্থাপক</label>
+                    <label class="option"><input type="radio" name="q14" value="d"> শক্তি বিনাশী</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৫.</span> <span class="board-tag">[বরিশাল ১৯]</span>
+                    <span>হাইগ্রোমিটার দিয়ে কী মাপা হয়?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q15" value="a"> তাপমাত্রা</label>
+                    <label class="option"><input type="radio" name="q15" value="b"> চাপ</label>
+                    <label class="option"><input type="radio" name="q15" value="c" data-correct="true"> আর্দ্রতা</label>
+                    <label class="option"><input type="radio" name="q15" value="d"> ঘনত্ব</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৬.</span> <span class="board-tag">[চট্টগ্রাম ২০]</span>
+                    <span>$27^\circ\text{C}$ তাপমাত্রায় হিলিয়াম গ্যাসের RMS বেগ কত? (M = 4 g/mol)</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q16" value="a"> $1300 \text{ ms}^{-1}$</label>
+                    <label class="option"><input type="radio" name="q16" value="b" data-correct="true"> $1367 \text{ ms}^{-1}$</label>
+                    <label class="option"><input type="radio" name="q16" value="c"> $1250 \text{ ms}^{-1}$</label>
+                    <label class="option"><input type="radio" name="q16" value="d"> $1400 \text{ ms}^{-1}$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৭.</span> <span class="board-tag">[ঢাকা ১৯]</span>
+                    <span>ডাল্টনের আংশিক চাপ সূত্র কোনটি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q17" value="a"> $P = P_1 V_1 + P_2 V_2$</label>
+                    <label class="option"><input type="radio" name="q17" value="b" data-correct="true"> $P = P_1 + P_2 + P_3 + ...$</label>
+                    <label class="option"><input type="radio" name="q17" value="c"> $P = \frac{P_1 + P_2}{2}$</label>
+                    <label class="option"><input type="radio" name="q17" value="d"> $PV = RT$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৮.</span> <span class="board-tag">[দিনাজপুর ২২]</span>
+                    <span>গড় বর্গবেগ ($\bar{C^2}$) এবং পরম তাপমাত্রা ($T$) এর সম্পর্ক কী?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q18" value="a" data-correct="true"> $\bar{C^2} \propto T$</label>
+                    <label class="option"><input type="radio" name="q18" value="b"> $\bar{C^2} \propto \sqrt{T}$</label>
+                    <label class="option"><input type="radio" name="q18" value="c"> $\bar{C^2} \propto T^2$</label>
+                    <label class="option"><input type="radio" name="q18" value="d"> $\bar{C^2} \propto \frac{1}{T}$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৯.</span> <span class="board-tag">[রাজশাহী ২১]</span>
+                    <span>গ্লেসারের ধ্রুবক $G$ কিসের উপর নির্ভর করে?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q19" value="a"> বায়ুচাপ</label>
+                    <label class="option"><input type="radio" name="q19" value="b" data-correct="true"> বাতাসের তাপমাত্রা</label>
+                    <label class="option"><input type="radio" name="q19" value="c"> আর্দ্রতা</label>
+                    <label class="option"><input type="radio" name="q19" value="d"> সময়</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২০.</span> <span class="board-tag">[ময়মনসিংহ ২২]</span>
+                    <span>গ্যাসের চাপ $P$ এবং অণুর গতিশক্তি $E$ এর মধ্যে সম্পর্ক কী? (একক আয়তনে)</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q20" value="a"> $P = \frac{3}{2}E$</label>
+                    <label class="option"><input type="radio" name="q20" value="b" data-correct="true"> $P = \frac{2}{3}E$</label>
+                    <label class="option"><input type="radio" name="q20" value="c"> $P = E$</label>
+                    <label class="option"><input type="radio" name="q20" value="d"> $P = \frac{1}{3}E$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২১.</span> <span class="board-tag">[সিলেট ২০]</span>
+                    <span>সম্পৃক্ত বাষ্প কী মেনে চলে না?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q21" value="a"> চার্লসের সূত্র</label>
+                    <label class="option"><input type="radio" name="q21" value="b" data-correct="true"> বয়েলের ও চার্লসের সূত্র</label>
+                    <label class="option"><input type="radio" name="q21" value="c"> ডাল্টনের সূত্র</label>
+                    <label class="option"><input type="radio" name="q21" value="d"> তাপগতিবিদ্যার সূত্র</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২২.</span> <span class="board-tag">[কুমিল্লা ১৯]</span>
+                    <span>গড় বেগ ($\bar{C}$), RMS বেগ ($C_{rms}$) এবং সম্ভাব্যতম বেগ ($C_m$) এর মধ্যে সঠিক ক্রম কোনটি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q22" value="a"> $C_m > \bar{C} > C_{rms}$</label>
+                    <label class="option"><input type="radio" name="q22" value="b" data-correct="true"> $C_{rms} > \bar{C} > C_m$</label>
+                    <label class="option"><input type="radio" name="q22" value="c"> $C_{rms} > C_m > \bar{C}$</label>
+                    <label class="option"><input type="radio" name="q22" value="d"> $\bar{C} > C_{rms} > C_m$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২৩.</span> <span class="board-tag">[যশোর ১৯]</span>
+                    <span>স্থির আয়তনে গ্যাসের চাপ দ্বিগুণ করলে তাপমাত্রা কত হবে?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q23" value="a"> অর্ধেক</label>
+                    <label class="option"><input type="radio" name="q23" value="b" data-correct="true"> দ্বিগুণ</label>
+                    <label class="option"><input type="radio" name="q23" value="c"> চার গুণ</label>
+                    <label class="option"><input type="radio" name="q23" value="d"> একই থাকবে</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২৪.</span> <span class="board-tag">[বরিশাল ২১]</span>
+                    <span>একক আয়তনে গ্যাসের অণুর সংখ্যা বের করার সূত্র কোনটি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q24" value="a"> $n = \frac{PV}{RT}$</label>
+                    <label class="option"><input type="radio" name="q24" value="b" data-correct="true"> $n = \frac{P}{kT}$</label>
+                    <label class="option"><input type="radio" name="q24" value="c"> $n = \frac{RT}{P}$</label>
+                    <label class="option"><input type="radio" name="q24" value="d"> $n = PkT$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২৫.</span> <span class="board-tag">[ঢাকা ২১]</span>
+                    <span>মুক্তিবেগ ($v_e$) এবং RMS বেগ ($C$) এর সম্পর্ক কী হলে গ্যাস গ্রহ থেকে বিলীন হবে?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q25" value="a"> $C < v_e$</label>
+                    <label class="option"><input type="radio" name="q25" value="b"> $C = v_e$</label>
+                    <label class="option"><input type="radio" name="q25" value="c" data-correct="true"> $C > v_e$</label>
+                    <label class="option"><input type="radio" name="q25" value="d"> $C = \frac{v_e}{2}$</label>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">সাবমিট করুন</button>
+        </form>
+
+        <div class="result-overlay" id="resultOverlay">
+            <div class="result-box">
+                <h2 style="color: #009688; margin-top: 0;">অভিনন্দন!</h2>
+                <div class="score-circle">
+                    <div class="score-number" id="displayScore">0</div>
+                    <div class="score-label">নম্বর ২৫ এর মধ্যে</div>
+                </div>
+                <p>তোমার নাম: <span id="displayName" style="font-weight: bold;"></span></p>
+                <p id="sendStatus" style="font-size: 14px; color: #555;">রেজাল্ট তৈরি হচ্ছে...</p>
+                <button class="close-btn" onclick="closeResult()">উত্তরপত্র দেখুন</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // এডমিন ইমেইল
+        const ADMIN_EMAIL = "leeminho7323@gmail.com";
+
+        // টাইমার সেটআপ (২৫ মিনিট)
+        let timeLeft = 25 * 60; 
+        const timerElement = document.getElementById('timer');
+        let countdown;
+
+        function startTimer() {
+             countdown = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+                
+                timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    alert("সময় শেষ! স্বয়ংক্রিয়ভাবে সাবমিট হচ্ছে...");
+                    submitQuiz();
+                }
+                timeLeft--;
+            }, 1000);
+        }
+        startTimer();
+
+        // ফরম সাবমিশন লজিক
+        const form = document.getElementById('quizForm');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            submitQuiz();
+        });
+
+        function submitQuiz() {
+            const name = document.getElementById('studentName').value;
+            if(!name) { 
+                alert("দয়া করে তোমার নাম লিখ।"); 
+                document.getElementById('studentName').focus();
+                return; 
+            }
+
+            clearInterval(countdown);
+            const btn = document.getElementById('submitBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ডাটা পাঠানো হচ্ছে...';
+            btn.disabled = true;
+            
+            let score = 0;
+            const questionCards = document.querySelectorAll('.question-card');
+
+            // খাতা মূল্যায়ন
+            questionCards.forEach(card => {
+                const inputs = card.querySelectorAll('input[type="radio"]');
+                let correctAnswer = null;
+                let userAnswer = null;
+
+                inputs.forEach(input => {
+                    if (input.getAttribute('data-correct') === 'true') {
+                        correctAnswer = input.value;
+                    }
+                    if (input.checked) {
+                        userAnswer = input.value;
+                    }
+                    input.disabled = true; // লক করা
+                });
+
+                inputs.forEach(input => {
+                    const label = input.parentElement;
+                    if (input.value === correctAnswer) {
+                        label.classList.add('correct-ans');
+                        label.innerHTML += ' <i class="fas fa-check" style="margin-left:auto;"></i>';
+                    }
+                    if (userAnswer === input.value && userAnswer !== correctAnswer) {
+                        label.classList.add('wrong-ans');
+                        label.innerHTML += ' <i class="fas fa-times" style="margin-left:auto;"></i>';
+                    }
+                });
+
+                if (userAnswer === correctAnswer) {
+                    score++;
+                } else if (!userAnswer) {
+                    card.classList.add('missed-ans');
+                }
+            });
+
+            // স্কোর সেট করা
+            document.getElementById('hiddenScore').value = score + " / 25";
+            const finalFormData = new FormData(form);
+
+            // ইমেইলে পাঠানো (AJAX)
+            fetch(`https://formsubmit.co/ajax/${ADMIN_EMAIL}`, {
+                method: "POST",
+                body: finalFormData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('sendStatus').textContent = "রেজাল্ট সফলভাবে স্যারের ইমেইলে পাঠানো হয়েছে!";
+                document.getElementById('sendStatus').style.color = "green";
+            })
+            .catch(error => {
+                document.getElementById('sendStatus').textContent = "নেটওয়ার্ক সমস্যার কারণে ইমেইল যায়নি, তবে তুমি রেজাল্ট দেখতে পারবে।";
+                document.getElementById('sendStatus').style.color = "red";
+            });
+
+            // রেজাল্ট দেখানো
+            document.getElementById('displayScore').textContent = score;
+            document.getElementById('displayName').textContent = name;
+            document.getElementById('resultOverlay').style.display = 'flex';
+            
+            btn.style.display = 'none';
+        }
+
+        function closeResult() {
+            document.getElementById('resultOverlay').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics CQ - অধ্যায় ১০ (মডেল ২)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e0f2f1; /* Teal Light Background */
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 60px; 
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #009688;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #009688 0%, #00796b 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ইনফো বক্স */
+        .info-box {
+            padding: 15px; margin: 0 20px 20px; background: #e0f2f1;
+            border-radius: 10px; border: 1px solid #80cbc4;
+            text-align: center;
+        }
+        .timer { font-size: 22px; font-weight: bold; color: #d32f2f; margin-top: 5px; }
+
+        /* সৃজনশীল প্রশ্ন কার্ড */
+        .cq-container { padding: 0 20px; }
+        .question-card {
+            background: #fff; padding: 20px; margin-bottom: 25px;
+            border-radius: 12px; border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-top: 5px solid #009688;
+        }
+        .stem-box {
+            background: #f5f5f5; padding: 15px; border-radius: 8px;
+            margin-bottom: 15px; border-left: 4px solid #ff9800;
+            font-size: 16px; line-height: 1.6;
+        }
+        .sub-questions { list-style: none; padding: 0; }
+        .sub-questions li {
+            margin-bottom: 10px; padding: 8px 0;
+            border-bottom: 1px dashed #eee; font-size: 15px;
+        }
+        .sub-questions li:last-child { border-bottom: none; }
+        .mark {
+            float: right; font-size: 12px; background: #009688;
+            color: white; padding: 2px 8px; border-radius: 10px;
+        }
+        
+        /* উত্তর বাটন */
+        .solution-btn {
+            background: white; border: 1px solid #009688; color: #009688;
+            padding: 5px 15px; border-radius: 20px; cursor: pointer;
+            font-size: 13px; margin-top: 10px; transition: 0.3s;
+        }
+        .solution-btn:hover { background: #009688; color: white; }
+        
+        .solution-box {
+            display: none; margin-top: 10px; padding: 10px;
+            background: #e0f2f1; border-radius: 8px; color: #00695c; font-size: 14px;
+        }
+
+        .footer { text-align: center; color: #777; font-size: 13px; margin-top: 30px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div><p>প্রশ্ন তৈরি হচ্ছে...</p></div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        
+        <div class="header">
+            <a href="ict_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-temperature-high" style="font-size: 40px; margin-bottom: 10px; color: #ffeb3b;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>পদার্থবিজ্ঞান ১ম পত্র | অধ্যায় ১০: আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব</p>
+        </div>
+
+        <div class="info-box">
+            <h3 style="margin:0;">সৃজনশীল পরীক্ষা (CQ) - মডেল ২</h3>
+            <p style="font-size: 13px; color: #555;">পূর্ণমান: ৪০ | সময়: ৪০ মিনিট</p>
+            <div class="timer" id="timer">সময় বাকি: ৪০:০০ মিনিট</div>
+        </div>
+
+        <div class="cq-container">
+            
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #009688;">প্রশ্ন নং - ০১ [গ্যাসের গতিতত্ত্ব]</div>
+                
+                <div class="stem-box">
+                    একটি বদ্ধ পাত্রে $27^\circ\text{C}$ তাপমাত্রায় নাইট্রোজেন গ্যাস আছে। হঠাৎ পাত্রটি ফেটে গেল। নাইট্রোজেনের আণবিক ভর $28 \text{ g/mol}$ এবং $\gamma = 1.4$।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> বোলৎজম্যান ধ্রুবক কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> শীতকালে ঠোঁট ও চামড়া ফেটে যায় কেন? <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> উদ্দীপকের তাপমাত্রায় নাইট্রোজেন অণুর RMS বেগ নির্ণয় করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol1c')">উত্তর দেখুন</button>
+                        <div id="sol1c" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            $T = 27 + 273 = 300 \text{ K}$। <br>
+                            $M = 28 \times 10^{-3} \text{ kg/mol}$। <br>
+                            $C_{rms} = \sqrt{\frac{3RT}{M}} = \sqrt{\frac{3 \times 8.314 \times 300}{28 \times 10^{-3}}} = 516.95 \text{ ms}^{-1}$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> পাত্রটি ফেটে যাওয়ার পর গ্যাসটির তাপমাত্রার কী পরিবর্তন হবে? গাণিতিকভাবে বিশ্লেষণ করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol1d')">উত্তর দেখুন</button>
+                        <div id="sol1d" class="solution-box">
+                            <strong>হিন্টস:</strong> <br>
+                            পাত্র ফেটে যাওয়া একটি রুদ্ধতাপীয় প্রক্রিয়া। <br>
+                            ধরি, প্রাথমিক চাপ $P_1$ এবং চূড়ান্ত চাপ $P_2 = P_{atm}$। <br>
+                            রুদ্ধতাপীয় প্রসারণে $T_1 P_1^{\frac{1-\gamma}{\gamma}} = T_2 P_2^{\frac{1-\gamma}{\gamma}}$ সূত্র ব্যবহার করতে হবে (যদি চাপের তথ্য দেওয়া থাকে)। <br>
+                            তবে এখানে চাপের তথ্য নেই, তাই সাধারণত রুদ্ধতাপীয় প্রসারণে তাপমাত্রা হ্রাস পায়—এটি তাত্ত্বিকভাবে ব্যাখ্যা করতে হবে। (গাণিতিক মানের জন্য উদ্দীপকে চাপ বা আয়তনের অনুপাত থাকা প্রয়োজন ছিল, অন্যথায় তাত্ত্বিক উত্তর দিবে)।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #009688;">প্রশ্ন নং - ০২ [আর্দ্রতা ও আবহাওয়া]</div>
+                
+                <div class="stem-box">
+                    ঢাকা ও চট্টগ্রামের বাতাসের তাপমাত্রা যথাক্রমে $30^\circ\text{C}$ এবং $25^\circ\text{C}$। ঐ দিন স্থান দুটির শিশিরাঙ্ক যথাক্রমে $14^\circ\text{C}$ এবং $18^\circ\text{C}$। <br>
+                    $14^\circ\text{C}, 18^\circ\text{C}, 25^\circ\text{C}$ এবং $30^\circ\text{C}$ তাপমাত্রায় সম্পৃক্ত জলীয়বাষ্পের চাপ যথাক্রমে $12 \text{ mm}, 15.5 \text{ mm}, 23.7 \text{ mm}$ এবং $31.8 \text{ mm Hg}$।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> শিশিরাঙ্ক কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> জলীয়বাষ্প ও গ্যাসের মধ্যে পার্থক্য কী? <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> ঢাকার বাতাসের আপেক্ষিক আর্দ্রতা নির্ণয় করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol2c')">উত্তর দেখুন</button>
+                        <div id="sol2c" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            ঢাকার শিশিরাঙ্ক $14^\circ\text{C}$ তে বাষ্পচাপ $f = 12 \text{ mm}$। <br>
+                            ঢাকার তাপমাত্রা $30^\circ\text{C}$ তে সম্পৃক্ত বাষ্পচাপ $F = 31.8 \text{ mm}$। <br>
+                            $R = \frac{f}{F} \times 100\% = \frac{12}{31.8} \times 100\% = 37.74\%$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> আবহাওয়া অফিস বলল, "চট্টগ্রামে বৃষ্টির সম্ভাবনা বেশি।" উক্তিটি গাণিতিকভাবে যাচাই করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol2d')">উত্তর দেখুন</button>
+                        <div id="sol2d" class="solution-box">
+                            <strong>হিন্টস:</strong> <br>
+                            ১. ঢাকার আপেক্ষিক আর্দ্রতা (গ) থেকে পেয়েছি $37.74\%$। <br>
+                            ২. চট্টগ্রামের শিশিরাঙ্ক $18^\circ\text{C}$ তে বাষ্পচাপ $15.5$ এবং তাপমাত্রা $25^\circ\text{C}$ তে $23.7$। <br>
+                            ৩. চট্টগ্রামের $R = \frac{15.5}{23.7} \times 100\% = 65.40\%$। <br>
+                            যেহেতু চট্টগ্রামের আপেক্ষিক আর্দ্রতা বেশি, তাই সেখানে বৃষ্টির সম্ভাবনা বেশি। উক্তিটি সঠিক।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #009688;">প্রশ্ন নং - ০৩ [বয়েলের সূত্র]</div>
+                
+                <div class="stem-box">
+                    একটি হ্রদের তলদেশ থেকে পানির উপরিতলে আসায় একটি বায়ু বুদবুদের ব্যাস দ্বিগুণ হয়। হ্রদের উপরিতলে বায়ুমণ্ডলের চাপ $10^5 \text{ Nm}^{-2}$ এবং তাপমাত্রা ধ্রুবক। পানির ঘনত্ব $1000 \text{ kgm}^{-3}$।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> গড় মুক্ত পথ কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> তাপমাত্রা বাড়লে গ্যাসের সান্দ্রতা বাড়ে কেন? <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> উদ্দীপকের হ্রদের গভীরতা নির্ণয় করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol3c')">উত্তর দেখুন</button>
+                        <div id="sol3c" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            ব্যাস দ্বিগুণ হলে ব্যাসার্ধও দ্বিগুণ ($r_2 = 2r_1$)। <br>
+                            আয়তন $V \propto r^3$, তাই $V_2 = (2)^3 V_1 = 8V_1$। <br>
+                            সূত্র: $P_1V_1 = P_2V_2 \Rightarrow (P_{atm} + h\rho g)V_1 = P_{atm}(8V_1)$ <br>
+                            $\Rightarrow h\rho g = 7 P_{atm}$ <br>
+                            $\Rightarrow h = \frac{7 \times 10^5}{1000 \times 9.8} = 71.43 \text{ m}$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> হ্রদের গভীরতা অর্ধেক হলে বুদবুদের আয়তন কী পরিবর্তন হতো? বিশ্লেষণ করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol3d')">উত্তর দেখুন</button>
+                        <div id="sol3d" class="solution-box">
+                            <strong>হিন্টস:</strong> <br>
+                            নতুন গভীরতা $h' = \frac{71.43}{2} = 35.715 \text{ m}$। <br>
+                            নতুন তলদেশের চাপ $P'_1 = P_{atm} + h'\rho g$ বের করো। <br>
+                            $P'_1V_1 = P_2V'_2$ ব্যবহার করে $V'_2$ বের করো এবং আয়তন কত গুণ বাড়ল তা দেখাও। (উত্তর ৪.৫ গুণ হবে)।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #009688;">প্রশ্ন নং - ০৪ [গ্যাসের গতিশক্তি]</div>
+                
+                <div class="stem-box">
+                    একটি পাত্রে $27^\circ\text{C}$ তাপমাত্রায় $10 \text{ g}$ অক্সিজেন গ্যাস রাখা আছে। অক্সিজেনের আণবিক ভর $32 \text{ g/mol}$।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> সম্পৃক্ত বাষ্পচাপ কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> $C_{rms} > \bar{C}$ কেন হয়? ব্যাখ্যা করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> উদ্দীপকের গ্যাসের মোট গতিশক্তি নির্ণয় করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol4c')">উত্তর দেখুন</button>
+                        <div id="sol4c" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            মোল সংখ্যা $n = \frac{10}{32} = 0.3125$। <br>
+                            গতিশক্তি $E_k = \frac{3}{2} nRT$ <br>
+                            $E_k = \frac{3}{2} \times 0.3125 \times 8.314 \times 300 = 1169.15 \text{ J}$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> যদি তাপমাত্রা দ্বিগুণ করা হয় এবং অর্ধেক গ্যাস বের করে দেওয়া হয়, তবে গতিশক্তির কী পরিবর্তন হবে? বিশ্লেষণ করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol4d')">উত্তর দেখুন</button>
+                        <div id="sol4d" class="solution-box">
+                            <strong>হিন্টস:</strong> <br>
+                            নতুন তাপমাত্রা $T' = 2 \times 300 = 600 \text{ K}$। <br>
+                            নতুন মোল সংখ্যা $n' = \frac{n}{2} = 0.15625$। <br>
+                            নতুন গতিশক্তি $E'_k = \frac{3}{2} n' R T'$। <br>
+                            মান বসিয়ে দেখাও যে গতিশক্তি অপরিবর্তিত থাকবে। কারণ $T$ দ্বিগুণ হয়েছে কিন্তু $n$ অর্ধেক হয়েছে।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2024 Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+    <script>
+        // টাইমার সেটআপ
+        let timeLeft = 40 * 60; 
+        const timerElement = document.getElementById('timer');
+        
+        const countdown = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "সময় শেষ!";
+                alert("পরীক্ষার সময় শেষ হয়েছে!");
+            }
+            timeLeft--;
+        }, 1000);
+
+        // উত্তর দেখানোর ফাংশন
+        function toggleSol(id) {
+            const x = document.getElementById(id);
+            if (x.style.display === "none" || x.style.display === "") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
