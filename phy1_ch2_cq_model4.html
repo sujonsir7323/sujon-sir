@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics CQ - অধ্যায় ২ (মডেল ৪)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #fbe9e7; /* Deep Orange Light Background */
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 60px; 
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #bf360c;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #bf360c 0%, #d84315 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ইনফো বক্স */
+        .info-box {
+            padding: 15px; margin: 0 20px 20px; background: #fbe9e7;
+            border-radius: 10px; border: 1px solid #ffab91;
+            text-align: center;
+        }
+        .timer { font-size: 22px; font-weight: bold; color: #d32f2f; margin-top: 5px; }
+
+        /* সৃজনশীল প্রশ্ন কার্ড */
+        .cq-container { padding: 0 20px; }
+        .question-card {
+            background: #fff; padding: 20px; margin-bottom: 25px;
+            border-radius: 12px; border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-top: 5px solid #bf360c;
+        }
+        .stem-box {
+            background: #f5f5f5; padding: 15px; border-radius: 8px;
+            margin-bottom: 15px; border-left: 4px solid #ff5722;
+            font-size: 16px; line-height: 1.6;
+        }
+        .sub-questions { list-style: none; padding: 0; }
+        .sub-questions li {
+            margin-bottom: 10px; padding: 8px 0;
+            border-bottom: 1px dashed #eee; font-size: 15px;
+        }
+        .sub-questions li:last-child { border-bottom: none; }
+        .mark {
+            float: right; font-size: 12px; background: #bf360c;
+            color: white; padding: 2px 8px; border-radius: 10px;
+        }
+        
+        /* উত্তর বাটন */
+        .solution-btn {
+            background: white; border: 1px solid #bf360c; color: #bf360c;
+            padding: 5px 15px; border-radius: 20px; cursor: pointer;
+            font-size: 13px; margin-top: 10px; transition: 0.3s;
+        }
+        .solution-btn:hover { background: #bf360c; color: white; }
+        
+        .solution-box {
+            display: none; margin-top: 10px; padding: 10px;
+            background: #fbe9e7; border-radius: 8px; color: #3e2723; font-size: 14px;
+        }
+
+        .footer { text-align: center; color: #777; font-size: 13px; margin-top: 30px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div><p>প্রশ্ন তৈরি হচ্ছে...</p></div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        
+        <div class="header">
+            <a href="physics_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-ship" style="font-size: 40px; margin-bottom: 10px; color: #ffeb3b;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>পদার্থবিজ্ঞান ১ম পত্র | অধ্যায় ২: ভেক্টর (Model 4)</p>
+        </div>
+
+        <div class="info-box">
+            <h3 style="margin:0;">সৃজনশীল পরীক্ষা (CQ) - মডেল ৪</h3>
+            <p style="font-size: 13px; color: #555;">পূর্ণমান: ৪০ | সময়: ৪০ মিনিট</p>
+            <div class="timer" id="timer">সময় বাকি: ৪০:০০ মিনিট</div>
+        </div>
+
+        <div class="cq-container">
+            
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #bf360c;">প্রশ্ন নং - ০১ [নদী পারাপারে প্রতিযোগিতা]</div>
+                
+                <div class="stem-box">
+                    একটি নদীর প্রস্থ $2 \ km$ এবং স্রোতের বেগ $3 \ kmh^{-1}$। দুইজন মাঝি আড়াড়িভাবে নদী পার হওয়ার জন্য একই বেগে $5 \ kmh^{-1}$ নৌকা চালানো শুরু করলেন। প্রথম মাঝি স্রোতের সাথে সমকোণে এবং দ্বিতীয় মাঝি স্রোতের সাথে $120^\circ$ কোণে যাত্রা করলেন।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> বিপ্রতীপ ভেক্টর কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> লন রোলার ঠেলা অপেক্ষা টানা সহজ কেন? ব্যাখ্যা করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> প্রথম মাঝির নদী পার হতে কত সময় লাগবে? <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol1c')">উত্তর দেখুন</button>
+                        <div id="sol1c" class="solution-box">
+                            <strong>সমাধান:</strong> প্রথম মাঝি স্রোতের সাথে সমকোণে ($90^\circ$) যাত্রা করেন। <br>
+                            প্রস্থ বরাবর উপাংশ $v \sin 90^\circ = 5 \ kmh^{-1}$। <br>
+                            সময় $t_1 = \frac{d}{v \sin 90^\circ} = \frac{2}{5} = 0.4 \ h = 24 \ \text{min}$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> কোন মাঝি আগে অপর পাড়ে পৌঁছাবেন? গাণিতিক যুক্তিসহ বিশ্লেষণ করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol1d')">উত্তর দেখুন</button>
+                        <div id="sol1d" class="solution-box">
+                            <strong>হিন্টস:</strong> <br>
+                            দ্বিতীয় মাঝির ক্ষেত্রে কোণ $\alpha = 120^\circ$। <br>
+                            সময় $t_2 = \frac{d}{v \sin 120^\circ} = \frac{2}{5 \times 0.866} = \frac{2}{4.33} = 0.461 \ h = 27.66 \ \text{min}$। <br>
+                            যেহেতু $t_1 (24 \ min) < t_2 (27.66 \ min)$, তাই প্রথম মাঝি আগে পৌঁছাবেন।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #bf360c;">প্রশ্ন নং - ০২ [ভেক্টর ডিফারেন্সিয়াল অপারেটর]</div>
+                
+                <div class="stem-box">
+                    একটি ভেক্টর ক্ষেত্র $\vec{A} = (x + 3y)\hat{i} + (y - 2z)\hat{j} + (x + bz)\hat{k}$।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> আয়ত একক ভেক্টর কাকে বলে? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> $\vec{A} \times \vec{A} = 0$ কেন? ব্যাখ্যা করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> $b$ এর মান কত হলে ভেক্টর ক্ষেত্রটি সলিডনয়ডাল হবে? <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol2c')">উত্তর দেখুন</button>
+                        <div id="sol2c" class="solution-box">
+                            <strong>সমাধান:</strong> সলিডনয়ডাল হওয়ার শর্ত $\nabla \cdot \vec{A} = 0$। <br>
+                            $\frac{\partial}{\partial x}(x+3y) + \frac{\partial}{\partial y}(y-2z) + \frac{\partial}{\partial z}(x+bz) = 0$ <br>
+                            $\Rightarrow 1 + 1 + b = 0$ <br>
+                            $\Rightarrow 2 + b = 0 \Rightarrow b = -2$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> উদ্দীপকের ভেক্টর ক্ষেত্রটি কি ঘূর্ণনশীল? গাণিতিকভাবে যাচাই করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol2d')">উত্তর দেখুন</button>
+                        <div id="sol2d" class="solution-box">
+                            <strong>হিন্টস:</strong> ঘূর্ণনশীলতার জন্য কার্ল ($\nabla \times \vec{A}$) নির্ণয় করতে হবে। <br>
+                            $\nabla \times \vec{A} = \begin{vmatrix} \hat{i} & \hat{j} & \hat{k} \\ \frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\ x+3y & y-2z & x+bz \end{vmatrix}$ <br>
+                            মান বের করে দেখবে এটি শূন্য ভেক্টর ($\vec{0}$) হয় কি না। যদি শূন্য না হয়, তবে এটি ঘূর্ণনশীল। (এখানে মান আসবে $2\hat{i} - \hat{j} - 3\hat{k}$, যা শূন্য নয়। তাই ঘূর্ণনশীল)।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #bf360c;">প্রশ্ন নং - ০৩ [বৃষ্টি ও বাতাস]</div>
+                
+                <div class="stem-box">
+                    বৃষ্টির দিনে একজন লোক $6 \ ms^{-1}$ বেগে পূর্ব দিকে হাঁটছিল। বৃষ্টি উলম্বভাবে $4 \ ms^{-1}$ বেগে পড়ছিল। হঠাৎ $2 \ ms^{-1}$ বেগে পশ্চিম দিক হতে বাতাস প্রবাহ শুরু হলো।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> অবস্থান ভেক্টর কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> ভেক্টর বিভাজন বলতে কী বোঝ? <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> বাতাসহীন অবস্থায় লোকটিকে কত কোণে ছাতা ধরতে হবে? <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol3c')">উত্তর দেখুন</button>
+                        <div id="sol3c" class="solution-box">
+                            <strong>সমাধান:</strong> বাতাসহীন অবস্থায়, $\tan\theta = \frac{v_m}{v_r} = \frac{6}{4} = 1.5$। <br>
+                            $\theta = \tan^{-1}(1.5) = 56.31^\circ$ (উলম্বের সাথে)।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> বাতাস প্রবাহের ফলে ছাতা ধরার কোণের কী পরিবর্তন হবে? বিশ্লেষণ করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol3d')">উত্তর দেখুন</button>
+                        <div id="sol3d" class="solution-box">
+                            <strong>হিন্টস:</strong> <br>
+                            বাতাসের বেগ $v_w = 2 \ ms^{-1}$ (পশ্চিম হতে পূর্ব দিকে, অর্থাৎ লোকের গতির দিকে)। <br>
+                            বৃষ্টির অনুভূমিক উপাংশ হবে $v_x = v_w = 2$। <br>
+                            লোকের সাপেক্ষে বৃষ্টির অনুভূমিক বেগ $v_{rx} = v_x - v_m = 2 - 6 = -4$ (বিপরীত দিকে)। <br>
+                            নতুন কোণ $\tan\theta' = \frac{|v_{rx}|}{v_r} = \frac{4}{4} = 1$। <br>
+                            $\theta' = 45^\circ$। <br>
+                            কোণের পরিবর্তন $= 56.31^\circ - 45^\circ = 11.31^\circ$।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #bf360c;">প্রশ্ন নং - ০৪ [উপাংশ ও লব্ধি]</div>
+                
+                <div class="stem-box">
+                    একটি বস্তুকে $50 \ N$ বলে অনুভূমিকের সাথে $30^\circ$ কোণে টানা হচ্ছে। একই সময় অন্য একজন $30 \ N$ বলে বিপরীত দিকে অনুভূমিকের সাথে $60^\circ$ কোণে টানছে।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> নাল ভেক্টর কাকে বলে? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> স্কেলার গুণন বিনিময় সূত্র মেনে চলে—ব্যাখ্যা করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> বস্তুটি অনুভূমিক বরাবর কত বল অনুভব করবে? <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol4c')">উত্তর দেখুন</button>
+                        <div id="sol4c" class="solution-box">
+                            <strong>সমাধান:</strong> অনুভূমিক উপাংশগুলোর লব্ধি নিতে হবে। <br>
+                            ১ম বলের অনুভূমিক উপাংশ $F_{1x} = 50 \cos 30^\circ = 43.3 \ N$। <br>
+                            ২য় বলের অনুভূমিক উপাংশ $F_{2x} = -30 \cos 60^\circ = -15 \ N$ (বিপরীত দিক)। <br>
+                            মোট অনুভূমিক বল $F_x = 43.3 - 15 = 28.3 \ N$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> বস্তুটি কি উপরের দিকে উঠে যাবে? গাণিতিকভাবে যাচাই করো। (বস্তুর ওজন $20 \ N$ ধরে নাও) <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol4d')">উত্তর দেখুন</button>
+                        <div id="sol4d" class="solution-box">
+                            <strong>হিন্টস:</strong> উলম্ব উপাংশগুলোর লব্ধি বের করো। <br>
+                            $F_y = 50 \sin 30^\circ + 30 \sin 60^\circ = 25 + 25.98 = 50.98 \ N$ (উপরের দিকে)। <br>
+                            বস্তুর ওজন $W = 20 \ N$ (নিচের দিকে)। <br>
+                            যেহেতু উর্ধ্বমুখী বল ($50.98 \ N$) ওজনের ($20 \ N$) চেয়ে বেশি, তাই বস্তুটি উপরের দিকে উঠে যাবে।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2024 Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+    <script>
+        // টাইমার সেটআপ
+        let timeLeft = 40 * 60; 
+        const timerElement = document.getElementById('timer');
+        
+        const countdown = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "সময় শেষ!";
+                alert("পরীক্ষার সময় শেষ হয়েছে!");
+            }
+            timeLeft--;
+        }, 1000);
+
+        // উত্তর দেখানোর ফাংশন
+        function toggleSol(id) {
+            const x = document.getElementById(id);
+            if (x.style.display === "none" || x.style.display === "") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>

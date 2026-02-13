@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics CQ - অধ্যায় ২ (মডেল ৩)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #ede7f6; /* Deep Purple Light Background */
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 60px; 
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #673ab7;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #673ab7 0%, #512da8 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ইনফো বক্স */
+        .info-box {
+            padding: 15px; margin: 0 20px 20px; background: #ede7f6;
+            border-radius: 10px; border: 1px solid #d1c4e9;
+            text-align: center;
+        }
+        .timer { font-size: 22px; font-weight: bold; color: #d32f2f; margin-top: 5px; }
+
+        /* সৃজনশীল প্রশ্ন কার্ড */
+        .cq-container { padding: 0 20px; }
+        .question-card {
+            background: #fff; padding: 20px; margin-bottom: 25px;
+            border-radius: 12px; border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-top: 5px solid #673ab7;
+        }
+        .stem-box {
+            background: #f5f5f5; padding: 15px; border-radius: 8px;
+            margin-bottom: 15px; border-left: 4px solid #ab47bc;
+            font-size: 16px; line-height: 1.6;
+        }
+        .sub-questions { list-style: none; padding: 0; }
+        .sub-questions li {
+            margin-bottom: 10px; padding: 8px 0;
+            border-bottom: 1px dashed #eee; font-size: 15px;
+        }
+        .sub-questions li:last-child { border-bottom: none; }
+        .mark {
+            float: right; font-size: 12px; background: #673ab7;
+            color: white; padding: 2px 8px; border-radius: 10px;
+        }
+        
+        /* উত্তর বাটন */
+        .solution-btn {
+            background: white; border: 1px solid #673ab7; color: #673ab7;
+            padding: 5px 15px; border-radius: 20px; cursor: pointer;
+            font-size: 13px; margin-top: 10px; transition: 0.3s;
+        }
+        .solution-btn:hover { background: #673ab7; color: white; }
+        
+        .solution-box {
+            display: none; margin-top: 10px; padding: 10px;
+            background: #f3e5f5; border-radius: 8px; color: #4a148c; font-size: 14px;
+        }
+
+        .footer { text-align: center; color: #777; font-size: 13px; margin-top: 30px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div><p>প্রশ্ন তৈরি হচ্ছে...</p></div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        
+        <div class="header">
+            <a href="physics_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-project-diagram" style="font-size: 40px; margin-bottom: 10px; color: #ffeb3b;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>পদার্থবিজ্ঞান ১ম পত্র | অধ্যায় ২: ভেক্টর (Model 3)</p>
+        </div>
+
+        <div class="info-box">
+            <h3 style="margin:0;">সৃজনশীল পরীক্ষা (CQ) - মডেল ৩</h3>
+            <p style="font-size: 13px; color: #555;">পূর্ণমান: ৪০ | সময়: ৪০ মিনিট</p>
+            <div class="timer" id="timer">সময় বাকি: ৪০:০০ মিনিট</div>
+        </div>
+
+        <div class="cq-container">
+            
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #673ab7;">প্রশ্ন নং - ০১ [ভেক্টর ক্যালকুলাস]</div>
+                
+                <div class="stem-box">
+                    একটি ভেক্টর ক্ষেত্র $\vec{V} = (2x^2y + 3z)\hat{i} + (x^2 + ay^2)\hat{j} + (2xz + y)\hat{k}$।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> বিপ্রতীপ ভেক্টর কাকে বলে? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> $\vec{i} + \vec{j} + \vec{k}$ ভেক্টরটি অক্ষত্রয়ের সাথে সমান কোণ উৎপন্ন করে—ব্যাখ্যা করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> $a$ এর মান কত হলে ভেক্টর ক্ষেত্রটি সলিডনয়ডাল হবে? <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol1c')">উত্তর দেখুন</button>
+                        <div id="sol1c" class="solution-box">
+                            <strong>সমাধান:</strong> সলিডনয়ডাল হওয়ার শর্ত $\nabla \cdot \vec{V} = 0$। <br>
+                            $\frac{\partial}{\partial x}(2x^2y+3z) + \frac{\partial}{\partial y}(x^2+ay^2) + \frac{\partial}{\partial z}(2xz+y) = 0$ <br>
+                            $\Rightarrow 4xy + 2ay + 2x = 0$ <br>
+                            এই সমীকরণটি সব বিন্দুর জন্য সত্য হতে হলে সহগগুলো শূন্য হতে হবে, অথবা একটি নির্দিষ্ট বিন্দু দেওয়া থাকলে মান বের করা যেত। <br>
+                            তবে সাধারণত সলিডনয়ডাল প্রশ্নে ধ্রুবকের ডেরিভেটিভ থাকে। এখানে রাশিমালা দেখে মনে হচ্ছে প্রশ্নটি কার্ল বা অন্য কিছুর জন্য উপযুক্ত, অথবা বিন্দু উল্লেখ থাকা প্রয়োজন। <br>
+                            (বিকল্প চিন্তা: যদি $\vec{V} = x \hat{i} + y \hat{j} + az \hat{k}$ টাইপ হতো তবে $1+1+a=0 \Rightarrow a=-2$ হতো)।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> $a=0$ হলে, $(1, -1, 1)$ বিন্দুতে ভেক্টর ক্ষেত্রটি অঘূর্ণনশীল হবে কি না? গাণিতিকভাবে যাচাই করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol1d')">উত্তর দেখুন</button>
+                        <div id="sol1d" class="solution-box">
+                            <strong>হিন্টস:</strong> অঘূর্ণনশীল হওয়ার শর্ত $\nabla \times \vec{V} = 0$। <br>
+                            $a=0$ বসিয়ে $\vec{V}$ এর কার্ল নির্ণয় করো। <br>
+                            $\hat{i}$ এর সহগ: $\frac{\partial}{\partial y}(2xz+y) - \frac{\partial}{\partial z}(x^2) = 1 - 0 = 1$। <br>
+                            যেহেতু প্রথম উপাংশই শূন্য নয় ($1 \neq 0$), তাই কার্ল শূন্য ভেক্টর হবে না। <br>
+                            সুতরাং, ভেক্টর ক্ষেত্রটি ঘূর্ণনশীল (অঘূর্ণনশীল নয়)।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #673ab7;">প্রশ্ন নং - ০২ [আপেক্ষিক বেগ]</div>
+                
+                <div class="stem-box">
+                    একটি গাড়ি $40 \ kmh^{-1}$ বেগে পূর্ব দিকে চলছে। এসময় আকাশ থেকে উলম্বভাবে $30 \ kmh^{-1}$ বেগে বৃষ্টি পড়া শুরু হলো। বাতাসের প্রভাব নেই।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> সীমাবদ্ধ ভেক্টর কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> নৌকার গুন যত লম্বা হয়, নৌকা টানা তত সহজ হয় কেন? <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> গাড়ির চালকের নিকট বৃষ্টি কত বেগে পড়ছে বলে মনে হবে? <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol2c')">উত্তর দেখুন</button>
+                        <div id="sol2c" class="solution-box">
+                            <strong>সমাধান:</strong> আপেক্ষিক বেগ $|\vec{v}_{rc}| = \sqrt{v_r^2 + v_c^2}$ (যেহেতু মধ্যবর্তী কোণ $90^\circ$)। <br>
+                            $v_r = 30, v_c = 40$ <br>
+                            $|\vec{v}_{rc}| = \sqrt{30^2 + 40^2} = \sqrt{900 + 1600} = \sqrt{2500} = 50 \ kmh^{-1}$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> গাড়ির সামনের ও পিছনের কাঁচের মধ্যে কোনটি ভিজবে? গাণিতিক যুক্তিসহ মতামত দাও। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol2d')">উত্তর দেখুন</button>
+                        <div id="sol2d" class="solution-box">
+                            <strong>হিন্টস:</strong> আপেক্ষিক বেগের দিক বের করতে হবে। <br>
+                            $\tan\theta = \frac{v_c}{v_r} = \frac{40}{30} = 1.33 \Rightarrow \theta = 53.13^\circ$ (উলম্বের সাথে)। <br>
+                            
+                            যেহেতু গাড়ি সামনে এগোচ্ছে, বৃষ্টির আপেক্ষিক দিক গাড়ির সামনের দিকে কাত হয়ে আসবে। ফলে **সামনের কাঁচ** ভিজবে। পিছনের কাঁচ বৃষ্টি থেকে রক্ষা পাবে (যদি কাঁচের ঢাল বৃষ্টির কোণের চেয়ে বেশি খাড়া না হয়)।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #673ab7;">প্রশ্ন নং - ০৩ [লব্ধি বল]</div>
+                
+                <div class="stem-box">
+                    দুটি বলের লব্ধির মান $40 \ N$। বল দুটির মধ্যে ছোট বলটির মান $30 \ N$ এবং এটি লব্ধির সাথে লম্বভাবে ক্রিয়া করে।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> নাল ভেক্টর কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> ভেক্টর যোগের ত্রিভুজ সূত্রটি বিবৃত করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> অপর বলটির (বড় বল) মান নির্ণয় করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol3c')">উত্তর দেখুন</button>
+                        <div id="sol3c" class="solution-box">
+                            <strong>সমাধান:</strong> ধরি, ছোট বল $P=30N$, লব্ধি $R=40N$, এবং বড় বল $Q$। <br>
+                            শর্তমতে, লব্ধি $R$ ছোট বল $P$ এর সাথে লম্ব ($\theta=90^\circ$)। <br>
+                            চিত্র হতে পিথাগোরাসের সূত্রানুসারে (সামান্তরিকটি আয়তক্ষেত্র বা ত্রিভুজ সূত্র দিয়ে ভাবলে): <br>
+                            অতিভুজ হবে বড় বল $Q$। <br>
+                            $Q^2 = P^2 + R^2$ <br>
+                            $Q = \sqrt{30^2 + 40^2} = 50 \ N$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> বলদ্বয়ের মধ্যবর্তী কোণ কত? <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol3d')">উত্তর দেখুন</button>
+                        <div id="sol3d" class="solution-box">
+                            <strong>হিন্টস:</strong> আমরা জানি, $\tan\theta = \frac{Q \sin\alpha}{P + Q \cos\alpha}$। <br>
+                            এখানে $\theta = 90^\circ$, তাই হর শূন্য হবে। <br>
+                            $P + Q \cos\alpha = 0$ <br>
+                            $\cos\alpha = -\frac{P}{Q} = -\frac{30}{50} = -0.6$ <br>
+                            $\alpha = \cos^{-1}(-0.6) = 126.87^\circ$।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #673ab7;">প্রশ্ন নং - ০৪ [ভেক্টরের জ্যামিতি]</div>
+                
+                <div class="stem-box">
+                    ত্রিভুজের দুটি বাহু যথাক্রমে $\vec{A} = 2\hat{i} + 2\hat{j} - \hat{k}$ এবং $\vec{B} = 6\hat{i} - 3\hat{j} + 2\hat{k}$।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> ভেক্টর গুণন কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> $\hat{i} \cdot \hat{j} = 0$ কেন? ব্যাখ্যা করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> $\vec{A}$ ভেক্টর বরাবর $\vec{B}$ ভেক্টরের উপাংশ নির্ণয় করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol4c')">উত্তর দেখুন</button>
+                        <div id="sol4c" class="solution-box">
+                            <strong>সমাধান:</strong> উপাংশ $= (\frac{\vec{A} \cdot \vec{B}}{|\vec{A}|}) \hat{a}$ বা শুধু মান চাইলে অভিক্ষেপ। <br>
+                            প্রশ্নে সাধারণত "উপাংশ" বললে ভেক্টর উপাংশ বোঝায়, তবে অনেক সময় মানও চায়। <br>
+                            অভিক্ষেপ $= \frac{\vec{A} \cdot \vec{B}}{|\vec{A}|}$ <br>
+                            $\vec{A} \cdot \vec{B} = 12 - 6 - 2 = 4$ <br>
+                            $|\vec{A}| = \sqrt{4+4+1} = 3$ <br>
+                            অভিক্ষেপ $= 4/3$। <br>
+                            উপাংশ ভেক্টর $= \frac{4}{3} \times \frac{2\hat{i}+2\hat{j}-\hat{k}}{3} = \frac{4}{9}(2\hat{i}+2\hat{j}-\hat{k})$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> উদ্দীপকের ভেক্টর দুটি দিয়ে গঠিত ত্রিভুজের ক্ষেত্রফল এবং সামান্তরিকের ক্ষেত্রফলের অনুপাত নির্ণয় করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol4d')">উত্তর দেখুন</button>
+                        <div id="sol4d" class="solution-box">
+                            <strong>হিন্টস:</strong> <br>
+                            সামান্তরিকের ক্ষেত্রফল = $|\vec{A} \times \vec{B}|$ <br>
+                            ত্রিভুজের ক্ষেত্রফল = $\frac{1}{2} |\vec{A} \times \vec{B}|$ <br>
+                            ক্রস গুণফলের মান বের করো। <br>
+                            অনুপাত সর্বদা ১:২ হবে (ত্রিভুজ : সামান্তরিক)। গাণিতিক মান বের করে দেখাও।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2024 Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+    <script>
+        // টাইমার সেটআপ
+        let timeLeft = 40 * 60; 
+        const timerElement = document.getElementById('timer');
+        
+        const countdown = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "সময় শেষ!";
+                alert("পরীক্ষার সময় শেষ হয়েছে!");
+            }
+            timeLeft--;
+        }, 1000);
+
+        // উত্তর দেখানোর ফাংশন
+        function toggleSol(id) {
+            const x = document.getElementById(id);
+            if (x.style.display === "none" || x.style.display === "") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>

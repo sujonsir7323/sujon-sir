@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortcuts - ভেক্টর | Sujon Sir</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e0f2f1; /* Teal Light Background */
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 60px; 
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #009688;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #009688 0%, #00796b 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px; position: relative;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 26px; font-weight: 700; }
+        .header p { margin: 5px 0; font-size: 15px; opacity: 0.9; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.3); }
+
+        /* টপিক কার্ড */
+        .topic-card {
+            background: white; margin: 20px; padding: 20px;
+            border-radius: 15px; border-left: 5px solid #009688;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .topic-card:hover { transform: translateY(-3px); }
+
+        .topic-title {
+            font-size: 18px; font-weight: 700; color: #00796b;
+            margin-bottom: 15px; border-bottom: 1px dashed #b2dfdb;
+            padding-bottom: 8px; display: flex; align-items: center; gap: 10px;
+        }
+        
+        .formula-box {
+            background: #e0f2f1; padding: 10px; border-radius: 8px;
+            margin-bottom: 10px; border: 1px solid #b2dfdb;
+            font-size: 15px;
+        }
+        .note { font-size: 13px; color: #666; font-style: italic; margin-top: 5px; }
+        
+        /* টেবিল ডিজাইন */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+        th, td { border: 1px solid #b2dfdb; padding: 8px; text-align: center; }
+        th { background: #b2dfdb; color: #004d40; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div><p>সূত্র লোড হচ্ছে...</p></div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        
+        <div class="header">
+            <a href="physics_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-project-diagram" style="font-size: 40px; margin-bottom: 10px; color: #ffeb3b;"></i>
+            
+            <h1>Self Study with Sujon Sir</h1>
+            <p>পদার্থবিজ্ঞান ১ম পত্র | অধ্যায় ২: ভেক্টর শর্টকাট</p>
+        </div>
+
+        <div class="topic-card">
+            <div class="topic-title"><i class="fas fa-arrows-alt"></i> ১. লব্ধির মান ও দিক</div>
+            
+            <p>দুটি ভেক্টর $P$ ও $Q$ এবং মধ্যবর্তী কোণ $\alpha$ হলে:</p>
+            <div class="formula-box">
+                লব্ধি, $R = \sqrt{P^2 + Q^2 + 2PQ \cos\alpha}$
+            </div>
+            <div class="formula-box">
+                দিক, $\tan\theta = \frac{Q \sin\alpha}{P + Q \cos\alpha}$
+            </div>
+            <p class="note">যার সাথে কোণ ($\theta$) উৎপন্ন হবে, সে হরে একা থাকবে ($P$)।</p>
+        </div>
+
+        <div class="topic-card">
+            <div class="topic-title"><i class="fas fa-ship"></i> ২. নদী ও নৌকা (Shortcut Magic)</div>
+            <p>নদীর প্রস্থ $d$, স্রোতের বেগ $u$, নৌকার বেগ $v$।</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>শর্ত</th>
+                        <th>সূত্র / শর্টকাট</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ন্যূনতম দূরত্বে (সোজা) পারাপার</td>
+                        <td>$\alpha = \cos^{-1}(-\frac{u}{v})$<br>$t = \frac{d}{\sqrt{v^2-u^2}}$</td>
+                    </tr>
+                    <tr>
+                        <td>ন্যূনতম সময়ে পারাপার</td>
+                        <td>$\alpha = 90^\circ$<br>$t = \frac{d}{v}$</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="topic-card">
+            <div class="topic-title"><i class="fas fa-umbrella"></i> ৩. বৃষ্টি ও ছাতা</div>
+            <p>মানুষের বেগ $v_m$, বৃষ্টির বেগ $v_r$ (খাড়া নিচের দিকে)।</p>
+            
+            <div class="formula-box">
+                উলম্বের সাথে কোণ: $\theta = \tan^{-1}\left(\frac{v_{\text{man}}}{v_{\text{rain}}}\right)$
+            </div>
+            <p class="note">যদি বাতাস থাকে তবে বাতাসের বেগ বৃষ্টির বেগের সাথে ভেক্টর যোগ হবে।</p>
+        </div>
+
+        <div class="topic-card">
+            <div class="topic-title"><i class="fas fa-times"></i> ৪. ডট ও ক্রস গুণন</div>
+            
+            <div class="formula-box">
+                ডট গুণন: $\vec{A} \cdot \vec{B} = AB \cos\theta = A_xB_x + A_yB_y + A_zB_z$
+            </div>
+            <div class="formula-box" style="background: #e0f2f1; border: 1px solid #009688;">
+                শর্ত: $\vec{A} \cdot \vec{B} = 0$ হলে ভেক্টরদ্বয় <strong>পরস্পর লম্ব</strong>।
+            </div>
+
+            <div class="formula-box" style="margin-top: 10px;">
+                ক্রস গুণন: $|\vec{A} \times \vec{B}| = AB \sin\theta$ (ক্ষেত্রফল)
+            </div>
+            <div class="formula-box" style="background: #e0f2f1; border: 1px solid #009688;">
+                শর্ত: $\vec{A} \times \vec{B} = 0$ হলে ভেক্টরদ্বয় <strong>পরস্পর সমান্তরাল</strong>।
+            </div>
+        </div>
+
+        <div class="topic-card">
+            <div class="topic-title"><i class="fas fa-compress-arrows-alt"></i> ৫. অভিক্ষেপ ও উপাংশ</div>
+            
+            <div class="formula-box">
+                $\vec{B}$ এর উপর $\vec{A}$ এর অভিক্ষেপ = $\frac{\vec{A} \cdot \vec{B}}{|\vec{B}|}$
+            </div>
+            <div class="formula-box">
+                $\vec{B}$ বরাবর $\vec{A}$ এর উপাংশ = $\left(\frac{\vec{A} \cdot \vec{B}}{|\vec{B}|}\right) \hat{b}$
+            </div>
+            <p class="note">যার উপর অভিক্ষেপ, তার মান দিয়ে ভাগ।</p>
+        </div>
+
+        <div class="topic-card">
+            <div class="topic-title"><i class="fas fa-wave-square"></i> ৬. ভেক্টর ক্যালকুলাস (Condition)</div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>অপারেশন</th>
+                        <th>শর্ত ও ফলাফল</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>গ্রেডিয়েন্ট ($\nabla \phi$)</td>
+                        <td>স্কেলার $\to$ ভেক্টর (ম্যাক্সিমাম ঢাল)</td>
+                    </tr>
+                    <tr>
+                        <td>ডাইভারজেন্স ($\nabla \cdot \vec{V}$)</td>
+                        <td>$\nabla \cdot \vec{V} = 0$ হলে <strong>সলিডনয়ডাল</strong> (অসংকুচনীয়)।</td>
+                    </tr>
+                    <tr>
+                        <td>কার্ল ($\nabla \times \vec{V}$)</td>
+                        <td>$\nabla \times \vec{V} = 0$ হলে <strong>অঘূর্ণনশীল</strong> বা সংরক্ষণশীল।</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; color: #777; font-size: 13px; padding-bottom: 20px;">
+            &copy; 2024 Self Study with Sujon Sir | Physics Dept.
+        </div>
+
+    </div>
+
+</body>
+</html>

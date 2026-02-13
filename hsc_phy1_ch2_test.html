@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অধ্যায় ২ - মূল্যায়ন টেস্ট (Physics)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e0f2f1; /* Physics Ch 2 (Vector) এর জন্য হালকা টিল ব্যাকগ্রাউন্ড */
+            margin: 0; 
+            padding: 0; 
+            color: #333;
+        }
+        .container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background: #fdfdfd; 
+            min-height: 100vh; 
+            padding-bottom: 20px;
+        }
+        
+        /* ১. হেডার ডিজাইন */
+        .header {
+            background: linear-gradient(135deg, #009688 0%, #004d40 100%); /* Teal Gradient */
+            color: white;
+            padding: 35px 20px;
+            text-align: center;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            position: relative;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .header h1 { font-size: 26px; margin: 10px 0 5px; font-weight: 700; }
+        .header p { font-size: 14px; color: #b2dfdb; margin-top: 5px; }
+        
+        /* ব্যাক বাটন */
+        .back-btn {
+            position: absolute; top: 20px; left: 20px;
+            color: white; font-size: 20px; text-decoration: none;
+            background: rgba(255,255,255,0.2);
+            width: 35px; height: 35px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.3); }
+
+        /* ২. বাণী সেকশন */
+        .quote-box {
+            background: #e0f7fa;
+            padding: 15px;
+            margin: 0 20px 25px 20px;
+            border-radius: 10px;
+            border-left: 5px solid #009688;
+            color: #00695c;
+            font-size: 14px;
+            text-align: center;
+            font-style: italic;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* ৩. পেজ টাইটেল */
+        .title-wrapper { text-align: center; margin-bottom: 20px; }
+        .page-title {
+            text-align: center; font-size: 20px; font-weight: bold; color: #00796b;
+            border-bottom: 2px dashed #4db6ac;
+            display: inline-block; padding-bottom: 5px;
+        }
+
+        /* টেস্ট কার্ড ডিজাইন */
+        .test-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 0 20px;
+        }
+
+        /* সূত্র বাটন ডিজাইন */
+        .formula-link {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-left: 6px solid #00897b; /* টিল বর্ডার হাইলাইট */
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 5px;
+        }
+        .formula-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+        .f-icon-box {
+            width: 45px; height: 45px;
+            background: #e0f2f1;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin-right: 15px;
+            color: #00897b;
+            font-size: 20px;
+        }
+        .f-content h3 { margin: 0; font-size: 18px; color: #333; font-weight: 700; }
+        .f-content p { margin: 2px 0 0; font-size: 13px; color: #666; }
+        .f-arrow { margin-left: auto; color: #bbb; }
+
+        /* সাধারণ টেস্ট কার্ড */
+        .test-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-top: 5px solid #009688;
+        }
+        
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+        .test-name { font-size: 20px; font-weight: 700; color: #333; }
+        .test-info { font-size: 13px; color: #666; background: #eee; padding: 3px 8px; border-radius: 4px;}
+
+        /* বাটন গ্রুপ */
+        .btn-group { display: flex; gap: 10px; }
+        
+        .action-btn {
+            flex: 1; padding: 12px; border-radius: 8px;
+            text-decoration: none; text-align: center;
+            font-weight: 600; font-size: 15px; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column;
+        }
+
+        .btn-cq { background: #e0f7fa; color: #006064; border: 1px solid #b2ebf2; }
+        .btn-cq:hover { background: #b2ebf2; }
+
+        .btn-mcq { background: #e8eaf6; color: #1a237e; border: 1px solid #c5cae9; }
+        .btn-mcq:hover { background: #c5cae9; }
+
+        .btn-icon { font-size: 20px; margin-bottom: 5px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="header">
+            <a href="phy_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-location-arrow" style="font-size: 45px; color: #a7ffeb; margin-bottom: 10px;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>"মান ও দিক, ভেক্টরের ঠিক"</p>
+        </div>
+
+        <div class="quote-box">
+            <i class="fas fa-quote-left"></i> 
+            সাফল্যের কোনো শর্টকাট নেই, আছে কেবল পরিশ্রম।
+        </div>
+
+        <div class="title-wrapper">
+            <div class="page-title">অধ্যায় ২: ভেক্টর</div>
+        </div>
+
+        <div class="test-wrapper">
+
+            <a href="phy1_ch2_shortcut.html" class="formula-link">
+                <div class="f-icon-box">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <div class="f-content">
+                    <h3>প্রয়োজনীয় সূত্র ও শর্টকাট</h3>
+                    <p>পরীক্ষার আগে এক নজরে দেখে নাও</p>
+                </div>
+                <div class="f-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </a>
+
+            <div class="test-card">
+                <div class="test-header">
+                    <div class="test-name">মডেল টেস্ট - ০১</div>
+                    <div class="test-info">পূর্ণমান: ৬৫</div>
+                </div>
+                <div class="btn-group">
+                    <a href="phy1_ch2_cq_model1.html" class="action-btn btn-cq">
+                        <i class="fas fa-pen-alt btn-icon"></i>
+                        সৃজনশীল (CQ)
+                    </a>
+                    <a href="phy1_ch2_mcq_model1.html" class="action-btn btn-mcq">
+                        <i class="fas fa-list-ul btn-icon"></i>
+                        বহুনির্বাচনি (MCQ)
+                    </a>
+                </div>
+            </div>
+
+            <div class="test-card">
+                <div class="test-header">
+                    <div class="test-name">মডেল টেস্ট - ০২</div>
+                    <div class="test-info">পূর্ণমান: ৬৫</div>
+                </div>
+                <div class="btn-group">
+                    <a href="phy1_ch2_cq_model2.html" class="action-btn btn-cq">
+                        <i class="fas fa-pen-alt btn-icon"></i>
+                        সৃজনশীল (CQ)
+                    </a>
+                    <a href="phy1_ch2_mcq_model2.html" class="action-btn btn-mcq">
+                        <i class="fas fa-list-ul btn-icon"></i>
+                        বহুনির্বাচনি (MCQ)
+                    </a>
+                </div>
+            </div>
+
+            <div class="test-card">
+                <div class="test-header">
+                    <div class="test-name">মডেল টেস্ট - ০৩</div>
+                    <div class="test-info">পূর্ণমান: ৬৫</div>
+                </div>
+                <div class="btn-group">
+                    <a href="phy1_ch2_cq_model3.html" class="action-btn btn-cq">
+                        <i class="fas fa-pen-alt btn-icon"></i>
+                        সৃজনশীল (CQ)
+                    </a>
+                    <a href="phy1_ch2_mcq_model3.html" class="action-btn btn-mcq">
+                        <i class="fas fa-list-ul btn-icon"></i>
+                        বহুনির্বাচনি (MCQ)
+                    </a>
+                </div>
+            </div>
+
+            <div class="test-card">
+                <div class="test-header">
+                    <div class="test-name">মডেল টেস্ট - ০৪</div>
+                    <div class="test-info">পূর্ণমান: ৬৫</div>
+                </div>
+                <div class="btn-group">
+                    <a href="phy1_ch2_cq_model4.html" class="action-btn btn-cq">
+                        <i class="fas fa-pen-alt btn-icon"></i>
+                        সৃজনশীল (CQ)
+                    </a>
+                    <a href="phy1_ch2_mcq_model4.html" class="action-btn btn-mcq">
+                        <i class="fas fa-list-ul btn-icon"></i>
+                        বহুনির্বাচনি (MCQ)
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

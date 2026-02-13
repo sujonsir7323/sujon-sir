@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics CQ - অধ্যায় ২ (মডেল ২)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e8eaf6; /* Indigo Light Background */
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 60px; 
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #3f51b5;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #3f51b5 0%, #303f9f 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ইনফো বক্স */
+        .info-box {
+            padding: 15px; margin: 0 20px 20px; background: #e8eaf6;
+            border-radius: 10px; border: 1px solid #c5cae9;
+            text-align: center;
+        }
+        .timer { font-size: 22px; font-weight: bold; color: #d32f2f; margin-top: 5px; }
+
+        /* সৃজনশীল প্রশ্ন কার্ড */
+        .cq-container { padding: 0 20px; }
+        .question-card {
+            background: #fff; padding: 20px; margin-bottom: 25px;
+            border-radius: 12px; border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-top: 5px solid #3f51b5;
+        }
+        .stem-box {
+            background: #f5f5f5; padding: 15px; border-radius: 8px;
+            margin-bottom: 15px; border-left: 4px solid #ff4081;
+            font-size: 16px; line-height: 1.6;
+        }
+        .sub-questions { list-style: none; padding: 0; }
+        .sub-questions li {
+            margin-bottom: 10px; padding: 8px 0;
+            border-bottom: 1px dashed #eee; font-size: 15px;
+        }
+        .sub-questions li:last-child { border-bottom: none; }
+        .mark {
+            float: right; font-size: 12px; background: #3f51b5;
+            color: white; padding: 2px 8px; border-radius: 10px;
+        }
+        
+        /* উত্তর বাটন */
+        .solution-btn {
+            background: white; border: 1px solid #3f51b5; color: #3f51b5;
+            padding: 5px 15px; border-radius: 20px; cursor: pointer;
+            font-size: 13px; margin-top: 10px; transition: 0.3s;
+        }
+        .solution-btn:hover { background: #3f51b5; color: white; }
+        
+        .solution-box {
+            display: none; margin-top: 10px; padding: 10px;
+            background: #e8eaf6; border-radius: 8px; color: #283593; font-size: 14px;
+        }
+
+        .footer { text-align: center; color: #777; font-size: 13px; margin-top: 30px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div><p>প্রশ্ন তৈরি হচ্ছে...</p></div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        
+        <div class="header">
+            <a href="physics_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-location-arrow" style="font-size: 40px; margin-bottom: 10px; color: #ffeb3b;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>পদার্থবিজ্ঞান ১ম পত্র | অধ্যায় ২: ভেক্টর (Model 2)</p>
+        </div>
+
+        <div class="info-box">
+            <h3 style="margin:0;">সৃজনশীল পরীক্ষা (CQ) - মডেল ২</h3>
+            <p style="font-size: 13px; color: #555;">পূর্ণমান: ৪০ | সময়: ৪০ মিনিট</p>
+            <div class="timer" id="timer">সময় বাকি: ৪০:০০ মিনিট</div>
+        </div>
+
+        <div class="cq-container">
+            
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #3f51b5;">প্রশ্ন নং - ০১ [ভেক্টর অপারেটর]</div>
+                
+                <div class="stem-box">
+                    একটি ভেক্টর ক্ষেত্র $\vec{F} = (4xy - z^3)\hat{i} + (2x^2)\hat{j} - (3xz^2)\hat{k}$।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> বিপ্রতীপ ভেক্টর কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> $\vec{A} \times \vec{B} = \vec{B} \times \vec{A}$ কি না? ব্যাখ্যা করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> $(1, -1, 1)$ বিন্দুতে $\vec{F}$ এর ডাইভারজেন্স নির্ণয় করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol1c')">উত্তর দেখুন</button>
+                        <div id="sol1c" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            $\nabla \cdot \vec{F} = \frac{\partial}{\partial x}(4xy - z^3) + \frac{\partial}{\partial y}(2x^2) + \frac{\partial}{\partial z}(-3xz^2)$ <br>
+                            $= 4y + 0 - 6xz$ <br>
+                            বিন্দু $(1, -1, 1)$ এ মান: <br>
+                            $= 4(-1) - 6(1)(1) = -4 - 6 = -10$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> উদ্দীপকের ভেক্টর ক্ষেত্রটি সংরক্ষণশীল কি না? গাণিতিকভাবে যাচাই করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol1d')">উত্তর দেখুন</button>
+                        <div id="sol1d" class="solution-box">
+                            <strong>হিন্টস:</strong> ভেক্টরটি সংরক্ষণশীল হবে যদি এর কার্ল শূন্য হয় ($\nabla \times \vec{F} = 0$)। <br>
+                            নির্ণায়ক পদ্ধতিতে কার্ল বের করো: <br>
+                            $\hat{i}$ এর সহগ: $\frac{\partial}{\partial y}(-3xz^2) - \frac{\partial}{\partial z}(2x^2) = 0 - 0 = 0$ <br>
+                            $\hat{j}$ এর সহগ: $\frac{\partial}{\partial z}(4xy-z^3) - \frac{\partial}{\partial x}(-3xz^2) = -3z^2 - (-3z^2) = 0$ <br>
+                            $\hat{k}$ এর সহগ: $\frac{\partial}{\partial x}(2x^2) - \frac{\partial}{\partial y}(4xy-z^3) = 4x - 4x = 0$ <br>
+                            যেহেতু কার্ল শূন্য, তাই এটি সংরক্ষণশীল বল ক্ষেত্র।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #3f51b5;">প্রশ্ন নং - ০২ [লব্ধি বল]</div>
+                
+                <div class="stem-box">
+                    একটি বস্তুর উপর একই সাথে দুটি বল $10 \ N$ এবং $6 \ N$ ক্রিয়া করছে। বলদ্বয়ের মধ্যবর্তী কোণ $60^\circ$।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> লম্ব একক ভেক্টর কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> দুটি ভেক্টরের লব্ধি কি ভেক্টর দুটির চেয়ে ছোট হতে পারে? <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> উদ্দীপকের বলদ্বয়ের লব্ধির মান নির্ণয় করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol2c')">উত্তর দেখুন</button>
+                        <div id="sol2c" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            $R = \sqrt{P^2 + Q^2 + 2PQ \cos\alpha}$ <br>
+                            $R = \sqrt{10^2 + 6^2 + 2 \times 10 \times 6 \times \cos 60^\circ}$ <br>
+                            $R = \sqrt{100 + 36 + 60} = \sqrt{196} = 14 \ N$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> যদি বলদ্বয়ের মধ্যবর্তী কোণ পরিবর্তন করে $120^\circ$ করা হয়, তবে লব্ধির দিক কীভাবে পরিবর্তিত হবে? <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol2d')">উত্তর দেখুন</button>
+                        <div id="sol2d" class="solution-box">
+                            <strong>হিন্টস:</strong> <br>
+                            ১ম ক্ষেত্রে ($60^\circ$): $\tan\theta_1 = \frac{6 \sin 60}{10 + 6 \cos 60}$। এখান থেকে $\theta_1$ বের করো। <br>
+                            ২য় ক্ষেত্রে ($120^\circ$): $\tan\theta_2 = \frac{6 \sin 120}{10 + 6 \cos 120}$। এখান থেকে $\theta_2$ বের করো। <br>
+                            তারপর দুটির পার্থক্য দেখাও।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #3f51b5;">প্রশ্ন নং - ০৩ [নদী পারাপার]</div>
+                
+                <div class="stem-box">
+                    $2 \ km$ প্রশস্ত একটি নদীতে স্রোতের বেগ $6 \ kmh^{-1}$। একজন মাঝি $10 \ kmh^{-1}$ বেগে নৌকা চালাতে পারেন। তিনি সোজা অপর পাড়ে পৌঁছাতে চান।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> স্বাধীন ভেক্টর কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> বাতাস প্রবাহিত হওয়ার সময় দৌড়বিদকে সামনের দিকে ঝুঁকে দৌড়াতে হয় কেন? <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> মাঝিকে কোন দিকে নৌকা চালাতে হবে? <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol3c')">উত্তর দেখুন</button>
+                        <div id="sol3c" class="solution-box">
+                            <strong>সমাধান:</strong> সোজা অপর পাড়ে পৌঁছাতে হলে (ন্যূনতম দূরত্বে), লব্ধি বেগ প্রস্থ বরাবর হতে হবে। <br>
+                            ধরি, স্রোতের সাথে $\alpha$ কোণে যাত্রা করতে হবে। <br>
+                            $\cos\alpha = -\frac{u}{v} = -\frac{6}{10} = -0.6$ <br>
+                            $\alpha = \cos^{-1}(-0.6) = 126.87^\circ$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> যদি মাঝি স্রোতের অনুকূলে নৌকা চালাতেন তবে নদী পার হতে কত সময় লাগত? উদ্দীপকের সময়ের সাথে তুলনা করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol3d')">উত্তর দেখুন</button>
+                        <div id="sol3d" class="solution-box">
+                            <strong>হিন্টস:</strong> <br>
+                            উদ্দীপকের ক্ষেত্রে (সোজা পারাপার): $t_1 = \frac{d}{v \sin\alpha} = \frac{2}{10 \sin 126.87^\circ}$। <br>
+                            স্রোতের অনুকূলে চালালে লব্ধি বেগ $R = u+v = 16$ কিন্তু নদী পারাপারে কার্যকরী বেগ হবে নৌকার বেগের উপাংশ। যদি তিনি লম্বভাবে চালাতেন তবে সবচেয়ে কম সময় লাগত। <br>
+                            তবে প্রশ্নে "স্রোতের অনুকূলে" মানে যদি তিনি স্রোতের দিকেই যান, তবে তিনি অপর পাড়ে পৌঁছাবেন না (অসীম দূরত্বে যাবেন)। <br>
+                            সম্ভবত প্রশ্নে "স্রোতের সাথে লম্বভাবে" বা "ন্যূনতম সময়ে" বোঝানো হয়েছে। যদি ন্যূনতম সময় ধরা হয়, $t_{min} = \frac{d}{v} = \frac{2}{10} = 0.2h$। <br>
+                            $t_1$ বের করে $t_{min}$ এর সাথে তুলনা করো।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #3f51b5;">প্রশ্ন নং - ০৪ [ভেক্টরের জ্যামিতিক প্রয়োগ]</div>
+                
+                <div class="stem-box">
+                    একটি সামান্তরিকের দুটি সন্নিহিত বাহু ভেক্টর $\vec{A} = 3\hat{i} + \hat{j} - 2\hat{k}$ এবং $\vec{B} = \hat{i} - 2\hat{j} + 4\hat{k}$ দ্বারা নির্দেশিত।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> আয়ত একক ভেক্টর কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> তিনটি ভেক্টর রাশি একই সমতলে থাকার শর্ত কী? <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> সামান্তরিকটির ক্ষেত্রফল নির্ণয় করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol4c')">উত্তর দেখুন</button>
+                        <div id="sol4c" class="solution-box">
+                            <strong>সমাধান:</strong> ক্ষেত্রফল = $|\vec{A} \times \vec{B}|$ <br>
+                            $\vec{A} \times \vec{B} = \begin{vmatrix} \hat{i} & \hat{j} & \hat{k} \\ 3 & 1 & -2 \\ 1 & -2 & 4 \end{vmatrix}$ <br>
+                            $= \hat{i}(4-4) - \hat{j}(12+2) + \hat{k}(-6-1)$ <br>
+                            $= 0\hat{i} - 14\hat{j} - 7\hat{k}$ <br>
+                            মান = $\sqrt{0^2 + (-14)^2 + (-7)^2} = \sqrt{196+49} = \sqrt{245} = 15.65$ বর্গ একক।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> ভেক্টর দুটি পরস্পর লম্ব হবে কি না? গাণিতিকভাবে যাচাই করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol4d')">উত্তর দেখুন</button>
+                        <div id="sol4d" class="solution-box">
+                            <strong>হিন্টস:</strong> লম্ব হওয়ার শর্ত $\vec{A} \cdot \vec{B} = 0$। <br>
+                            $\vec{A} \cdot \vec{B} = (3)(1) + (1)(-2) + (-2)(4)$ <br>
+                            $= 3 - 2 - 8 = -7$ <br>
+                            যেহেতু ডট গুণফল শূন্য নয় ($-7 \neq 0$), তাই ভেক্টর দুটি পরস্পর লম্ব নয়।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2024 Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+    <script>
+        // টাইমার সেটআপ
+        let timeLeft = 40 * 60; 
+        const timerElement = document.getElementById('timer');
+        
+        const countdown = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "সময় শেষ!";
+                alert("পরীক্ষার সময় শেষ হয়েছে!");
+            }
+            timeLeft--;
+        }, 1000);
+
+        // উত্তর দেখানোর ফাংশন
+        function toggleSol(id) {
+            const x = document.getElementById(id);
+            if (x.style.display === "none" || x.style.display === "") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>

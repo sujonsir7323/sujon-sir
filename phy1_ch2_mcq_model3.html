@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics MCQ - অধ্যায় ২ (মডেল ৩)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { font-family: 'Hind Siliguri', sans-serif; background: #ede7f6; margin: 0; padding: 0; color: #333; user-select: none; }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; min-height: 100vh; padding-bottom: 60px; }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #673ab7; /* Deep Purple Theme */
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #673ab7 0%, #512da8 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 22px; font-weight: 700; }
+        .back-btn { color: white; float: left; font-size: 20px; }
+
+        /* ইনপুট বক্স */
+        .info-box {
+            padding: 20px; margin: 0 20px; background: #ede7f6;
+            border-radius: 10px; border: 1px solid #d1c4e9;
+            text-align: center;
+        }
+        .input-field {
+            width: 80%; padding: 12px; border-radius: 5px; border: 1px solid #aaa;
+            font-family: 'Hind Siliguri', sans-serif; font-size: 16px; margin-top: 10px;
+            outline: none;
+        }
+        .timer { font-size: 20px; font-weight: bold; color: #d32f2f; margin-top: 10px; }
+
+        /* প্রশ্ন কার্ড */
+        .mcq-container { padding: 20px; }
+        .question-card {
+            background: #fff; padding: 15px; margin-bottom: 20px;
+            border-radius: 10px; border: 1px solid #eee;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+        .q-header { font-weight: 600; font-size: 17px; margin-bottom: 15px; display: flex; gap: 10px; align-items: flex-start; }
+        .board-tag { font-size: 11px; background: #eee; color: #555; padding: 2px 6px; border-radius: 4px; height: fit-content; white-space: nowrap; margin-top: 3px; }
+        
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .option {
+            display: flex; align-items: center; padding: 10px; border: 1px solid #ddd;
+            border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 15px;
+        }
+        .option:hover { background: #f9f9f9; }
+        .option input { margin-right: 10px; transform: scale(1.2); cursor: pointer; }
+
+        /* কালার স্কিম */
+        .correct-ans { background-color: #d4edda !important; border-color: #c3e6cb !important; color: #155724; }
+        .wrong-ans { background-color: #f8d7da !important; border-color: #f5c6cb !important; color: #721c24; }
+        .missed-ans { border: 2px solid #ffc107 !important; background-color: #fff3cd; }
+
+        /* বাটন */
+        .submit-btn {
+            display: block; width: 90%; margin: 20px auto; padding: 15px;
+            background: #673ab7; color: white; font-size: 18px; font-weight: bold;
+            border: none; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(103, 58, 183, 0.3);
+            transition: 0.3s;
+        }
+        .submit-btn:hover { background: #512da8; transform: scale(1.02); }
+
+        /* রেজাল্ট পপআপ */
+        .result-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;
+        }
+        .result-box {
+            background: white; width: 90%; max-width: 400px; padding: 30px;
+            border-radius: 15px; text-align: center; position: relative; animation: popUp 0.4s ease;
+        }
+        @keyframes popUp { from {transform: scale(0.5);} to {transform: scale(1);} }
+        
+        .score-circle {
+            width: 120px; height: 120px; background: #ede7f6; border-radius: 50%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin: 0 auto 20px; border: 5px solid #673ab7;
+        }
+        .score-number { font-size: 35px; font-weight: bold; color: #673ab7; }
+        .score-label { font-size: 12px; color: #666; }
+
+        .close-btn {
+            background: #d32f2f; color: white; border: none; padding: 10px 20px;
+            border-radius: 5px; margin-top: 15px; cursor: pointer; font-size: 14px;
+        }
+
+        @media (max-width: 500px) {
+            .options-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="spinner"></div>
+        <p>প্রশ্ন লোড হচ্ছে...</p>
+    </div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        <div class="header">
+            <a href="physics_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>পদার্থবিজ্ঞান ১ম পত্র | অধ্যায় ২: ভেক্টর (মডেল ৩)</p>
+        </div>
+
+        <div class="info-box">
+            <h3 style="margin:0 0 10px;">MCQ পরীক্ষা - মডেল ৩</h3>
+            <p style="font-size: 13px; color: #555;">পূর্ণমান: ২৫ | সময়: ২৫ মিনিট</p>
+            <div class="timer" id="timer">সময় বাকি: ২৫:০০ মিনিট</div>
+        </div>
+
+        <form id="quizForm" class="mcq-container">
+            <input type="hidden" name="_subject" value="Physics Ch2 MCQ Result: Model 3">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="obtained_score" id="hiddenScore">
+
+            <div style="margin-bottom: 20px; text-align: center;">
+                <input type="text" name="Student_Name" id="studentName" class="input-field" placeholder="তোমার নাম লিখ (বাধ্যতামূলক)..." required>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০১.</span> <span class="board-tag">[ঢাকা ১৯]</span>
+                    <span>দুটি ভেক্টরের লব্ধির মান সর্বোচ্চ হয় যখন তাদের মধ্যবর্তী কোণ—</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q1" value="a" data-correct="true"> $0^\circ$</label>
+                    <label class="option"><input type="radio" name="q1" value="b"> $90^\circ$</label>
+                    <label class="option"><input type="radio" name="q1" value="c"> $120^\circ$</label>
+                    <label class="option"><input type="radio" name="q1" value="d"> $180^\circ$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০২.</span> <span class="board-tag">[রাজশাহী ২২]</span>
+                    <span>$\vec{A} = 2\hat{i} - 3\hat{j} + \hat{k}$ এবং $\vec{B} = -\hat{i} + 2\hat{j} - 3\hat{k}$ হলে, $\vec{A} \cdot \vec{B}$ এর মান কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q2" value="a"> -8</label>
+                    <label class="option"><input type="radio" name="q2" value="b"> 10</label>
+                    <label class="option"><input type="radio" name="q2" value="c" data-correct="true"> -11</label>
+                    <label class="option"><input type="radio" name="q2" value="d"> 11</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৩.</span> <span class="board-tag">[যশোর ২১]</span>
+                    <span>ভেক্টর বিভাজনের উপাংশের সংখ্যা কয়টি হতে পারে?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q3" value="a"> ২টি</label>
+                    <label class="option"><input type="radio" name="q3" value="b"> ৩টি</label>
+                    <label class="option"><input type="radio" name="q3" value="c"> অসংখ্য</label>
+                    <label class="option"><input type="radio" name="q3" value="d" data-correct="true"> যেকোনো সংখ্যা</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৪.</span> <span class="board-tag">[সিলেট ২২]</span>
+                    <span>কোনটি সঠিক?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q4" value="a"> $\vec{A} \times \vec{B} = \vec{B} \times \vec{A}$</label>
+                    <label class="option"><input type="radio" name="q4" value="b"> $\vec{A} \cdot \vec{B} = - \vec{B} \cdot \vec{A}$</label>
+                    <label class="option"><input type="radio" name="q4" value="c" data-correct="true"> $\vec{A} \times \vec{B} = - (\vec{B} \times \vec{A})$</label>
+                    <label class="option"><input type="radio" name="q4" value="d"> $\vec{A} \times \vec{B} = \vec{A} \cdot \vec{B}$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৫.</span> <span class="board-tag">[কুমিল্লা ২০]</span>
+                    <span>$\vec{P} = 2\hat{i} - \hat{j}$ এবং $\vec{Q} = 4\hat{i} - 2\hat{j}$ ভেক্টর দুটি—</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q5" value="a"> পরস্পর লম্ব</label>
+                    <label class="option"><input type="radio" name="q5" value="b" data-correct="true"> পরস্পর সমান্তরাল</label>
+                    <label class="option"><input type="radio" name="q5" value="c"> সমান</label>
+                    <label class="option"><input type="radio" name="q5" value="d"> বিপরীত</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৬.</span> <span class="board-tag">[বরিশাল ২১]</span>
+                    <span>নদী পার হতে সবচেয়ে কম সময় লাগে যদি নৌকা চালানো হয়—</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q6" value="a"> স্রোতের অনুকূলে</label>
+                    <label class="option"><input type="radio" name="q6" value="b"> স্রোতের প্রতিকূলে</label>
+                    <label class="option"><input type="radio" name="q6" value="c" data-correct="true"> স্রোতের সাথে লম্বভাবে</label>
+                    <label class="option"><input type="radio" name="q6" value="d"> স্রোতের সাথে $45^\circ$ কোণে</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৭.</span> <span class="board-tag">[চট্টগ্রাম ১৯]</span>
+                    <span>$\hat{i} \times (\hat{j} \times \hat{k}) = ?$</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q7" value="a"> $\vec{0}$</label>
+                    <label class="option"><input type="radio" name="q7" value="b"> 1</label>
+                    <label class="option"><input type="radio" name="q7" value="c" data-correct="true"> $\vec{0}$</label>
+                    <label class="option"><input type="radio" name="q7" value="d"> $\hat{i}$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৮.</span> <span class="board-tag">[দিনাজপুর ২২]</span>
+                    <span>দুটি সমান ভেক্টরের লব্ধি এদের মধ্যবর্তী কোণকে কী করে?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q8" value="a"> দ্বিগুণ করে</label>
+                    <label class="option"><input type="radio" name="q8" value="b" data-correct="true"> সমদ্বিখণ্ডিত করে</label>
+                    <label class="option"><input type="radio" name="q8" value="c"> তিনগুণ করে</label>
+                    <label class="option"><input type="radio" name="q8" value="d"> কোনো পরিবর্তন করে না</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৯.</span> <span class="board-tag">[ময়মনসিংহ ২১]</span>
+                    <span>$X$-অক্ষ বরাবর একক ভেক্টর কোনটি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q9" value="a" data-correct="true"> $\hat{i}$</label>
+                    <label class="option"><input type="radio" name="q9" value="b"> $\hat{j}$</label>
+                    <label class="option"><input type="radio" name="q9" value="c"> $\hat{k}$</label>
+                    <label class="option"><input type="radio" name="q9" value="d"> $\hat{n}$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১০.</span> <span class="board-tag">[ঢাকা ২১]</span>
+                    <span>ঘূর্ণনশীল বস্তুর ক্ষেত্রে কোনটি সঠিক? (কৌণিক ভরবেগ $\vec{L}$, রৈখিক ভরবেগ $\vec{p}$, ব্যাসার্ধ ভেক্টর $\vec{r}$)</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q10" value="a"> $\vec{L} = \vec{p} \times \vec{r}$</label>
+                    <label class="option"><input type="radio" name="q10" value="b" data-correct="true"> $\vec{L} = \vec{r} \times \vec{p}$</label>
+                    <label class="option"><input type="radio" name="q10" value="c"> $\vec{L} = \vec{r} \cdot \vec{p}$</label>
+                    <label class="option"><input type="radio" name="q10" value="d"> $L = rp$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১১.</span> <span class="board-tag">[রাজশাহী ২০]</span>
+                    <span>$\vec{P} = 3\hat{i} + 4\hat{j}$ ভেক্টরের $Y$-অক্ষের সাথে উৎপন্ন কোণ কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q11" value="a"> $36.87^\circ$</label>
+                    <label class="option"><input type="radio" name="q11" value="b" data-correct="true"> $36.87^\circ$</label>
+                    <label class="option"><input type="radio" name="q11" value="c"> $53.13^\circ$</label>
+                    <label class="option"><input type="radio" name="q11" value="d"> $45^\circ$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১২.</span> <span class="board-tag">[যশোর ২০]</span>
+                    <span>দুটি ভেক্টরের লব্ধির মান কখন ভেক্টরদ্বয়ের মানের যোগফলের সমান হয়?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q12" value="a" data-correct="true"> $0^\circ$</label>
+                    <label class="option"><input type="radio" name="q12" value="b"> $90^\circ$</label>
+                    <label class="option"><input type="radio" name="q12" value="c"> $180^\circ$</label>
+                    <label class="option"><input type="radio" name="q12" value="d"> $60^\circ$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৩.</span> <span class="board-tag">[সিলেট ২১]</span>
+                    <span>$\vec{A}$ ভেক্টরের দিকে একক ভেক্টর $\hat{n}$ হলে—</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q13" value="a"> $\hat{n} \cdot \vec{A} = 0$</label>
+                    <label class="option"><input type="radio" name="q13" value="b" data-correct="true"> $\hat{n} \times \vec{A} = 0$</label>
+                    <label class="option"><input type="radio" name="q13" value="c"> $\hat{n} \cdot \hat{n} = 0$</label>
+                    <label class="option"><input type="radio" name="q13" value="d"> $|\hat{n}| = 0$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৪.</span> <span class="board-tag">[কুমিল্লা ১৯]</span>
+                    <span>ত্রিভুজের তিনটি বাহু একই ক্রমে গৃহীত তিনটি ভেক্টর দ্বারা সূচিত হলে তাদের লব্ধি—</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q14" value="a"> সর্বোচ্চ</label>
+                    <label class="option"><input type="radio" name="q14" value="b"> সর্বনিম্ন</label>
+                    <label class="option"><input type="radio" name="q14" value="c" data-correct="true"> শূন্য</label>
+                    <label class="option"><input type="radio" name="q14" value="d"> অসীম</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৫.</span> <span class="board-tag">[বরিশাল ২২]</span>
+                    <span>কোন ভেক্টর ক্ষেত্রের ডাইভারজেন্স ধনাত্মক হলে, আয়তন—</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q15" value="a"> হ্রাস পায়</label>
+                    <label class="option"><input type="radio" name="q15" value="b" data-correct="true"> বৃদ্ধি পায়</label>
+                    <label class="option"><input type="radio" name="q15" value="c"> স্থির থাকে</label>
+                    <label class="option"><input type="radio" name="q15" value="d"> শূন্য হয়</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৬.</span> <span class="board-tag">[দিনাজপুর ২০]</span>
+                    <span>$\vec{A} = 3\hat{i} + 4\hat{j}$ এবং $\vec{B} = 6\hat{i} + 8\hat{j}$ ভেক্টর দুটি—</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q16" value="a"> লম্ব</label>
+                    <label class="option"><input type="radio" name="q16" value="b" data-correct="true"> সমান্তরাল</label>
+                    <label class="option"><input type="radio" name="q16" value="c"> সমান</label>
+                    <label class="option"><input type="radio" name="q16" value="d"> কোনোটিই নয়</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৭.</span> <span class="board-tag">[চট্টগ্রাম ২১]</span>
+                    <span>একটি সামান্তরিকের দুটি সন্নিহিত বাহু $\vec{A}$ ও $\vec{B}$ হলে এর ক্ষেত্রফল কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q17" value="a"> $\vec{A} \cdot \vec{B}$</label>
+                    <label class="option"><input type="radio" name="q17" value="b" data-correct="true"> $|\vec{A} \times \vec{B}|$</label>
+                    <label class="option"><input type="radio" name="q17" value="c"> $\frac{1}{2} |\vec{A} \times \vec{B}|$</label>
+                    <label class="option"><input type="radio" name="q17" value="d"> $(\vec{A} + \vec{B})^2$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৮.</span> <span class="board-tag">[ময়মনসিংহ ২২]</span>
+                    <span>$\vec{A} = 2\hat{i} + \hat{j} - \hat{k}$ ভেক্টরটির $XZ$ সমতলে দৈর্ঘ্য কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q18" value="a"> $\sqrt{6}$</label>
+                    <label class="option"><input type="radio" name="q18" value="b"> $\sqrt{3}$</label>
+                    <label class="option"><input type="radio" name="q18" value="c" data-correct="true"> $\sqrt{5}$</label>
+                    <label class="option"><input type="radio" name="q18" value="d"> $\sqrt{2}$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৯.</span> <span class="board-tag">[ঢাকা ২২]</span>
+                    <span>কোনটি ভেক্টর অপারেটর?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q19" value="a"> $\log$</label>
+                    <label class="option"><input type="radio" name="q19" value="b"> $\sin$</label>
+                    <label class="option"><input type="radio" name="q19" value="c" data-correct="true"> $\vec{\nabla}$</label>
+                    <label class="option"><input type="radio" name="q19" value="d"> $\sum$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২০.</span> <span class="board-tag">[রাজশাহী ২১]</span>
+                    <span>$\vec{A}$ ভেক্টরকে $\vec{B}$ ভেক্টরের দিকে অভিক্ষেপ কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q20" value="a"> $\vec{A} \cos\theta$</label>
+                    <label class="option"><input type="radio" name="q20" value="b"> $|\vec{A}| \sin\theta$</label>
+                    <label class="option"><input type="radio" name="q20" value="c" data-correct="true"> $\frac{\vec{A} \cdot \vec{B}}{|\vec{B}|}$</label>
+                    <label class="option"><input type="radio" name="q20" value="d"> $\frac{\vec{A} \times \vec{B}}{|\vec{B}|}$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২১.</span> <span class="board-tag">[যশোর ১৯]</span>
+                    <span>বায়ুপ্রবাহের দিকে দৌড়ালে বাতাসের বেগ—</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q21" value="a"> বেশি মনে হয়</label>
+                    <label class="option"><input type="radio" name="q21" value="b" data-correct="true"> কম মনে হয়</label>
+                    <label class="option"><input type="radio" name="q21" value="c"> সমান মনে হয়</label>
+                    <label class="option"><input type="radio" name="q21" value="d"> শূন্য মনে হয়</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২২.</span> <span class="board-tag">[কুমিল্লা ২০]</span>
+                    <span>তিনটি অসমলৈখিক ভেক্টরের লব্ধি কি শূন্য হতে পারে?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q22" value="a"> হ্যাঁ</label>
+                    <label class="option"><input type="radio" name="q22" value="b"> না</label>
+                    <label class="option"><input type="radio" name="q22" value="c" data-correct="true"> পারে, যদি তারা ত্রিভুজ গঠন করে</label>
+                    <label class="option"><input type="radio" name="q22" value="d"> কোনোটিই নয়</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২৩.</span> <span class="board-tag">[সিলেট ২১]</span>
+                    <span>$\vec{A} = 5\hat{i}$ এবং $\vec{B} = 5\hat{j}$ হলে লব্ধির দিক $X$-অক্ষের সাথে কত কোণে?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q23" value="a"> $30^\circ$</label>
+                    <label class="option"><input type="radio" name="q23" value="b" data-correct="true"> $45^\circ$</label>
+                    <label class="option"><input type="radio" name="q23" value="c"> $60^\circ$</label>
+                    <label class="option"><input type="radio" name="q23" value="d"> $90^\circ$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২৪.</span> <span class="board-tag">[বরিশাল ১৯]</span>
+                    <span>$\hat{i} \cdot (\hat{j} \times \hat{k}) + \hat{j} \cdot (\hat{k} \times \hat{i}) = ?$</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q24" value="a"> 0</label>
+                    <label class="option"><input type="radio" name="q24" value="b"> 1</label>
+                    <label class="option"><input type="radio" name="q24" value="c" data-correct="true"> 2</label>
+                    <label class="option"><input type="radio" name="q24" value="d"> 3</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২৫.</span> <span class="board-tag">[চট্টগ্রাম ২০]</span>
+                    <span>কোন ক্ষেত্রে ভেক্টর বিয়োগ করা হয়?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q25" value="a"> লব্ধি বল নির্ণয়ে</label>
+                    <label class="option"><input type="radio" name="q25" value="b" data-correct="true"> আপেক্ষিক বেগ নির্ণয়ে</label>
+                    <label class="option"><input type="radio" name="q25" value="c"> কাজ নির্ণয়ে</label>
+                    <label class="option"><input type="radio" name="q25" value="d"> টর্ক নির্ণয়ে</label>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">সাবমিট করুন</button>
+        </form>
+
+        <div class="result-overlay" id="resultOverlay">
+            <div class="result-box">
+                <h2 style="color: #3f51b5; margin-top: 0;">অভিনন্দন!</h2>
+                <div class="score-circle">
+                    <div class="score-number" id="displayScore">0</div>
+                    <div class="score-label">নম্বর ২৫ এর মধ্যে</div>
+                </div>
+                <p>তোমার নাম: <span id="displayName" style="font-weight: bold;"></span></p>
+                <p id="sendStatus" style="font-size: 14px; color: #555;">রেজাল্ট তৈরি হচ্ছে...</p>
+                <button class="close-btn" onclick="closeResult()">উত্তরপত্র দেখুন</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // এডমিন ইমেইল
+        const ADMIN_EMAIL = "leeminho7323@gmail.com";
+
+        // টাইমার সেটআপ (২৫ মিনিট)
+        let timeLeft = 25 * 60; 
+        const timerElement = document.getElementById('timer');
+        let countdown;
+
+        function startTimer() {
+             countdown = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+                
+                timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    alert("সময় শেষ! স্বয়ংক্রিয়ভাবে সাবমিট হচ্ছে...");
+                    submitQuiz();
+                }
+                timeLeft--;
+            }, 1000);
+        }
+        startTimer();
+
+        // ফরম সাবমিশন লজিক
+        const form = document.getElementById('quizForm');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            submitQuiz();
+        });
+
+        function submitQuiz() {
+            const name = document.getElementById('studentName').value;
+            if(!name) { 
+                alert("দয়া করে তোমার নাম লিখ।"); 
+                document.getElementById('studentName').focus();
+                return; 
+            }
+
+            clearInterval(countdown);
+            const btn = document.getElementById('submitBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ডাটা পাঠানো হচ্ছে...';
+            btn.disabled = true;
+            
+            let score = 0;
+            const questionCards = document.querySelectorAll('.question-card');
+
+            // খাতা মূল্যায়ন
+            questionCards.forEach(card => {
+                const inputs = card.querySelectorAll('input[type="radio"]');
+                let correctAnswer = null;
+                let userAnswer = null;
+
+                inputs.forEach(input => {
+                    if (input.getAttribute('data-correct') === 'true') {
+                        correctAnswer = input.value;
+                    }
+                    if (input.checked) {
+                        userAnswer = input.value;
+                    }
+                    input.disabled = true; // লক করা
+                });
+
+                inputs.forEach(input => {
+                    const label = input.parentElement;
+                    if (input.value === correctAnswer) {
+                        label.classList.add('correct-ans');
+                        label.innerHTML += ' <i class="fas fa-check" style="margin-left:auto;"></i>';
+                    }
+                    if (userAnswer === input.value && userAnswer !== correctAnswer) {
+                        label.classList.add('wrong-ans');
+                        label.innerHTML += ' <i class="fas fa-times" style="margin-left:auto;"></i>';
+                    }
+                });
+
+                if (userAnswer === correctAnswer) {
+                    score++;
+                } else if (!userAnswer) {
+                    card.classList.add('missed-ans');
+                }
+            });
+
+            // স্কোর সেট করা
+            document.getElementById('hiddenScore').value = score + " / 25";
+            const finalFormData = new FormData(form);
+
+            // ইমেইলে পাঠানো (AJAX)
+            fetch(`https://formsubmit.co/ajax/${ADMIN_EMAIL}`, {
+                method: "POST",
+                body: finalFormData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('sendStatus').textContent = "রেজাল্ট সফলভাবে স্যারের ইমেইলে পাঠানো হয়েছে!";
+                document.getElementById('sendStatus').style.color = "green";
+            })
+            .catch(error => {
+                document.getElementById('sendStatus').textContent = "নেটওয়ার্ক সমস্যার কারণে ইমেইল যায়নি, তবে তুমি রেজাল্ট দেখতে পারবে।";
+                document.getElementById('sendStatus').style.color = "red";
+            });
+
+            // রেজাল্ট দেখানো
+            document.getElementById('displayScore').textContent = score;
+            document.getElementById('displayName').textContent = name;
+            document.getElementById('resultOverlay').style.display = 'flex';
+            
+            btn.style.display = 'none';
+        }
+
+        function closeResult() {
+            document.getElementById('resultOverlay').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>

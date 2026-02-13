@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics CQ - অধ্যায় ২ (মডেল ১)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e0f2f1; /* Teal Light Background */
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 60px; 
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #009688;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #009688 0%, #00796b 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ইনফো বক্স */
+        .info-box {
+            padding: 15px; margin: 0 20px 20px; background: #e0f2f1;
+            border-radius: 10px; border: 1px solid #80cbc4;
+            text-align: center;
+        }
+        .timer { font-size: 22px; font-weight: bold; color: #d32f2f; margin-top: 5px; }
+
+        /* সৃজনশীল প্রশ্ন কার্ড */
+        .cq-container { padding: 0 20px; }
+        .question-card {
+            background: #fff; padding: 20px; margin-bottom: 25px;
+            border-radius: 12px; border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-top: 5px solid #009688;
+        }
+        .stem-box {
+            background: #f5f5f5; padding: 15px; border-radius: 8px;
+            margin-bottom: 15px; border-left: 4px solid #ff9800;
+            font-size: 16px; line-height: 1.6;
+        }
+        .sub-questions { list-style: none; padding: 0; }
+        .sub-questions li {
+            margin-bottom: 10px; padding: 8px 0;
+            border-bottom: 1px dashed #eee; font-size: 15px;
+        }
+        .sub-questions li:last-child { border-bottom: none; }
+        .mark {
+            float: right; font-size: 12px; background: #009688;
+            color: white; padding: 2px 8px; border-radius: 10px;
+        }
+        
+        /* উত্তর বাটন */
+        .solution-btn {
+            background: white; border: 1px solid #009688; color: #009688;
+            padding: 5px 15px; border-radius: 20px; cursor: pointer;
+            font-size: 13px; margin-top: 10px; transition: 0.3s;
+        }
+        .solution-btn:hover { background: #009688; color: white; }
+        
+        .solution-box {
+            display: none; margin-top: 10px; padding: 10px;
+            background: #e0f2f1; border-radius: 8px; color: #00695c; font-size: 14px;
+        }
+
+        .footer { text-align: center; color: #777; font-size: 13px; margin-top: 30px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div><p>প্রশ্ন তৈরি হচ্ছে...</p></div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        
+        <div class="header">
+            <a href="physics_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-location-arrow" style="font-size: 40px; margin-bottom: 10px; color: #ffeb3b;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>পদার্থবিজ্ঞান ১ম পত্র | অধ্যায় ২: ভেক্টর (Model 1)</p>
+        </div>
+
+        <div class="info-box">
+            <h3 style="margin:0;">সৃজনশীল পরীক্ষা (CQ) - মডেল ১</h3>
+            <p style="font-size: 13px; color: #555;">পূর্ণমান: ৪০ | সময়: ৪০ মিনিট</p>
+            <div class="timer" id="timer">সময় বাকি: ৪০:০০ মিনিট</div>
+        </div>
+
+        <div class="cq-container">
+            
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #009688;">প্রশ্ন নং - ০১ [নদী-নৌকা সমস্যা]</div>
+                
+                <div class="stem-box">
+                    একটি নদীর প্রস্থ $1.5 \ km$। নদীতে স্রোতের বেগ $4 \ kmh^{-1}$। একজন মাঝি $8 \ kmh^{-1}$ বেগে নৌকা চালাতে পারেন। তিনি সোজা অপর পাড়ে যাওয়ার জন্য যাত্রা শুরু করলেন।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> নাল ভেক্টর কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> একক ভেক্টরের কোনো একক নেই কেন? ব্যাখ্যা করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> নদী পার হতে মাঝির কত সময় লাগবে? <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol1c')">উত্তর দেখুন</button>
+                        <div id="sol1c" class="solution-box">
+                            <strong>সমাধান:</strong> সোজা অপর পাড়ে পৌঁছাতে হলে লব্ধি বেগ প্রস্থ বরাবর কাজ করবে। <br>
+                            ধরি, মাঝি স্রোতের সাথে $\alpha$ কোণে যাত্রা করেছে। <br>
+                            $v \cos\alpha = -u \Rightarrow \cos\alpha = -\frac{4}{8} = -0.5 \Rightarrow \alpha = 120^\circ$ <br>
+                            প্রস্থ বরাবর উপাংশ $v_y = v \sin\alpha = 8 \sin 120^\circ = 6.928 \ kmh^{-1}$ <br>
+                            সময় $t = \frac{d}{v_y} = \frac{1.5}{6.928} = 0.2165 \ h = 12.99 \ \text{min}$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> মাঝি যদি কম সময়ে নদী পার হতে চাইতেন, তবে তাকে কোন দিকে নৌকা চালাতে হতো? গাণিতিকভাবে বিশ্লেষণ করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol1d')">উত্তর দেখুন</button>
+                        <div id="sol1d" class="solution-box">
+                            <strong>হিন্টস:</strong> সবচেয়ে কম সময়ে পার হতে হলে $\sin\alpha$ সর্বোচ্চ হতে হবে, অর্থাৎ $\alpha = 90^\circ$ হতে হবে। <br>
+                            এক্ষেত্রে সময় $t_{min} = \frac{d}{v}$। <br>
+                            তুলনা করে দেখাও যে $t_{min} < t$ (আগের সময়)। অর্থাৎ তাকে স্রোতের সাথে সমকোণে ($90^\circ$) নৌকা চালাতে হতো।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #009688;">প্রশ্ন নং - ০২ [ডট ও ক্রস গুণন]</div>
+                
+                <div class="stem-box">
+                    দুটি ভেক্টর রাশি $\vec{P} = 2\hat{i} + 3\hat{j} - 4\hat{k}$ এবং $\vec{Q} = 3\hat{i} - 2\hat{j} + 2\hat{k}$।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> অবস্থান ভেক্টর কাকে বলে? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> ভেক্টর যোগের বিনিময় সূত্রটি ব্যাখ্যা করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> $\vec{Q}$ ভেক্টরের উপর $\vec{P}$ ভেক্টরের লম্ব অভিক্ষেপ নির্ণয় করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol2c')">উত্তর দেখুন</button>
+                        <div id="sol2c" class="solution-box">
+                            <strong>সমাধান:</strong> লম্ব অভিক্ষেপ $= \frac{\vec{P} \cdot \vec{Q}}{|\vec{Q}|}$ <br>
+                            $\vec{P} \cdot \vec{Q} = (2)(3) + (3)(-2) + (-4)(2) = 6 - 6 - 8 = -8$ <br>
+                            $|\vec{Q}| = \sqrt{3^2 + (-2)^2 + 2^2} = \sqrt{9+4+4} = \sqrt{17} = 4.12$ <br>
+                            অভিক্ষেপ $= \frac{-8}{4.12} = -1.94$ (মান $1.94$ একক)।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> ভেক্টর দুটি পরস্পর লম্ব হবে কি না? গাণিতিক যুক্তিসহ মতামত দাও। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol2d')">উত্তর দেখুন</button>
+                        <div id="sol2d" class="solution-box">
+                            <strong>হিন্টস:</strong> দুটি ভেক্টর লম্ব হওয়ার শর্ত হলো তাদের ডট গুণফল শূন্য হতে হবে ($\vec{P} \cdot \vec{Q} = 0$)। <br>
+                            (গ) হতে পাই, $\vec{P} \cdot \vec{Q} = -8$। <br>
+                            যেহেতু গুণফল শূন্য নয়, তাই ভেক্টর দুটি পরস্পর লম্ব নয়।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #009688;">প্রশ্ন নং - ০৩ [আপেক্ষিক বেগ]</div>
+                
+                <div class="stem-box">
+                    বৃষ্টির দিনে একজন লোক $4 \ ms^{-1}$ বেগে অনুভূমিক রাস্তায় হাঁটছিলেন। বৃষ্টি উলম্বভাবে $6 \ ms^{-1}$ বেগে পড়ছিল।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> লামি'র উপপাদ্যটি লিখ। <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> কেন্দ্রমুখী বল দ্বারা কৃতকাজ শূন্য হয় কেন? <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> বৃষ্টি হতে রক্ষা পেতে লোকটিকে উলম্বের সাথে কত কোণে ছাতা ধরতে হবে? <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol3c')">উত্তর দেখুন</button>
+                        <div id="sol3c" class="solution-box">
+                            <strong>সমাধান:</strong> ধরি, উলম্বের সাথে কোণ $\theta$। <br>
+                            $\tan\theta = \frac{v_m}{v_r} = \frac{4}{6} = 0.667$ <br>
+                            $\theta = \tan^{-1}(0.667) = 33.69^\circ$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> লোকটি যদি তার বেগ দ্বিগুণ করে, তবে ছাতা ধরার কোণের কী পরিবর্তন হবে? বিশ্লেষণ করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol3d')">উত্তর দেখুন</button>
+                        <div id="sol3d" class="solution-box">
+                            <strong>হিন্টস:</strong> নতুন বেগ $v'_m = 2 \times 4 = 8 \ ms^{-1}$। <br>
+                            নতুন কোণ $\theta'$ হলে, $\tan\theta' = \frac{8}{6} = 1.33$। <br>
+                            $\theta' = \tan^{-1}(1.33) = 53.13^\circ$। <br>
+                            কোণের পরিবর্তন = $53.13^\circ - 33.69^\circ = 19.44^\circ$। অর্থাৎ ছাতা আরও বাঁকিয়ে ধরতে হবে।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #009688;">প্রশ্ন নং - ০৪ [ভেক্টর ক্যালকুলাস]</div>
+                
+                <div class="stem-box">
+                    একটি ভেক্টর ক্ষেত্র $\vec{F} = (2x^2y)\hat{i} + (3y^2z)\hat{j} + (x^2z)\hat{k}$।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> গ্রেডিয়েন্ট কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> $\vec{\nabla} \cdot \vec{r} = 3$ প্রমাণ করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> $(1, -1, 1)$ বিন্দুতে ভেক্টর ক্ষেত্রটির ডাইভারজেন্স নির্ণয় করো। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol4c')">উত্তর দেখুন</button>
+                        <div id="sol4c" class="solution-box">
+                            <strong>সমাধান:</strong> $\nabla \cdot \vec{F} = \frac{\partial}{\partial x}(2x^2y) + \frac{\partial}{\partial y}(3y^2z) + \frac{\partial}{\partial z}(x^2z)$ <br>
+                            $= 4xy + 6yz + x^2$ <br>
+                            বিন্দু $(1, -1, 1)$ বসিয়ে: <br>
+                            $= 4(1)(-1) + 6(-1)(1) + (1)^2 = -4 - 6 + 1 = -9$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> উদ্দীপকের ভেক্টর ক্ষেত্রটি সলিডনয়ডাল কি না? গাণিতিকভাবে যাচাই করো। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol4d')">উত্তর দেখুন</button>
+                        <div id="sol4d" class="solution-box">
+                            <strong>হিন্টস:</strong> সলিডনয়ডাল হওয়ার শর্ত হলো ডাইভারজেন্স শূন্য হতে হবে ($\nabla \cdot \vec{F} = 0$)। <br>
+                            এখানে ডাইভারজেন্সের রাশিমালা $4xy + 6yz + x^2$। এটি সব বিন্দুতে শূন্য নয় (যেমন গ তে -৯ এসেছে)। <br>
+                            তাই ক্ষেত্রটি সলিডনয়ডাল নয়।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2024 Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+    <script>
+        // টাইমার সেটআপ
+        let timeLeft = 40 * 60; 
+        const timerElement = document.getElementById('timer');
+        
+        const countdown = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "সময় শেষ!";
+                alert("পরীক্ষার সময় শেষ হয়েছে!");
+            }
+            timeLeft--;
+        }, 1000);
+
+        // উত্তর দেখানোর ফাংশন
+        function toggleSol(id) {
+            const x = document.getElementById(id);
+            if (x.style.display === "none" || x.style.display === "") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
