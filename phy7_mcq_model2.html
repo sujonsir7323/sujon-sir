@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC Physics MCQ - অধ্যায় ৭ (মডেল ২)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { font-family: 'Hind Siliguri', sans-serif; background: #e8eaf6; margin: 0; padding: 0; color: #333; user-select: none; }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; min-height: 100vh; padding-bottom: 60px; }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #3f51b5;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #3f51b5 0%, #303f9f 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 22px; font-weight: 700; }
+        .back-btn { color: white; float: left; font-size: 20px; }
+
+        /* ইনপুট বক্স */
+        .info-box {
+            padding: 20px; margin: 0 20px; background: #e8eaf6;
+            border-radius: 10px; border: 1px solid #c5cae9;
+            text-align: center;
+        }
+        .input-field {
+            width: 80%; padding: 12px; border-radius: 5px; border: 1px solid #aaa;
+            font-family: 'Hind Siliguri', sans-serif; font-size: 16px; margin-top: 10px;
+            outline: none;
+        }
+        .timer { font-size: 20px; font-weight: bold; color: #d32f2f; margin-top: 10px; }
+
+        /* প্রশ্ন কার্ড */
+        .mcq-container { padding: 20px; }
+        .question-card {
+            background: #fff; padding: 15px; margin-bottom: 20px;
+            border-radius: 10px; border: 1px solid #eee;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+        .q-header { font-weight: 600; font-size: 17px; margin-bottom: 15px; display: flex; gap: 10px; align-items: flex-start; }
+        .board-tag { font-size: 11px; background: #eee; color: #555; padding: 2px 6px; border-radius: 4px; height: fit-content; white-space: nowrap; margin-top: 3px; }
+        
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .option {
+            display: flex; align-items: center; padding: 10px; border: 1px solid #ddd;
+            border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 15px;
+        }
+        .option:hover { background: #f9f9f9; }
+        .option input { margin-right: 10px; transform: scale(1.2); cursor: pointer; }
+
+        /* কালার স্কিম */
+        .correct-ans { background-color: #d4edda !important; border-color: #c3e6cb !important; color: #155724; }
+        .wrong-ans { background-color: #f8d7da !important; border-color: #f5c6cb !important; color: #721c24; }
+        .missed-ans { border: 2px solid #ffc107 !important; background-color: #fff3cd; }
+
+        /* বাটন */
+        .submit-btn {
+            display: block; width: 90%; margin: 20px auto; padding: 15px;
+            background: #3f51b5; color: white; font-size: 18px; font-weight: bold;
+            border: none; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(63, 81, 181, 0.3);
+            transition: 0.3s;
+        }
+        .submit-btn:hover { background: #303f9f; transform: scale(1.02); }
+
+        /* রেজাল্ট পপআপ */
+        .result-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;
+        }
+        .result-box {
+            background: white; width: 90%; max-width: 400px; padding: 30px;
+            border-radius: 15px; text-align: center; position: relative; animation: popUp 0.4s ease;
+        }
+        @keyframes popUp { from {transform: scale(0.5);} to {transform: scale(1);} }
+        
+        .score-circle {
+            width: 120px; height: 120px; background: #e8eaf6; border-radius: 50%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin: 0 auto 20px; border: 5px solid #3f51b5;
+        }
+        .score-number { font-size: 35px; font-weight: bold; color: #3f51b5; }
+        .score-label { font-size: 12px; color: #666; }
+
+        .close-btn {
+            background: #d32f2f; color: white; border: none; padding: 10px 20px;
+            border-radius: 5px; margin-top: 15px; cursor: pointer; font-size: 14px;
+        }
+
+        @media (max-width: 500px) {
+            .options-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="spinner"></div>
+        <p>প্রশ্ন লোড হচ্ছে...</p>
+    </div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        <div class="header">
+            <a href="ssc_physics.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>পদার্থবিজ্ঞান (SSC) | অধ্যায় ৭: তরঙ্গ ও শব্দ (মডেল ২)</p>
+        </div>
+
+        <div class="info-box">
+            <h3 style="margin:0 0 10px;">MCQ পরীক্ষা - মডেল ২</h3>
+            <p style="font-size: 13px; color: #555;">পূর্ণমান: ২৫ | সময়: ২৫ মিনিট</p>
+            <div class="timer" id="timer">সময় বাকি: ২৫:০০ মিনিট</div>
+        </div>
+
+        <form id="quizForm" class="mcq-container">
+            <input type="hidden" name="_subject" value="Physics Ch7 MCQ Result: Model 2">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="obtained_score" id="hiddenScore">
+
+            <div style="margin-bottom: 20px; text-align: center;">
+                <input type="text" name="Student_Name" id="studentName" class="input-field" placeholder="তোমার নাম লিখ (বাধ্যতামূলক)..." required>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০১.</span> <span class="board-tag">[ঢাকা ২০]</span>
+                    <span>শব্দের তীব্রতা বিস্তারের—</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q1" value="a"> সমানুপাতিক</label>
+                    <label class="option"><input type="radio" name="q1" value="b"> ব্যস্তানুপাতিক</label>
+                    <label class="option"><input type="radio" name="q1" value="c" data-correct="true"> বর্গের সমানুপাতিক</label>
+                    <label class="option"><input type="radio" name="q1" value="d"> বর্গের ব্যস্তানুপাতিক</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০২.</span> <span class="board-tag">[রাজশাহী ২২]</span>
+                    <span>কোনটি অনুদৈর্ঘ্য তরঙ্গের উদাহরণ?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q2" value="a"> আলোক তরঙ্গ</label>
+                    <label class="option"><input type="radio" name="q2" value="b"> পানি তরঙ্গ</label>
+                    <label class="option"><input type="radio" name="q2" value="c" data-correct="true"> স্প্রিং এর তরঙ্গ</label>
+                    <label class="option"><input type="radio" name="q2" value="d"> বেতার তরঙ্গ</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৩.</span> <span class="board-tag">[যশোর ১৯]</span>
+                    <span>মানুষের শব্দানুভূতির স্থায়িত্বকাল কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q3" value="a"> $0.01 \text{ s}$</label>
+                    <label class="option"><input type="radio" name="q3" value="b" data-correct="true"> $0.1 \text{ s}$</label>
+                    <label class="option"><input type="radio" name="q3" value="c"> $1.0 \text{ s}$</label>
+                    <label class="option"><input type="radio" name="q3" value="d"> $0.05 \text{ s}$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৪.</span> <span class="board-tag">[সিলেট ২১]</span>
+                    <span>বাদুড় তার সৃষ্ট শব্দের প্রতিধ্বনি শুনে কিসের ধারণা পায়?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q4" value="a"> বস্তুর আকার</label>
+                    <label class="option"><input type="radio" name="q4" value="b"> বস্তুর অবস্থান</label>
+                    <label class="option"><input type="radio" name="q4" value="c"> বস্তুর প্রকৃতি</label>
+                    <label class="option"><input type="radio" name="q4" value="d" data-correct="true"> উপরের সবগুলো</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৫.</span> <span class="board-tag">[কুমিল্লা ২০]</span>
+                    <span>একটি তরঙ্গ $0.1$ সেকেন্ডে $10$টি পূর্ণ কম্পন সম্পন্ন করে। এর কম্পাঙ্ক কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q5" value="a"> $10 \text{ Hz}$</label>
+                    <label class="option"><input type="radio" name="q5" value="b" data-correct="true"> $100 \text{ Hz}$</label>
+                    <label class="option"><input type="radio" name="q5" value="c"> $1 \text{ Hz}$</label>
+                    <label class="option"><input type="radio" name="q5" value="d"> $0.1 \text{ Hz}$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৬.</span> <span class="board-tag">[বরিশাল ২১]</span>
+                    <span>SONAR এর পূর্ণরূপ কী?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q6" value="a"> Sound Of Navigation And Ranging</label>
+                    <label class="option"><input type="radio" name="q6" value="b" data-correct="true"> Sound Navigation And Ranging</label>
+                    <label class="option"><input type="radio" name="q6" value="c"> Sound Null And Rare</label>
+                    <label class="option"><input type="radio" name="q6" value="d"> Solar Navigation And Ranging</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৭.</span> <span class="board-tag">[চট্টগ্রাম ১৯]</span>
+                    <span>শব্দের তীক্ষ্ণতা (Pitch) নির্ভর করে কিসের উপর?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q7" value="a"> বিস্তার</label>
+                    <label class="option"><input type="radio" name="q7" value="b"> বেগ</label>
+                    <label class="option"><input type="radio" name="q7" value="c" data-correct="true"> কম্পাঙ্ক</label>
+                    <label class="option"><input type="radio" name="q7" value="d"> দশা</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৮.</span> <span class="board-tag">[দিনাজপুর ২০]</span>
+                    <span>শূন্য মাধ্যমে শব্দের বেগ কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q8" value="a"> $330 \text{ ms}^{-1}$</label>
+                    <label class="option"><input type="radio" name="q8" value="b"> $3 \times 10^8 \text{ ms}^{-1}$</label>
+                    <label class="option"><input type="radio" name="q8" value="c" data-correct="true"> $0 \text{ ms}^{-1}$</label>
+                    <label class="option"><input type="radio" name="q8" value="d"> $1493 \text{ ms}^{-1}$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৯.</span> <span class="board-tag">[ময়মনসিংহ ২২]</span>
+                    <span>শব্দের বেগের ক্ষেত্রে কোনটি সঠিক?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q9" value="a"> $v_{\text{solid}} < v_{\text{liquid}}$</label>
+                    <label class="option"><input type="radio" name="q9" value="b"> $v_{\text{gas}} > v_{\text{liquid}}$</label>
+                    <label class="option"><input type="radio" name="q9" value="c" data-correct="true"> $v_{\text{solid}} > v_{\text{liquid}} > v_{\text{gas}}$</label>
+                    <label class="option"><input type="radio" name="q9" value="d"> $v_{\text{solid}} = v_{\text{gas}}$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১০.</span> <span class="board-tag">[ঢাকা ২১]</span>
+                    <span>পর্যায়কাল $T$ হলে কম্পাঙ্ক $f$ হবে—</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q10" value="a"> $f = T^2$</label>
+                    <label class="option"><input type="radio" name="q10" value="b"> $f = T$</label>
+                    <label class="option"><input type="radio" name="q10" value="c" data-correct="true"> $f = 1/T$</label>
+                    <label class="option"><input type="radio" name="q10" value="d"> $f = \sqrt{T}$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১১.</span> <span class="board-tag">[রাজশাহী ২১]</span>
+                    <span>শব্দ সঞ্চালনের জন্য প্রয়োজন—</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q11" value="a"> তাপমাত্রা</label>
+                    <label class="option"><input type="radio" name="q11" value="b" data-correct="true"> জড় মাধ্যম</label>
+                    <label class="option"><input type="radio" name="q11" value="c"> আলো</label>
+                    <label class="option"><input type="radio" name="q11" value="d"> চৌম্বক ক্ষেত্র</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১২.</span> <span class="board-tag">[যশোর ২০]</span>
+                    <span>শব্দের বেগ তার পরম তাপমাত্রার—</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q12" value="a"> সমানুপাতিক</label>
+                    <label class="option"><input type="radio" name="q12" value="b"> ব্যস্তানুপাতিক</label>
+                    <label class="option"><input type="radio" name="q12" value="c" data-correct="true"> বর্গমূলের সমানুপাতিক</label>
+                    <label class="option"><input type="radio" name="q12" value="d"> বর্গের ব্যস্তানুপাতিক</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৩.</span> <span class="board-tag">[সিলেট ১৯]</span>

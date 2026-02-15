@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortcuts - অধ্যায় ৭ (তরঙ্গ ও শব্দ)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e0f7fa; 
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 50px; 
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+
+        /* ১. হেডার ডিজাইন */
+        .header {
+            background: linear-gradient(135deg, #0097a7 0%, #006064 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 26px; font-weight: 700; }
+        .header p { font-size: 14px; opacity: 0.9; margin-top: 5px; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.4); }
+
+        /* ২. বাণী সেকশন */
+        .quote-box {
+            background: #e0f2f1;
+            padding: 15px; margin: 0 20px 25px;
+            border-radius: 10px; border-left: 5px solid #0097a7;
+            text-align: center; font-style: italic; color: #00695c;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* ৩. সেকশন টাইটেল */
+        .section-title {
+            color: #00838f; font-size: 18px; font-weight: 700;
+            margin: 25px 20px 15px; border-bottom: 2px dashed #b2ebf2;
+            padding-bottom: 5px; display: flex; align-items: center;
+        }
+        .section-title i { margin-right: 8px; color: #00bcd4; }
+
+        /* ৪. ফর্মুলা কার্ড গ্রিড */
+        .card-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px; padding: 0 20px;
+        }
+        .formula-card {
+            background: #fff; border-radius: 12px;
+            border: 1px solid #b2ebf2;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+            padding: 15px; transition: transform 0.2s;
+            position: relative; overflow: hidden;
+        }
+        .formula-card:hover { transform: translateY(-3px); border-color: #00bcd4; }
+        
+        .formula-card::before {
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 4px; height: 100%; background: #00bcd4;
+        }
+
+        .f-title { font-size: 16px; font-weight: 600; color: #006064; margin-bottom: 10px; }
+        .math-expr { 
+            background: #f1f8e9; padding: 10px; border-radius: 8px; 
+            text-align: center; font-size: 18px; color: #2e7d32; margin-bottom: 8px;
+            border: 1px dashed #c5e1a5;
+        }
+        .f-note { font-size: 13px; color: #555; line-height: 1.5; }
+
+        /* ৫. একক টেবিল */
+        .unit-table {
+            width: calc(100% - 40px); margin: 0 20px;
+            border-collapse: collapse; font-size: 14px;
+            background: white; border-radius: 10px; overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .unit-table th { background: #0097a7; color: white; padding: 10px; text-align: left; }
+        .unit-table td { padding: 10px; border-bottom: 1px solid #e0f7fa; }
+        .unit-table tr:last-child td { border-bottom: none; }
+
+        /* ৬. শর্টকাট টিপস বক্স */
+        .tips-box {
+            background: #fff3e0; margin: 0 20px; padding: 15px;
+            border-radius: 10px; border-left: 5px solid #ff9800;
+        }
+        .tip-item { display: flex; align-items: flex-start; margin-bottom: 10px; font-size: 14px; }
+        .tip-item:last-child { margin-bottom: 0; }
+        .tip-item i { color: #f57c00; margin-right: 10px; margin-top: 4px; }
+
+        .footer { text-align: center; margin-top: 40px; color: #777; font-size: 13px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="header">
+            <a href="ssc_physics.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-wave-square" style="font-size: 40px; margin-bottom: 10px; color: #b2ebf2;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>পদার্থবিজ্ঞান (SSC) | অধ্যায় ৭: তরঙ্গ ও শব্দ</p>
+        </div>
+
+        <div class="quote-box">
+            <i class="fas fa-quote-left"></i> 
+            অধ্যবসায় ও অনুশীলনই হলো পদার্থবিজ্ঞানে ভালো করার একমাত্র চাবিকাঠি। সূত্রগুলো মুখস্থ না করে বুঝে পড়ো।
+        </div>
+
+        <div class="section-title">
+            <i class="fas fa-calculator"></i> গাণিতিক সূত্রাবলী (All Formulas)
+        </div>
+
+        <div class="card-grid">
+            
+            <div class="formula-card">
+                <div class="f-title">১. তরঙ্গ সমীকরণ (মৌলিক)</div>
+                <div class="math-expr">
+                    $v = f \lambda$
+                </div>
+                <div class="f-note">
+                    $v$ = তরঙ্গ বেগ, $f$ = কম্পাঙ্ক, $\lambda$ = তরঙ্গদৈর্ঘ্য।
+                    <br> <em>মনে রেখো:</em> মাধ্যম পরিবর্তন হলে $f$ অপরিবর্তিত থাকে, কিন্তু $v$ ও $\lambda$ পরিবর্তিত হয়।
+                </div>
+            </div>
+
+            <div class="formula-card">
+                <div class="f-title">২. পর্যায়কাল ও কম্পাঙ্ক</div>
+                <div class="math-expr">
+                    $f = \frac{1}{T}$ &nbsp; বা &nbsp; $T = \frac{1}{f}$
+                </div>
+                <div class="f-note">
+                    $T$ = পর্যায়কাল (সেকেন্ড)।
+                    <br> স্প্রিং বা দোলকের ক্ষেত্রে: $T = 2\pi\sqrt{\frac{L}{g}}$ বা $T = 2\pi\sqrt{\frac{m}{k}}$
+                </div>
+            </div>
+
+            <div class="formula-card">
+                <div class="f-title">৩. প্রতিধ্বনি (Echo)</div>
+                <div class="math-expr">
+                    $2d = v \times t$
+                </div>
+                <div class="f-note">
+                    $d$ = উৎস ও প্রতিফলকের মধ্যবর্তী দূরত্ব।
+                    <br> $t$ = প্রতিধ্বনি শুনতে মোট সময়।
+                    <br> <em>শর্ত:</em> ন্যূনতম সময় $0.1s$ হতে হবে।
+                </div>
+            </div>
+
+            <div class="formula-card">
+                <div class="f-title">৪. তাপমাত্রা ও শব্দের বেগ</div>
+                <div class="math-expr">
+                    $v \propto \sqrt{T}$
+                </div>
+                <div class="math-expr" style="font-size: 16px;">
+                    $\frac{v_2}{v_1} = \sqrt{\frac{T_2}{T_1}}$
+                </div>
+                <div class="f-note">
+                    $T$ = কেলভিন তাপমাত্রা ($T_K = \theta^\circ C + 273$)।
+                </div>
+            </div>
+
+        </div>
+
+        <div class="section-title">
+            <i class="fas fa-bolt"></i> MCQ শর্টকাট টেকনিক (Shortcuts)
+        </div>
+
+        <div class="card-grid">
+            
+            <div class="formula-card" style="border-color: #ffccbc;">
+                <div class="f-title">★ বাতাসের তাপমাত্রা বৃদ্ধি ও বেগ</div>
+                <div class="math-expr" style="background: #fff3e0; color: #d84315;">
+                    $v_{\theta} = 330 + (0.6 \times \theta)$
+                </div>
+                <div class="f-note">
+                    এটি একটি রৈখিক শর্টকাট সূত্র।
+                    <br> যেমন: $20^\circ C$ এ বেগ $\approx 330 + (0.6 \times 20) = 342 ms^{-1}$।
+                </div>
+            </div>
+
+            <div class="formula-card" style="border-color: #ffccbc;">
+                <div class="f-title">★ দশা ও পথ পার্থক্য</div>
+                <div class="math-expr" style="background: #fff3e0; color: #d84315;">
+                    $\text{দশা} = \frac{2\pi}{\lambda} \times \text{পথ পার্থক্য}$
+                </div>
+                <div class="f-note">
+                    MCQ তে প্রায়ই আসে।
+                    <br> $\delta = \frac{2\pi}{\lambda} \Delta x$
+                </div>
+            </div>
+
+            <div class="formula-card" style="border-color: #ffccbc;">
+                <div class="f-title">★ কূয়ার গভীরতা (পাথর ফেলা)</div>
+                <div class="math-expr" style="background: #fff3e0; color: #d84315;">
+                    $T = \sqrt{\frac{2h}{g}} + \frac{h}{v}$
+                </div>
+                <div class="f-note">
+                    মোট সময় ($T$) = পাথর পড়ার সময় + শব্দ আসার সময়।
+                    <br> এখান থেকে $h$ বের করা যায় (দ্বিঘাত সমীকরণ)।
+                </div>
+            </div>
+
+        </div>
+
+        <div class="section-title">
+            <i class="fas fa-ruler-combined"></i> রাশি ও একক (Units)
+        </div>
+        
+        <table class="unit-table">
+            <thead>
+                <tr>
+                    <th>রাশি</th>
+                    <th>প্রতীক</th>
+                    <th>একক (SI)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>তরঙ্গদৈর্ঘ্য</td>
+                    <td>$\lambda$</td>
+                    <td>মিটার ($m$)</td>
+                </tr>
+                <tr>
+                    <td>কম্পাঙ্ক</td>
+                    <td>$f$</td>
+                    <td>হার্জ ($Hz$)</td>
+                </tr>
+                <tr>
+                    <td>পর্যায়কাল</td>
+                    <td>$T$</td>
+                    <td>সেকেন্ড ($s$)</td>
+                </tr>
+                <tr>
+                    <td>তীব্রতা</td>
+                    <td>$I$</td>
+                    <td>$Wm^{-2}$</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="section-title">
+            <i class="fas fa-lightbulb"></i> মনে রাখার টিপস
+        </div>
+
+        <div class="tips-box">
+            <div class="tip-item">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <strong>ন্যূনতম দূরত্ব:</strong> প্রতিধ্বনি শোনার জন্য বায়ুতে ($20^\circ C$) উৎস ও প্রতিফলকের ন্যূনতম দূরত্ব <strong>১৬.৬ মিটার</strong> (প্রায় ১৭ মিটার)।
+                </div>
+            </div>
+            <div class="tip-item">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <strong>শব্দানুভূতির স্থায়িত্বকাল:</strong> মানুষের মস্তিষ্কে শব্দের রেশ <strong>০.১ সেকেন্ড</strong> পর্যন্ত থাকে।
+                </div>
+            </div>
+            <div class="tip-item">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <strong>বেগের ক্রম:</strong> কঠিন (লোহা) > তরল (পানি) > বায়বীয় (বাতাস)। শূন্য মাধ্যমে শব্দ চলে না।
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            &copy; 2024 Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+</body>
+</html>

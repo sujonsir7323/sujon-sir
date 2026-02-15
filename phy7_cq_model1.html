@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC Physics CQ - অধ্যায় ৭ (মডেল ১)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e1f5fe; /* Light Blue Background */
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 60px; 
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #0288d1;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #0288d1 0%, #01579b 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ইনফো বক্স */
+        .info-box {
+            padding: 15px; margin: 0 20px 20px; background: #e1f5fe;
+            border-radius: 10px; border: 1px solid #81d4fa;
+            text-align: center;
+        }
+        .timer { font-size: 22px; font-weight: bold; color: #d32f2f; margin-top: 5px; }
+
+        /* সৃজনশীল প্রশ্ন কার্ড */
+        .cq-container { padding: 0 20px; }
+        .question-card {
+            background: #fff; padding: 20px; margin-bottom: 25px;
+            border-radius: 12px; border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-top: 5px solid #0288d1;
+        }
+        .stem-box {
+            background: #f5f5f5; padding: 15px; border-radius: 8px;
+            margin-bottom: 15px; border-left: 4px solid #039be5;
+            font-size: 16px; line-height: 1.6;
+        }
+        .board-ref {
+            font-size: 12px; background: #eee; padding: 2px 8px; 
+            border-radius: 4px; color: #666; margin-left: 10px; font-weight: normal;
+        }
+        .sub-questions { list-style: none; padding: 0; }
+        .sub-questions li {
+            margin-bottom: 10px; padding: 8px 0;
+            border-bottom: 1px dashed #eee; font-size: 15px;
+        }
+        .sub-questions li:last-child { border-bottom: none; }
+        .mark {
+            float: right; font-size: 12px; background: #0288d1;
+            color: white; padding: 2px 8px; border-radius: 10px;
+        }
+        
+        /* উত্তর বাটন */
+        .solution-btn {
+            background: white; border: 1px solid #0288d1; color: #0288d1;
+            padding: 5px 15px; border-radius: 20px; cursor: pointer;
+            font-size: 13px; margin-top: 10px; transition: 0.3s;
+        }
+        .solution-btn:hover { background: #0288d1; color: white; }
+        
+        .solution-box {
+            display: none; margin-top: 10px; padding: 10px;
+            background: #e1f5fe; border-radius: 8px; color: #01579b; font-size: 14px;
+        }
+
+        .footer { text-align: center; color: #777; font-size: 13px; margin-top: 30px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div><p>প্রশ্ন তৈরি হচ্ছে...</p></div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        
+        <div class="header">
+            <a href="ssc_physics.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-wave-square" style="font-size: 40px; margin-bottom: 10px; color: #ffeb3b;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>পদার্থবিজ্ঞান (SSC) | অধ্যায় ৭: তরঙ্গ ও শব্দ</p>
+        </div>
+
+        <div class="info-box">
+            <h3 style="margin:0;">সৃজনশীল পরীক্ষা (CQ) - মডেল ১</h3>
+            <p style="font-size: 13px; color: #555;">পূর্ণমান: ৩০ | সময়: ৩০ মিনিট</p>
+            <div class="timer" id="timer">সময় বাকি: ৩০:০০ মিনিট</div>
+        </div>
+
+        <div class="cq-container">
+            
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #0277bd;">
+                    প্রশ্ন নং - ০১ [প্রতিধ্বনি] <span class="board-ref">[ঢাকা বোর্ড ২০২০]</span>
+                </div>
+                
+                <div class="stem-box">
+                    একটি কূয়ার গভীরতা $80 \text{ m}$। একজন ব্যক্তি কূয়ার মুখে শব্দ করায় $0.46 \text{ s}$ পর প্রতিধ্বনি শুনতে পেলেন। ঐ দিন বায়ুর তাপমাত্রা ছিল $30^\circ\text{C}$।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> শ্রাব্যতার পাল্লা কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> বর্ষাকালে শব্দ দ্রুত শোনা যায় কেন? <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> ঐ দিন শব্দের বেগ কত ছিল নির্ণয় কর। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol1c')">উত্তর দেখুন</button>
+                        <div id="sol1c" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            আমরা জানি, $2d = vt$ <br>
+                            বা, $v = \frac{2d}{t} = \frac{2 \times 80}{0.46}$ <br>
+                            $\therefore v = 347.83 \text{ ms}^{-1}$
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> উদ্দীপকের তথ্যানুসারে শব্দের বেগ তাপমাত্রার সাথে সঙ্গতিপূর্ণ কি না? গাণিতিকভাবে যাচাই কর। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol1d')">উত্তর দেখুন</button>
+                        <div id="sol1d" class="solution-box">
+                            <strong>হিন্টস:</strong> <br>
+                            $30^\circ\text{C}$ তাপমাত্রায় তাত্ত্বিক বেগ বের করতে হবে। <br>
+                            $v_2 = v_1 \sqrt{\frac{T_2}{T_1}} = 330 \sqrt{\frac{303}{273}} \approx 347.7 \text{ ms}^{-1}$। <br>
+                            প্রাপ্ত বেগ ও তাত্ত্বিক বেগ প্রায় সমান।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #0277bd;">
+                    প্রশ্ন নং - ০২ [তরঙ্গ বেগ ও তরঙ্গদৈর্ঘ্য] <span class="board-ref">[সিলেট বোর্ড ২০১৯]</span>
+                </div>
+                
+                <div class="stem-box">
+                    পানিতে শব্দের বেগ বায়ুর বেগের ৪.৫ গুণ। একটি সুরশলাকা বাতাসে $500 \text{ Hz}$ কম্পাঙ্কের শব্দ সৃষ্টি করে যার তরঙ্গদৈর্ঘ্য $0.66 \text{ m}$।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> পর্যায়কাল কাকে বলে? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> শব্দের তীব্রতা বলতে কী বোঝ? <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> বাতাসে শব্দের বেগ নির্ণয় কর। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol2c')">উত্তর দেখুন</button>
+                        <div id="sol2c" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            দেওয়া আছে, $f = 500 \text{ Hz}, \lambda_{air} = 0.66 \text{ m}$ <br>
+                            আমরা জানি, $v_{air} = f \lambda_{air}$ <br>
+                            $= 500 \times 0.66 = 330 \text{ ms}^{-1}$
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> পানিতে সৃষ্ট শব্দের তরঙ্গদৈর্ঘ্য কত হবে? গাণিতিকভাবে বিশ্লেষণ কর। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol2d')">উত্তর দেখুন</button>
+                        <div id="sol2d" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            শর্তমতে, $v_{water} = 4.5 \times v_{air} = 4.5 \times 330 = 1485 \text{ ms}^{-1}$ <br>
+                            কম্পাঙ্ক মাধ্যম পরিবর্তন হলেও একই থাকে। <br>
+                            $\lambda_{water} = \frac{v_{water}}{f} = \frac{1485}{500} = 2.97 \text{ m}$।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #0277bd;">
+                    প্রশ্ন নং - ০৩ [কম্পাঙ্ক ও পর্যায়কাল] <span class="board-ref">[যশোর বোর্ড ২০২১]</span>
+                </div>
+                
+                <div class="stem-box">
+                    একটি স্প্রিং থেকে ঝুলানো কোনো বস্তু $0.1$ সেকেন্ডে $4$টি পূর্ণ স্পন্দন সম্পন্ন করে। উৎপন্ন তরঙ্গের বেগ $340 \text{ ms}^{-1}$।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> দশা কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> অনুপ্রস্থ ও অনুদৈর্ঘ্য তরঙ্গের মধ্যে দুটি পার্থক্য লিখ। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> তরঙ্গটির তরঙ্গদৈর্ঘ্য নির্ণয় কর। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol3c')">উত্তর দেখুন</button>
+                        <div id="sol3c" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            কম্পাঙ্ক, $f = \frac{\text{সংখ্যা}}{\text{সময়}} = \frac{4}{0.1} = 40 \text{ Hz}$ <br>
+                            আমরা জানি, $v = f\lambda \Rightarrow \lambda = \frac{v}{f}$ <br>
+                            $\lambda = \frac{340}{40} = 8.5 \text{ m}$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> উদ্দীপকের তরঙ্গটি $850 \text{ m}$ পথ অতিক্রম করতে কতটি পূর্ণ কম্পন দিবে? <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol3d')">উত্তর দেখুন</button>
+                        <div id="sol3d" class="solution-box">
+                            <strong>হিন্টস:</strong> <br>
+                            মোট দূরত্ব $D = 850 \text{ m}$। একটি পূর্ণ কম্পনে তরঙ্গ যায় $\lambda = 8.5 \text{ m}$ দূরত্ব। <br>
+                            কম্পন সংখ্যা $n = \frac{D}{\lambda} = \frac{850}{8.5} = 100$ টি।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2024 Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+    <script>
+        // টাইমার সেটআপ
+        let timeLeft = 30 * 60; 
+        const timerElement = document.getElementById('timer');
+        
+        const countdown = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "সময় শেষ!";
+                alert("পরীক্ষার সময় শেষ হয়েছে!");
+            }
+            timeLeft--;
+        }, 1000);
+
+        // উত্তর দেখানোর ফাংশন
+        function toggleSol(id) {
+            const x = document.getElementById(id);
+            if (x.style.display === "none" || x.style.display === "") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC Physics CQ - অধ্যায় ৭ (মডেল ২)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #ede7f6; /* Deep Purple Light Background */
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 60px; 
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #673ab7;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #673ab7 0%, #512da8 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ইনফো বক্স */
+        .info-box {
+            padding: 15px; margin: 0 20px 20px; background: #ede7f6;
+            border-radius: 10px; border: 1px solid #d1c4e9;
+            text-align: center;
+        }
+        .timer { font-size: 22px; font-weight: bold; color: #d32f2f; margin-top: 5px; }
+
+        /* সৃজনশীল প্রশ্ন কার্ড */
+        .cq-container { padding: 0 20px; }
+        .question-card {
+            background: #fff; padding: 20px; margin-bottom: 25px;
+            border-radius: 12px; border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-top: 5px solid #673ab7;
+        }
+        .stem-box {
+            background: #f5f5f5; padding: 15px; border-radius: 8px;
+            margin-bottom: 15px; border-left: 4px solid #9c27b0;
+            font-size: 16px; line-height: 1.6;
+        }
+        .board-ref {
+            font-size: 12px; background: #eee; padding: 2px 8px; 
+            border-radius: 4px; color: #666; margin-left: 10px; font-weight: normal;
+        }
+        .sub-questions { list-style: none; padding: 0; }
+        .sub-questions li {
+            margin-bottom: 10px; padding: 8px 0;
+            border-bottom: 1px dashed #eee; font-size: 15px;
+        }
+        .sub-questions li:last-child { border-bottom: none; }
+        .mark {
+            float: right; font-size: 12px; background: #673ab7;
+            color: white; padding: 2px 8px; border-radius: 10px;
+        }
+        
+        /* উত্তর বাটন */
+        .solution-btn {
+            background: white; border: 1px solid #673ab7; color: #673ab7;
+            padding: 5px 15px; border-radius: 20px; cursor: pointer;
+            font-size: 13px; margin-top: 10px; transition: 0.3s;
+        }
+        .solution-btn:hover { background: #673ab7; color: white; }
+        
+        .solution-box {
+            display: none; margin-top: 10px; padding: 10px;
+            background: #f3e5f5; border-radius: 8px; color: #4a148c; font-size: 14px;
+        }
+
+        .footer { text-align: center; color: #777; font-size: 13px; margin-top: 30px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div><p>প্রশ্ন তৈরি হচ্ছে...</p></div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        
+        <div class="header">
+            <a href="ssc_physics.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-bullhorn" style="font-size: 40px; margin-bottom: 10px; color: #ffeb3b;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>পদার্থবিজ্ঞান (SSC) | অধ্যায় ৭: তরঙ্গ ও শব্দ</p>
+        </div>
+
+        <div class="info-box">
+            <h3 style="margin:0;">সৃজনশীল পরীক্ষা (CQ) - মডেল ২</h3>
+            <p style="font-size: 13px; color: #555;">পূর্ণমান: ৩০ | সময়: ৩০ মিনিট</p>
+            <div class="timer" id="timer">সময় বাকি: ৩০:০০ মিনিট</div>
+        </div>
+
+        <div class="cq-container">
+            
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #673ab7;">
+                    প্রশ্ন নং - ০১ [প্রতিধ্বনি] <span class="board-ref">[রাজশাহী বোর্ড ২০১৯]</span>
+                </div>
+                
+                <div class="stem-box">
+                    একজন ব্যক্তি দুটি দালানের মাঝখানে দাঁড়িয়ে বন্দুকের গুলি ছুঁড়লেন। তিনি $2 \text{ sec}$ এবং $3 \text{ sec}$ পর দুটি প্রতিধ্বনি শুনতে পেলেন। ঐ দিন বায়ুর তাপমাত্রা ছিল $30^\circ\text{C}$।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> প্রতিধ্বনি কাকে বলে? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> বাদুড় অন্ধকারে পথ চলে কীভাবে? <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> ১ম দালান হতে ঐ ব্যক্তির দূরত্ব নির্ণয় কর। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol1c')">উত্তর দেখুন</button>
+                        <div id="sol1c" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            $30^\circ\text{C}$ তাপমাত্রায় বেগ $v = 330 + (0.6 \times 30) = 348 \text{ ms}^{-1}$। <br>
+                            ১ম প্রতিধ্বনি শোনার সময় $t_1 = 2 \text{ s}$। <br>
+                            দূরত্ব $d_1 = \frac{v \times t_1}{2} = \frac{348 \times 2}{2} = 348 \text{ m}$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> দালান দুটির মধ্যবর্তী দূরত্ব নির্ণয় কর। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol1d')">উত্তর দেখুন</button>
+                        <div id="sol1d" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            ২য় দালানের দূরত্ব $d_2 = \frac{v \times t_2}{2} = \frac{348 \times 3}{2} = 522 \text{ m}$। <br>
+                            দালান দুটির মধ্যবর্তী দূরত্ব $D = d_1 + d_2 = 348 + 522 = 870 \text{ m}$।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #673ab7;">
+                    প্রশ্ন নং - ০২ [তরঙ্গের বৈশিষ্ট্য] <span class="board-ref">[দিনাজপুর বোর্ড ২০২০]</span>
+                </div>
+                
+                <div class="stem-box">
+                    একটি স্প্রিং থেকে ঝুলানো বস্তুর দোলনকাল $0.02 \text{ sec}$। বস্তুটি থেকে উৎপন্ন তরঙ্গটি $0.05 \text{ sec}$-এ $16 \text{ m}$ দূরত্ব অতিক্রম করে।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> হার্জ কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> শব্দের তীব্রতা $10^{-6} \text{ Wm}^{-2}$ বলতে কী বোঝায়? <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> তরঙ্গটির কম্পাঙ্ক নির্ণয় কর। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol2c')">উত্তর দেখুন</button>
+                        <div id="sol2c" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            দেওয়া আছে, দোলনকাল $T = 0.02 \text{ s}$। <br>
+                            কম্পাঙ্ক $f = \frac{1}{T} = \frac{1}{0.02} = 50 \text{ Hz}$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> উদ্দীপকের তথ্যের আলোকে তরঙ্গদৈর্ঘ্য নির্ণয় করে মন্তব্য কর। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol2d')">উত্তর দেখুন</button>
+                        <div id="sol2d" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            তরঙ্গের বেগ $v = \frac{\text{দূরত্ব}}{\text{সময়}} = \frac{16}{0.05} = 320 \text{ ms}^{-1}$। <br>
+                            আমরা জানি, $v = f\lambda \Rightarrow \lambda = \frac{v}{f} = \frac{320}{50} = 6.4 \text{ m}$। <br>
+                            মন্তব্য: তরঙ্গটির তরঙ্গদৈর্ঘ্য ৬.৪ মিটার এবং এটি বাতাসে সৃষ্ট সাধারণ শব্দের কাছাকাছি বেগে চলছে।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #673ab7;">
+                    প্রশ্ন নং - ০৩ [তাপমাত্রা ও বেগ] <span class="board-ref">[চট্টগ্রাম বোর্ড ২০১৯]</span>
+                </div>
+                
+                <div class="stem-box">
+                    একটি সুরশলাকার কম্পাঙ্ক $320 \text{ Hz}$। এটি থেকে সৃষ্ট শব্দ বাতাসে $350 \text{ m}$ পথ যেতে $100$টি পূর্ণ কম্পন সম্পন্ন করে।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> বিস্তার কাকে বলে? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> শব্দের বেগ মাধ্যমের প্রকৃতির উপর নির্ভরশীল—ব্যাখ্যা কর। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> ঐ স্থানের তাপমাত্রা নির্ণয় কর। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol3c')">উত্তর দেখুন</button>
+                        <div id="sol3c" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            তরঙ্গদৈর্ঘ্য $\lambda = \frac{\text{দূরত্ব}}{\text{কম্পন সংখ্যা}} = \frac{350}{100} = 3.5 \text{ m}$। <br>
+                            বেগ $v = f\lambda = 320 \times 3.5 = 1120 \text{ ms}^{-1}$। <br>
+                            (বি.দ্র: এই বেগ বাতাসে স্বাভাবিক নয়, এটি অন্য মাধ্যম হতে পারে বা প্রশ্নে তথ্যে ভিন্নতা থাকতে পারে। তবে নিয়ম অনুযায়ী এটিই উত্তর)। <br>
+                            যদি বাতাস হয়, তবে $v \propto \sqrt{T}$ সূত্র ব্যবহার করে তাপমাত্রা বের করা যাবে।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> সুরশলাকাটির কম্পাঙ্ক ২০% বাড়ালে তরঙ্গদৈর্ঘ্যের কী পরিবর্তন হবে? <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol3d')">উত্তর দেখুন</button>
+                        <div id="sol3d" class="solution-box">
+                            <strong>হিন্টস:</strong> <br>
+                            নতুন কম্পাঙ্ক $f' = 320 + (320 \times 0.20) = 384 \text{ Hz}$। <br>
+                            বেগ মাধ্যম ও তাপমাত্রা স্থির থাকলে অপরিবর্তিত থাকে ($v = 1120$)। <br>
+                            নতুন তরঙ্গদৈর্ঘ্য $\lambda' = \frac{v}{f'} = \frac{1120}{384} \approx 2.92 \text{ m}$। <br>
+                            পরিবর্তন = $3.5 - 2.92 = 0.58 \text{ m}$ হ্রাস পাবে।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2024 Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+    <script>
+        // টাইমার সেটআপ
+        let timeLeft = 30 * 60; 
+        const timerElement = document.getElementById('timer');
+        
+        const countdown = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "সময় শেষ!";
+                alert("পরীক্ষার সময় শেষ হয়েছে!");
+            }
+            timeLeft--;
+        }, 1000);
+
+        // উত্তর দেখানোর ফাংশন
+        function toggleSol(id) {
+            const x = document.getElementById(id);
+            if (x.style.display === "none" || x.style.display === "") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>

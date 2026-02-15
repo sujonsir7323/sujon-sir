@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC Physics CQ - অধ্যায় ৭ (মডেল ৪)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e8f5e9; /* Light Green Background */
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 60px; 
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #4caf50;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ইনফো বক্স */
+        .info-box {
+            padding: 15px; margin: 0 20px 20px; background: #e8f5e9;
+            border-radius: 10px; border: 1px solid #a5d6a7;
+            text-align: center;
+        }
+        .timer { font-size: 22px; font-weight: bold; color: #d32f2f; margin-top: 5px; }
+
+        /* সৃজনশীল প্রশ্ন কার্ড */
+        .cq-container { padding: 0 20px; }
+        .question-card {
+            background: #fff; padding: 20px; margin-bottom: 25px;
+            border-radius: 12px; border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-top: 5px solid #4caf50;
+        }
+        .stem-box {
+            background: #f1f8e9; padding: 15px; border-radius: 8px;
+            margin-bottom: 15px; border-left: 4px solid #66bb6a;
+            font-size: 16px; line-height: 1.6;
+        }
+        .board-ref {
+            font-size: 12px; background: #eee; padding: 2px 8px; 
+            border-radius: 4px; color: #666; margin-left: 10px; font-weight: normal;
+        }
+        .sub-questions { list-style: none; padding: 0; }
+        .sub-questions li {
+            margin-bottom: 10px; padding: 8px 0;
+            border-bottom: 1px dashed #eee; font-size: 15px;
+        }
+        .sub-questions li:last-child { border-bottom: none; }
+        .mark {
+            float: right; font-size: 12px; background: #4caf50;
+            color: white; padding: 2px 8px; border-radius: 10px;
+        }
+        
+        /* উত্তর বাটন */
+        .solution-btn {
+            background: white; border: 1px solid #4caf50; color: #4caf50;
+            padding: 5px 15px; border-radius: 20px; cursor: pointer;
+            font-size: 13px; margin-top: 10px; transition: 0.3s;
+        }
+        .solution-btn:hover { background: #4caf50; color: white; }
+        
+        .solution-box {
+            display: none; margin-top: 10px; padding: 10px;
+            background: #e8f5e9; border-radius: 8px; color: #1b5e20; font-size: 14px;
+        }
+
+        .footer { text-align: center; color: #777; font-size: 13px; margin-top: 30px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div><p>প্রশ্ন তৈরি হচ্ছে...</p></div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        
+        <div class="header">
+            <a href="ssc_physics.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-stethoscope" style="font-size: 40px; margin-bottom: 10px; color: #ffeb3b;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>পদার্থবিজ্ঞান (SSC) | অধ্যায় ৭: তরঙ্গ ও শব্দ</p>
+        </div>
+
+        <div class="info-box">
+            <h3 style="margin:0;">সৃজনশীল পরীক্ষা (CQ) - মডেল ৪</h3>
+            <p style="font-size: 13px; color: #555;">পূর্ণমান: ৩০ | সময়: ৩০ মিনিট</p>
+            <div class="timer" id="timer">সময় বাকি: ৩০:০০ মিনিট</div>
+        </div>
+
+        <div class="cq-container">
+            
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #4caf50;">
+                    প্রশ্ন নং - ০১ [ধাতব মাধ্যমে শব্দের বেগ] <span class="board-ref">[কুমিল্লা বোর্ড ২০১৬]</span>
+                </div>
+                
+                <div class="stem-box">
+                    ৫১৩ মিটার দীর্ঘ একটি লোহার পাইপের এক প্রান্তে শব্দ করলে অপর প্রান্তে দুটি শব্দ শোনা যায়। শব্দের সময়ের ব্যবধান ১.৪ সেকেন্ড। বায়ুতে শব্দের বেগ $340 \text{ ms}^{-1}$।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> শব্দ কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> দিনের চেয়ে রাতে শব্দ বেশি দূর শোনা যায় কেন? <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> বায়ুর মধ্য দিয়ে শব্দটি অপর প্রান্তে যেতে কত সময় লাগবে? <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol1c')">উত্তর দেখুন</button>
+                        <div id="sol1c" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            দেওয়া আছে, দূরত্ব $d = 513 \text{ m}$, বায়ুতে বেগ $v_a = 340 \text{ ms}^{-1}$। <br>
+                            সময় $t_a = \frac{d}{v_a} = \frac{513}{340} = 1.508 \text{ s}$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> লোহাতে শব্দের বেগ নির্ণয় কর। <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol1d')">উত্তর দেখুন</button>
+                        <div id="sol1d" class="solution-box">
+                            <strong>হিন্টস:</strong> <br>
+                            লোহাতে শব্দ দ্রুত যাবে, তাই সময় কম লাগবে। <br>
+                            লোহাতে সময় $t_i = t_a - 1.4 = 1.508 - 1.4 = 0.108 \text{ s}$। <br>
+                            লোহাতে বেগ $v_i = \frac{d}{t_i} = \frac{513}{0.108} = 4750 \text{ ms}^{-1}$।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #4caf50;">
+                    প্রশ্ন নং - ০২ [তরঙ্গের চিত্র বিশ্লেষণ] <span class="board-ref">[ঢাকা বোর্ড ২০২১]</span>
+                </div>
+                
+                <div class="stem-box">
+                    
+
+[Image of a Wave]
+
+                    উদ্দীপকের চিত্রে একটি তরঙ্গ দেখানো হলো যেখানে $P$ থেকে $Q$ বিন্দুর (৩টি পূর্ণ তরঙ্গ) দূরত্ব $12 \text{ m}$ এবং তরঙ্গটির পর্যায়কাল $0.2 \text{ s}$।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> কম্পন কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> শব্দ সঞ্চালনের জন্য জড় মাধ্যমের প্রয়োজন কেন? <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> উদ্দীপকের তরঙ্গটির বেগ নির্ণয় কর। <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol2c')">উত্তর দেখুন</button>
+                        <div id="sol2c" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            ৩টি পূর্ণ তরঙ্গের দৈর্ঘ্য $3\lambda = 12 \text{ m} \Rightarrow \lambda = 4 \text{ m}$। <br>
+                            কম্পাঙ্ক $f = \frac{1}{T} = \frac{1}{0.2} = 5 \text{ Hz}$। <br>
+                            বেগ $v = f\lambda = 5 \times 4 = 20 \text{ ms}^{-1}$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> মাধ্যম পরিবর্তন হয়ে বেগ $30 \text{ ms}^{-1}$ হলে তরঙ্গদৈর্ঘ্যের কী পরিবর্তন হবে? <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol2d')">উত্তর দেখুন</button>
+                        <div id="sol2d" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            মাধ্যম পাল্টালে কম্পাঙ্ক ঠিক থাকে ($f=5 \text{ Hz}$)। <br>
+                            নতুন তরঙ্গদৈর্ঘ্য $\lambda' = \frac{v'}{f} = \frac{30}{5} = 6 \text{ m}$। <br>
+                            তরঙ্গদৈর্ঘ্য বৃদ্ধি = $6 - 4 = 2 \text{ m}$।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #4caf50;">
+                    প্রশ্ন নং - ০৩ [কূপ ও প্রতিধ্বনি] <span class="board-ref">[রাজশাহী বোর্ড ২০১৭]</span>
+                </div>
+                
+                <div class="stem-box">
+                    একজন বালকের কাছে একটি হাতঘড়ি আছে যা প্রতি সেকেন্ডে ৫টি টিক্ শব্দ করে। বালকটি একটি দেয়াল থেকে নির্দিষ্ট দূরত্বে দাঁড়িয়ে হাততালি দিল এবং হাততালির শব্দ ও প্রতিধ্বনি ঘড়ির টিক্ শব্দের সাথে মিলে গেল। বায়ুতে শব্দের বেগ $340 \text{ ms}^{-1}$।
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> প্রতিধ্বনি শোনার ন্যূনতম সময় কত? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> শীতকাল অপেক্ষা গ্রীষ্মকালে প্রতিধ্বনি শোনার জন্য প্রতিফলককে বেশি দূরে রাখতে হয় কেন? <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> ঘড়ির দোলনকাল কত? <span class="mark">৩</span>
+                        <br>
+                        <button class="solution-btn" onclick="toggleSol('sol3c')">উত্তর দেখুন</button>
+                        <div id="sol3c" class="solution-box">
+                            <strong>সমাধান:</strong> <br>
+                            ১ সেকেন্ডে শব্দ করে ৫টি। <br>
+                            ১টি শব্দের সময় বা দোলনকাল $T = \frac{1}{5} = 0.2 \text{ s}$।
+                        </div>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> দেয়াল থেকে বালকের দূরত্ব কত ছিল? <span class="mark">৪</span>
+                        <button class="solution-btn" onclick="toggleSol('sol3d')">উত্তর দেখুন</button>
+                        <div id="sol3d" class="solution-box">
+                            <strong>হিন্টস:</strong> <br>
+                            প্রতিধ্বনি শোনার সময় $t = T = 0.2 \text{ s}$ (যেহেতু টিক শব্দের সাথে মিলে গেছে)। <br>
+                            দূরত্ব $d = \frac{vt}{2} = \frac{340 \times 0.2}{2} = 34 \text{ m}$।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2024 Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+    <script>
+        // টাইমার সেটআপ
+        let timeLeft = 30 * 60; 
+        const timerElement = document.getElementById('timer');
+        
+        const countdown = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "সময় শেষ!";
+                alert("পরীক্ষার সময় শেষ হয়েছে!");
+            }
+            timeLeft--;
+        }, 1000);
+
+        // উত্তর দেখানোর ফাংশন
+        function toggleSol(id) {
+            const x = document.getElementById(id);
+            if (x.style.display === "none" || x.style.display === "") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
