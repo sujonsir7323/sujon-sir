@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 1 - Math Practice & Shortcuts</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e0f2f1; /* Light Teal Background */
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 50px; 
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #00897b 0%, #004d40 100%);
+            color: white; padding: 35px 20px 25px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 25px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .header p { margin: 0; font-size: 14px; opacity: 0.9; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.4); }
+
+        /* ইনফো বক্স */
+        .info-box {
+            background: #e0f7fa; padding: 15px; margin: 0 20px 25px;
+            border-radius: 10px; border-left: 5px solid #00acc1;
+            text-align: center; font-size: 15px; color: #006064;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* কার্ড কন্টেইনার */
+        .menu-container { padding: 0 20px; }
+        
+        .menu-card {
+            background: #fff; border-radius: 12px; margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08); overflow: hidden;
+            border: 1px solid #b2dfdb;
+        }
+        
+        .card-header {
+            background: #f1f8e9; color: #2e7d32; padding: 15px 20px;
+            font-size: 18px; font-weight: bold; border-bottom: 1px solid #c5e1a5;
+            display: flex; align-items: center; gap: 10px;
+        }
+        
+        .card-header.combined {
+            background: #fff3e0; color: #e65100; border-bottom-color: #ffcc80;
+        }
+
+        .card-header.shortcut-header {
+            background: #e3f2fd; color: #1565c0; border-bottom-color: #bbdefb;
+        }
+
+        .card-body { padding: 15px; display: grid; gap: 12px; }
+
+        /* লিংক বাটন */
+        .action-btn {
+            display: flex; align-items: center; padding: 15px;
+            background: #fafafa; border: 1px solid #ddd; border-radius: 10px;
+            text-decoration: none; color: #333; transition: all 0.3s ease;
+        }
+        .action-btn:hover {
+            background: #e0f2f1; border-color: #00897b; transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,137,123,0.15);
+        }
+        
+        .btn-icon {
+            background: #00897b; color: white; width: 45px; height: 45px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 18px; margin-right: 15px; flex-shrink: 0;
+        }
+        
+        /* শর্টকাট বাটন হোভার ও আইকন */
+        .action-btn.shortcut-btn:hover { background: #e3f2fd; border-color: #1976d2; box-shadow: 0 4px 8px rgba(25,118,210,0.15); }
+        .action-btn.shortcut-btn .btn-icon { background: #1976d2; }
+
+        /* সমন্বিত বাটন হোভার ও আইকন */
+        .action-btn.combined-btn:hover { background: #fff3e0; border-color: #f57c00; box-shadow: 0 4px 8px rgba(245,124,0,0.15); }
+        .action-btn.combined-btn .btn-icon { background: #f57c00; }
+
+        .btn-text { flex-grow: 1; }
+        .btn-title { display: block; font-weight: 600; font-size: 16px; margin-bottom: 3px; }
+        .btn-subtitle { display: block; font-size: 13px; color: #666; }
+
+        .footer { text-align: center; color: #777; font-size: 13px; margin-top: 30px; padding-bottom: 20px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="header">
+            <a href="physics_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-calculator" style="font-size: 45px; margin-bottom: 10px; color: #b2dfdb;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>পদার্থবিজ্ঞান (SSC) | অধ্যায় ১: ভৌত রাশি ও পরিমাপ</p>
+        </div>
+
+        <div class="info-box">
+            <i class="fas fa-info-circle"></i> তোমার প্রস্তুতির জন্য গাণিতিক সমস্যাগুলোকে নিয়মভিত্তিক এবং সমন্বিত সৃজনশীল আকারে ভাগ করা হয়েছে।
+        </div>
+
+        <div class="menu-container">
+            
+            <div class="menu-card" style="border-color: #bbdefb;">
+                <div class="card-header shortcut-header">
+                    <i class="fas fa-bolt"></i> গুরুত্বপূর্ণ নোটস
+                </div>
+                <div class="card-body">
+                    <a href="phy_ch1_shortcut.html" class="action-btn shortcut-btn" style="border-left: 4px solid #1976d2;">
+                        <div class="btn-icon"><i class="fas fa-rocket"></i></div>
+                        <div class="btn-text">
+                            <span class="btn-title">শর্টকাট ও প্রয়োজনীয় সূত্র</span>
+                            <span class="btn-subtitle">অধ্যায় ১ এর সকল সূত্র, একক ও টেকনিক</span>
+                        </div>
+                        <i class="fas fa-chevron-right" style="color: #aaa;"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <div class="card-header">
+                    <i class="fas fa-list-ol"></i> নিয়মভিত্তিক গাণিতিক সমস্যা
+                </div>
+                <div class="card-body">
+                    
+                    <a href="phy_ch1_rule1.html" class="action-btn">
+                        <div class="btn-icon"><i class="fas fa-ruler"></i></div>
+                        <div class="btn-text">
+                            <span class="btn-title">নিয়ম ১: স্লাইড ক্যালিপার্স</span>
+                            <span class="btn-subtitle">ভার্নিয়ার ধ্রুবক ও দৈর্ঘ্য নির্ণয়</span>
+                        </div>
+                        <i class="fas fa-chevron-right" style="color: #aaa;"></i>
+                    </a>
+
+                    <a href="phy_ch1_rule2.html" class="action-btn">
+                        <div class="btn-icon"><i class="fas fa-cogs"></i></div>
+                        <div class="btn-text">
+                            <span class="btn-title">নিয়ম ২: স্ক্রু গজ</span>
+                            <span class="btn-subtitle">নূন্যাঙ্ক, ব্যাস বা পুরুত্ব নির্ণয়</span>
+                        </div>
+                        <i class="fas fa-chevron-right" style="color: #aaa;"></i>
+                    </a>
+
+                    <a href="phy_ch1_rule3.html" class="action-btn">
+                        <div class="btn-icon"><i class="fas fa-cube"></i></div>
+                        <div class="btn-text">
+                            <span class="btn-title">নিয়ম ৩: ক্ষেত্রফল ও আয়তন</span>
+                            <span class="btn-subtitle">বিভিন্ন বস্তুর ক্ষেত্রফল ও আয়তন নির্ণয়</span>
+                        </div>
+                        <i class="fas fa-chevron-right" style="color: #aaa;"></i>
+                    </a>
+
+                    <a href="phy_ch1_rule4.html" class="action-btn">
+                        <div class="btn-icon"><i class="fas fa-percent"></i></div>
+                        <div class="btn-text">
+                            <span class="btn-title">নিয়ম ৪: ত্রুটি নির্ণয়</span>
+                            <span class="btn-subtitle">আপেক্ষিক ও শতকরা ত্রুটি বিশ্লেষণ</span>
+                        </div>
+                        <i class="fas fa-chevron-right" style="color: #aaa;"></i>
+                    </a>
+
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <div class="card-header combined">
+                    <i class="fas fa-layer-group"></i> সমন্বিত সৃজনশীল (CQ)
+                </div>
+                <div class="card-body">
+                    
+                    <a href="phy_ch1_marge.html" class="action-btn combined-btn">
+                        <div class="btn-icon"><i class="fas fa-pen-alt"></i></div>
+                        <div class="btn-text">
+                            <span class="btn-title">সম্মিলিত সৃজনশীল - পর্ব ০১</span>
+                            <span class="btn-subtitle">বোর্ড পরীক্ষার অনুরূপ ১০টি প্রশ্ন</span>
+                        </div>
+                        <i class="fas fa-chevron-right" style="color: #aaa;"></i>
+                    </a>
+
+                    <a href="phy_ch1_marge2.html" class="action-btn combined-btn">
+                        <div class="btn-icon"><i class="fas fa-pencil-ruler"></i></div>
+                        <div class="btn-text">
+                            <span class="btn-title">সম্মিলিত সৃজনশীল - পর্ব ০২</span>
+                            <span class="btn-subtitle">চিত্রভিত্তিক আরও ১০টি প্রশ্ন</span>
+                        </div>
+                        <i class="fas fa-chevron-right" style="color: #aaa;"></i>
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2026 Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+</body>
+</html>

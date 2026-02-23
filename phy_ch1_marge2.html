@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combined CQ Practice 2 - Chapter 1</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e0f2f1; /* Light Teal Background */
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 60px; 
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #00897b;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #00897b 0%, #004d40 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ইনফো বক্স */
+        .info-box {
+            padding: 15px; margin: 0 20px 20px; background: #e0f2f1;
+            border-radius: 10px; border: 1px solid #80cbc4;
+            text-align: center;
+        }
+        .info-box h3 { margin: 0 0 5px; color: #00695c; }
+        .info-box p { margin: 0; font-size: 14px; color: #004d40; }
+
+        /* প্রশ্ন কার্ড */
+        .math-container { padding: 0 20px; }
+        .question-card {
+            background: #fff; padding: 20px; margin-bottom: 25px;
+            border-radius: 12px; border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-top: 5px solid #00897b;
+        }
+        .q-title {
+            margin-bottom: 10px; font-weight: bold; color: #00796b; font-size: 16px;
+        }
+        .board-ref {
+            font-size: 12px; background: #eee; padding: 2px 8px; 
+            border-radius: 4px; color: #555; margin-left: 10px; font-weight: normal;
+        }
+        .stem-box {
+            background: #f5f5f5; padding: 15px; border-radius: 8px;
+            margin-bottom: 15px; border-left: 4px solid #26a69a;
+            font-size: 15px; line-height: 1.6; color: #333;
+        }
+        .sub-question { margin-top: 10px; padding-left: 10px; font-weight: 500; }
+        
+        /* উত্তর বাটন ও বক্স */
+        .solution-btn {
+            background: white; border: 1px solid #00897b; color: #00897b;
+            padding: 8px 15px; border-radius: 5px; cursor: pointer;
+            font-size: 14px; font-weight: 600; transition: 0.3s;
+            display: inline-flex; align-items: center; gap: 5px;
+            margin-top: 10px;
+        }
+        .solution-btn:hover { background: #00897b; color: white; }
+        
+        .solution-box {
+            display: none; margin-top: 15px; padding: 15px;
+            background: #e0f7fa; border-radius: 8px; color: #006064; 
+            font-size: 15px; border-left: 4px solid #00bcd4;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        /* Diagram Box */
+        .diagram-box {
+            text-align: center; margin: 15px 0; padding: 10px; 
+            background: white; border: 1px dashed #00897b; border-radius: 8px;
+        }
+
+        .footer { text-align: center; color: #777; font-size: 13px; margin-top: 30px; padding-bottom: 20px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div><p>অংক লোড হচ্ছে...</p></div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        
+        <div class="header">
+            <a href="phy_ch1_test.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-pencil-ruler" style="font-size: 40px; margin-bottom: 10px; color: #b2dfdb;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>পদার্থবিজ্ঞান (SSC) | অধ্যায় ১: ভৌত রাশি ও পরিমাপ</p>
+        </div>
+
+        <div class="info-box">
+            <h3>সমন্বিত সৃজনশীল প্রশ্ন (CQ) - পর্ব ২</h3>
+            <p>টপিক: চিত্রভিত্তিক প্রশ্ন, স্লাইড ক্যালিপার্স, স্ক্রু গজ ও ত্রুটি</p>
+            <p style="font-size: 12px; margin-top: 5px; opacity: 0.8;">[বোর্ড পরীক্ষার অনুরূপ ১০টি গাণিতিক সমস্যা]</p>
+        </div>
+
+        <div class="math-container">
+            
+            <div class="question-card">
+                <div class="q-title">সৃজনশীল প্রশ্ন ১১ <span class="board-ref">[চিত্রভিত্তিক + নিয়ম ২, ৩]</span></div>
+                <div class="stem-box">
+                    ল্যাবরেটরিতে একটি তারের ব্যাস পরিমাপের জন্য ব্যবহৃত স্ক্রু গজের পাঠ নিচের চিত্রে দেখানো হলো। যন্ত্রটির বৃত্তাকার স্কেলের ভাগসংখ্যা $100$ এবং পিচ $1 \text{ mm}$। তারটির দৈর্ঘ্য $2 \text{ m}$।
+                    
+                    <div class="diagram-box">
+                        <svg width="220" height="90" viewBox="0 0 220 90">
+                            <rect x="20" y="35" width="80" height="20" fill="#e0e0e0" stroke="#333"/>
+                            <line x1="20" y1="45" x2="100" y2="45" stroke="#333" stroke-width="1.5"/>
+                            <line x1="40" y1="35" x2="40" y2="45" stroke="#333"/>
+                            <line x1="60" y1="35" x2="60" y2="45" stroke="#333"/>
+                            <line x1="80" y1="35" x2="80" y2="45" stroke="#333"/>
+                            <line x1="100" y1="35" x2="100" y2="45" stroke="#333"/>
+                            <text x="35" y="30" font-size="12" font-family="sans-serif">0</text>
+                            <text x="75" y="30" font-size="12" font-family="sans-serif">2</text>
+                            
+                            <rect x="100" y="10" width="50" height="70" fill="#cfd8dc" stroke="#333"/>
+                            <line x1="100" y1="25" x2="115" y2="25" stroke="#333"/>
+                            <line x1="100" y1="45" x2="120" y2="45" stroke="#333" stroke-width="2" stroke-dasharray="2,2"/>
+                            <line x1="100" y1="65" x2="115" y2="65" stroke="#333"/>
+                            <text x="125" y="29" font-size="12" font-family="sans-serif">35</text>
+                            <text x="125" y="49" font-size="12" font-family="sans-serif" font-weight="bold" fill="#d32f2f">30</text>
+                            <text x="125" y="69" font-size="12" font-family="sans-serif">25</text>
+                        </svg>
+                        <br><span style="font-size: 12px; color: #555;">চিত্র: স্ক্রু গজের পাঠ</span>
+                    </div>
+                </div>
+                <div class="sub-question">গ. উদ্দীপকের তারটির ব্যাস নির্ণয় কর।</div>
+                <div class="sub-question">ঘ. তারটির আয়তন $cm^3$ এককে কত হবে? গাণিতিকভাবে দেখাও।</div>
+                
+                <button class="solution-btn" onclick="toggleSol('sol11')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol11" class="solution-box">
+                    <strong>গ. এর সমাধান:</strong><br>
+                    চিত্র হতে পাই,<br>
+                    রৈখিক স্কেলের পাঠ, $L = 3 \text{ mm}$ (কারণ ০ থেকে ৩টি দাগ দেখা যাচ্ছে)<br>
+                    বৃত্তাকার স্কেলের পাঠ, $C = 30$ (প্রধান অনুভূমিক রেখার সাথে মিলেছে)<br>
+                    লঘিষ্ঠ গণন, $LC = \frac{1}{100} = 0.01 \text{ mm}$<br><br>
+                    তারের ব্যাস, $D = L + C \times LC$<br>
+                    $= 3 + 30 \times 0.01 = 3 + 0.30 = 3.30 \text{ mm}$ <strong>(Ans.)</strong><br><br>
+                    <strong>ঘ. এর সমাধান:</strong><br>
+                    তারের ব্যাস, $D = 3.30 \text{ mm} = 0.33 \text{ cm}$<br>
+                    ব্যাসার্ধ, $r = 0.165 \text{ cm}$<br>
+                    তারের দৈর্ঘ্য, $h = 2 \text{ m} = 200 \text{ cm}$<br><br>
+                    তারের আয়তন (সিলিন্ডার), $V = \pi r^2 h$<br>
+                    $= 3.1416 \times (0.165)^2 \times 200$<br>
+                    $= 3.1416 \times 0.027225 \times 200$<br>
+                    $= 17.106 \text{ cm}^3$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">সৃজনশীল প্রশ্ন ১২ <span class="board-ref">[চিত্রভিত্তিক + নিয়ম ১, ৪]</span></div>
+                <div class="stem-box">
+                    একটি আয়তাকার কাঠের ব্লকের দৈর্ঘ্য পরিমাপের সময় স্লাইড ক্যালিপার্সের স্কেলের অবস্থা নিচে দেওয়া হলো। প্রধান স্কেলের ক্ষুদ্রতম ১ ভাগের মান $1 \text{ mm}$ এবং ভার্নিয়ারের ১০ ভাগ প্রধান স্কেলের ৯ ভাগের সমান। পরিমাপে সম্ভাব্য ত্রুটি $\pm 0.5 \text{ mm}$।
+                    
+                    <div class="diagram-box">
+                        <svg width="250" height="70" viewBox="0 0 250 70">
+                            <rect x="10" y="10" width="220" height="25" fill="#e0e0e0" stroke="#333"/>
+                            <text x="15" y="25" font-size="10">4 cm</text>
+                            <line x1="20" y1="25" x2="20" y2="35" stroke="#333"/> <line x1="40" y1="25" x2="40" y2="35" stroke="#333"/> <line x1="60" y1="25" x2="60" y2="35" stroke="#333"/> <line x1="80" y1="25" x2="80" y2="35" stroke="#333"/> <line x1="100" y1="25" x2="100" y2="35" stroke="#333"/> <line x1="120" y1="20" x2="120" y2="35" stroke="#333"/> <rect x="55" y="35" width="150" height="20" fill="#b2dfdb" stroke="#333"/>
+                            <text x="50" y="65" font-size="10">0</text>
+                            <line x1="55" y1="35" x2="55" y2="45" stroke="#333"/> <text x="165" y="65" font-size="10">6</text>
+                            <line x1="163" y1="35" x2="163" y2="45" stroke="#d32f2f" stroke-width="2"/> <text x="163" y="30" font-size="12" fill="#d32f2f">▼</text>
+                        </svg>
+                        <br><span style="font-size: 12px; color: #555;">চিত্র: স্লাইড ক্যালিপার্সের পাঠ</span>
+                    </div>
+                    (চিত্রে ভার্নিয়ারের শূন্য দাগটি প্রধান স্কেলের 4.1 cm ও 4.2 cm এর মাঝে আছে এবং ৬নং দাগটি প্রধান স্কেলের একটি দাগের সাথে সম্পূর্ণ মিলেছে)
+                </div>
+                <div class="sub-question">গ. ব্লকটির দৈর্ঘ্য নির্ণয় কর।</div>
+                <div class="sub-question">ঘ. ব্লকটির দৈর্ঘ্য পরিমাপে শতকরা আপেক্ষিক ত্রুটি নির্ণয় কর।</div>
+                
+                <button class="solution-btn" onclick="toggleSol('sol12')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol12" class="solution-box">
+                    <strong>গ. এর সমাধান:</strong><br>
+                    ভার্নিয়ার ধ্রুবক, $VC = \frac{1 \text{ mm}}{10} = 0.1 \text{ mm} = 0.01 \text{ cm}$<br><br>
+                    চিত্র হতে পাই,<br>
+                    প্রধান স্কেলের পাঠ, $M = 4.1 \text{ cm}$<br>
+                    ভার্নিয়ার সমপাতন, $V = 6$<br><br>
+                    ব্লকের দৈর্ঘ্য, $L = M + V \times VC$<br>
+                    $= 4.1 + 6 \times 0.01$<br>
+                    $= 4.16 \text{ cm}$ <strong>(Ans.)</strong><br><br>
+                    <strong>ঘ. এর সমাধান:</strong><br>
+                    ব্লকের পরিমাপকৃত দৈর্ঘ্য, $L = 4.16 \text{ cm}$<br>
+                    সম্ভাব্য ত্রুটি $\Delta L = \pm 0.5 \text{ mm} = \pm 0.05 \text{ cm}$<br><br>
+                    শতকরা আপেক্ষিক ত্রুটি = $\frac{\Delta L}{L} \times 100\%$<br>
+                    $= \frac{0.05}{4.16} \times 100\%$<br>
+                    $= 1.201\%$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">সৃজনশীল প্রশ্ন ১৩ <span class="board-ref">[নিয়ম ২, ৩ ও ৪]</span></div>
+                <div class="stem-box">
+                    একটি স্ক্রু গজের পিচ $0.5 \text{ mm}$ এবং বৃত্তাকার স্কেলের ভাগসংখ্যা $50$। এটি দিয়ে একটি কাঁচের পাতের পুরুত্ব মাপা হলো ২ মিলিমিটার। কাঁচের পাতের দৈর্ঘ্য ও প্রস্থ যথাক্রমে $5 \text{ cm}$ ও $4 \text{ cm}$।
+                </div>
+                <div class="sub-question">গ. পুরুত্ব পরিমাপে স্ক্রু গজের বৃত্তাকার স্কেলের পাঠ কত ছিল? (রৈখিক স্কেলের পাঠ ১.৫ মি.মি. ধরবে)</div>
+                <div class="sub-question">ঘ. যদি দৈর্ঘ্য ও প্রস্থ পরিমাপে $1\%$ ত্রুটি থাকে, তবে কাঁচের পাতের ক্ষেত্রফল পরিমাপে শতকরা ত্রুটি কত হবে?</div>
+                
+                <button class="solution-btn" onclick="toggleSol('sol13')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol13" class="solution-box">
+                    <strong>গ. এর সমাধান:</strong><br>
+                    লঘিষ্ঠ গণন, $LC = \frac{0.5}{50} = 0.01 \text{ mm}$<br>
+                    দেওয়া আছে, পুরুত্ব $d = 2 \text{ mm}$, রৈখিক পাঠ $L = 1.5 \text{ mm}$<br>
+                    আমরা জানি, $d = L + C \times LC$<br>
+                    $2 = 1.5 + C \times 0.01$<br>
+                    $0.5 = C \times 0.01$<br>
+                    $C = \frac{0.5}{0.01} = 50$<br>
+                    বৃত্তাকার স্কেলের পাঠ $50$। <strong>(Ans.)</strong><br><br>
+                    <strong>ঘ. এর সমাধান:</strong><br>
+                    পরিমাপকৃত ক্ষেত্রফল, $A = 5 \times 4 = 20 \text{ cm}^2$<br>
+                    দৈর্ঘ্য ত্রুটি = $5 \times 1\% = 0.05 \text{ cm}$<br>
+                    প্রস্থ ত্রুটি = $4 \times 1\% = 0.04 \text{ cm}$<br><br>
+                    সর্বোচ্চ ক্ষেত্রফল, $A_{max} = (5+0.05) \times (4+0.04) = 5.05 \times 4.04 = 20.402 \text{ cm}^2$<br>
+                    সর্বনিম্ন ক্ষেত্রফল, $A_{min} = (5-0.05) \times (4-0.04) = 4.95 \times 3.96 = 19.602 \text{ cm}^2$<br>
+                    $\Delta A_1 = 20.402 - 20 = 0.402$<br>
+                    $\Delta A_2 = 20 - 19.602 = 0.398$<br>
+                    চূড়ান্ত ত্রুটি = $0.402$<br>
+                    শতকরা ত্রুটি = $\frac{0.402}{20} \times 100\% = 2.01\%$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">সৃজনশীল প্রশ্ন ১৪ <span class="board-ref">[নিয়ম ১, ৩]</span></div>
+                <div class="stem-box">
+                    একটি ফাঁপা সিলিন্ডারের বাইরের ব্যাস মাপার সময় স্লাইড ক্যালিপার্সের প্রধান স্কেলের পাঠ $4.5 \text{ cm}$ এবং ভার্নিয়ার সমপাতন $8$ পাওয়া গেল। ভেতরের ব্যাস মাপার সময় প্রধান স্কেলের পাঠ $4.2 \text{ cm}$ এবং ভার্নিয়ার সমপাতন $5$ পাওয়া গেল। যন্ত্রটির ভার্নিয়ার ধ্রুবক $0.005 \text{ cm}$।
+                </div>
+                <div class="sub-question">গ. সিলিন্ডারটির দেয়ালের পুরুত্ব নির্ণয় কর।</div>
+                <div class="sub-question">ঘ. সিলিন্ডারটির দৈর্ঘ্য $15 \text{ cm}$ হলে, সিলিন্ডারটিতে কী পরিমাণ উপাদান (আয়তন) আছে?</div>
+                
+                <button class="solution-btn" onclick="toggleSol('sol14')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol14" class="solution-box">
+                    <strong>গ. এর সমাধান:</strong><br>
+                    বাইরের ব্যাস, $D_1 = 4.5 + 8 \times 0.005 = 4.54 \text{ cm}$<br>
+                    ভেতরের ব্যাস, $D_2 = 4.2 + 5 \times 0.005 = 4.225 \text{ cm}$<br>
+                    দেয়ালের পুরুত্ব = $\frac{D_1 - D_2}{2}$<br>
+                    $= \frac{4.54 - 4.225}{2} = \frac{0.315}{2} = 0.1575 \text{ cm}$ <strong>(Ans.)</strong><br><br>
+                    <strong>ঘ. এর সমাধান:</strong><br>
+                    বাইরের ব্যাসার্ধ, $r_1 = \frac{4.54}{2} = 2.27 \text{ cm}$<br>
+                    ভেতরের ব্যাসার্ধ, $r_2 = \frac{4.225}{2} = 2.1125 \text{ cm}$<br>
+                    দৈর্ঘ্য, $h = 15 \text{ cm}$<br><br>
+                    উপাদানের আয়তন = বাইরের আয়তন - ভেতরের আয়তন<br>
+                    $V = \pi r_1^2 h - \pi r_2^2 h = \pi h (r_1^2 - r_2^2)$<br>
+                    $= 3.1416 \times 15 \times \{(2.27)^2 - (2.1125)^2\}$<br>
+                    $= 47.124 \times \{5.1529 - 4.4626\}$<br>
+                    $= 47.124 \times 0.6903 = 32.53 \text{ cm}^3$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">সৃজনশীল প্রশ্ন ১৫ <span class="board-ref">[নিয়ম ৩, ৪]</span></div>
+                <div class="stem-box">
+                    একটি গোলকের ব্যাসার্ধ পরিমাপ করে $4 \text{ cm}$ পাওয়া গেল। ব্যাসার্ধ পরিমাপে সম্ভাব্য ত্রুটি $\pm 0.1 \text{ cm}$।
+                </div>
+                <div class="sub-question">গ. গোলকটির পৃষ্ঠতলের ক্ষেত্রফল নির্ণয় কর।</div>
+                <div class="sub-question">ঘ. গোলকটির পৃষ্ঠতলের ক্ষেত্রফল এবং আয়তন পরিমাপে শতকরা ত্রুটির তুলনামূলক বিশ্লেষণ কর।</div>
+                
+                <button class="solution-btn" onclick="toggleSol('sol15')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol15" class="solution-box">
+                    <strong>গ. এর সমাধান:</strong><br>
+                    গোলকের পৃষ্ঠতলের ক্ষেত্রফল, $A = 4 \pi r^2$<br>
+                    $= 4 \times 3.1416 \times (4)^2$<br>
+                    $= 201.06 \text{ cm}^2$ <strong>(Ans.)</strong><br><br>
+                    <strong>ঘ. এর সমাধান:</strong><br>
+                    <strong>ক্ষেত্রফলের ক্ষেত্রে:</strong><br>
+                    $A = 201.06 \text{ cm}^2$<br>
+                    $A_{max} = 4 \pi (4.1)^2 = 211.24 \text{ cm}^2$<br>
+                    $A_{min} = 4 \pi (3.9)^2 = 191.13 \text{ cm}^2$<br>
+                    $\Delta A_1 = 10.18$, $\Delta A_2 = 9.93$<br>
+                    ক্ষেত্রফলে শতকরা ত্রুটি = $\frac{10.18}{201.06} \times 100\% \approx 5.06\%$<br><br>
+                    <strong>আয়তনের ক্ষেত্রে:</strong><br>
+                    $V = \frac{4}{3} \pi r^3 = \frac{4}{3} \pi (4)^3 = 268.08 \text{ cm}^3$<br>
+                    $V_{max} = \frac{4}{3} \pi (4.1)^3 = 288.69 \text{ cm}^3$<br>
+                    $V_{min} = \frac{4}{3} \pi (3.9)^3 = 248.47 \text{ cm}^3$<br>
+                    $\Delta V_1 = 20.61$, $\Delta V_2 = 19.61$<br>
+                    আয়তনে শতকরা ত্রুটি = $\frac{20.61}{268.08} \times 100\% \approx 7.68\%$<br><br>
+                    <strong>বিশ্লেষণ:</strong> আয়তন পরিমাপে শতকরা ত্রুটি ($7.68\%$) ক্ষেত্রফল পরিমাপের ত্রুটি ($5.06\%$) অপেক্ষা বেশি।
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">সৃজনশীল প্রশ্ন ১৬ <span class="board-ref">[নিয়ম ২ - ত্রুটিসহ]</span></div>
+                <div class="stem-box">
+                    একটি স্ক্রু গজে বৃত্তাকার স্কেলের ভাগসংখ্যা ১০০। স্ক্রুটিকে ৫ বার ঘুরালে এটি রৈখিক স্কেলে ৫ মি.মি. সরে যায়। যন্ত্রটিতে $-0.04 \text{ mm}$ যান্ত্রিক ত্রুটি আছে। একটি তারের ব্যাস মাপতে গিয়ে রৈখিক স্কেলের পাঠ $2 \text{ mm}$ এবং বৃত্তাকার স্কেলের পাঠ $45$ পাওয়া গেল।
+                </div>
+                <div class="sub-question">গ. তারটির প্রকৃত ব্যাস নির্ণয় কর।</div>
+                <div class="sub-question">ঘ. যান্ত্রিক ত্রুটি বিবেচনা না করলে তারের প্রস্থচ্ছেদের ক্ষেত্রফলের মান কতটুকু কম বা বেশি হতো?</div>
+                
+                <button class="solution-btn" onclick="toggleSol('sol16')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol16" class="solution-box">
+                    <strong>গ. এর সমাধান:</strong><br>
+                    পিচ $P = \frac{5}{5} = 1 \text{ mm}$<br>
+                    $LC = \frac{1}{100} = 0.01 \text{ mm}$<br>
+                    লব্ধ পাঠ, $D' = 2 + 45 \times 0.01 = 2.45 \text{ mm}$<br>
+                    প্রকৃত ব্যাস, $D = D' - e = 2.45 - (-0.04) = 2.49 \text{ mm}$ <strong>(Ans.)</strong><br><br>
+                    <strong>ঘ. এর সমাধান:</strong><br>
+                    প্রকৃত ক্ষেত্রফল, $A_{real} = \frac{\pi (2.49)^2}{4} = 4.869 \text{ mm}^2$<br>
+                    ত্রুটি বিবেচনা না করলে ব্যাস হতো $2.45 \text{ mm}$<br>
+                    ভুল ক্ষেত্রফল, $A_{wrong} = \frac{\pi (2.45)^2}{4} = 4.714 \text{ mm}^2$<br><br>
+                    ক্ষেত্রফলের পার্থক্য = $4.869 - 4.714 = 0.155 \text{ mm}^2$<br>
+                    অর্থাৎ, যান্ত্রিক ত্রুটি বিবেচনা না করলে ক্ষেত্রফল $0.155 \text{ mm}^2$ <strong>কম</strong> হতো। <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">সৃজনশীল প্রশ্ন ১৭ <span class="board-ref">[নিয়ম ১, ৪]</span></div>
+                <div class="stem-box">
+                    একটি সমঘনকের দৈর্ঘ্য স্লাইড ক্যালিপার্স দিয়ে মেপে পাওয়া গেল $5.00 \text{ cm}$। স্লাইড ক্যালিপার্সের ভার্নিয়ার স্কেলে ২০টি ভাগ আছে। পরিমাপে ভার্নিয়ার ধ্রুবকের সমান ত্রুটি হতে পারে বলে ধারণা করা হলো।
+                </div>
+                <div class="sub-question">গ. যন্ত্রটির ভার্নিয়ার ধ্রুবক কত $cm$? (প্রধান স্কেলের ১ ভাগ $1 \text{ mm}$ ধরে)</div>
+                <div class="sub-question">ঘ. উক্ত সমঘনকের আয়তন পরিমাপে শতকরা ত্রুটি নির্ণয় কর।</div>
+                
+                <button class="solution-btn" onclick="toggleSol('sol17')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol17" class="solution-box">
+                    <strong>গ. এর সমাধান:</strong><br>
+                    প্রধান স্কেলের ১ ভাগের মান $s = 1 \text{ mm}$<br>
+                    ভার্নিয়ার ভাগসংখ্যা $n = 20$<br>
+                    $VC = \frac{1}{20} \text{ mm} = 0.05 \text{ mm} = 0.005 \text{ cm}$ <strong>(Ans.)</strong><br><br>
+                    <strong>ঘ. এর সমাধান:</strong><br>
+                    সম্ভাব্য ত্রুটি = $VC = \pm 0.005 \text{ cm}$<br>
+                    পরিমাপকৃত বাহু, $a = 5.00 \text{ cm}$ $\implies V = (5)^3 = 125 \text{ cm}^3$<br>
+                    সর্বোচ্চ বাহু, $a_{max} = 5.005 \implies V_{max} = (5.005)^3 = 125.375 \text{ cm}^3$<br>
+                    সর্বনিম্ন বাহু, $a_{min} = 4.995 \implies V_{min} = (4.995)^3 = 124.625 \text{ cm}^3$<br>
+                    $\Delta V_1 = 125.375 - 125 = 0.375$<br>
+                    $\Delta V_2 = 125 - 124.625 = 0.375$<br>
+                    চূড়ান্ত ত্রুটি = $0.375 \text{ cm}^3$<br>
+                    শতকরা ত্রুটি = $\frac{0.375}{125} \times 100\% = 0.3\%$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">সৃজনশীল প্রশ্ন ১৮ <span class="board-ref">[নিয়ম ৪ - আয়তাকার বস্তু]</span></div>
+                <div class="stem-box">
+                    একটি কাঠের ব্লকের দৈর্ঘ্য, প্রস্থ ও উচ্চতা যথাক্রমে $12 \text{ cm}$, $8 \text{ cm}$ এবং $6 \text{ cm}$। প্রতিটি পরিমাপে $2\%$ ত্রুটি রয়েছে।
+                </div>
+                <div class="sub-question">গ. ব্লকটির সমগ্রতলের ক্ষেত্রফল কত?</div>
+                <div class="sub-question">ঘ. ব্লকটির আয়তন পরিমাপে শতকরা আপেক্ষিক ত্রুটি গাণিতিকভাবে বিশ্লেষণ কর।</div>
+                
+                <button class="solution-btn" onclick="toggleSol('sol18')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol18" class="solution-box">
+                    <strong>গ. এর সমাধান:</strong><br>
+                    $L = 12$, $W = 8$, $H = 6$<br>
+                    সমগ্রতলের ক্ষেত্রফল, $A = 2(LW + WH + HL)$<br>
+                    $= 2(12 \times 8 + 8 \times 6 + 6 \times 12)$<br>
+                    $= 2(96 + 48 + 72) = 2 \times 216 = 432 \text{ cm}^2$ <strong>(Ans.)</strong><br><br>
+                    <strong>ঘ. এর সমাধান:</strong><br>
+                    পরিমাপকৃত আয়তন, $V = 12 \times 8 \times 6 = 576 \text{ cm}^3$<br>
+                    দৈর্ঘ্য, প্রস্থ ও উচ্চতা সবগুলোতে $2\%$ ত্রুটি থাকলে:<br>
+                    $L_{max} = 12 + 12(0.02) = 12.24$<br>
+                    $W_{max} = 8 + 8(0.02) = 8.16$<br>
+                    $H_{max} = 6 + 6(0.02) = 6.12$<br>
+                    $V_{max} = 12.24 \times 8.16 \times 6.12 = 611.27 \text{ cm}^3$<br><br>
+                    $L_{min} = 11.76$, $W_{min} = 7.84$, $H_{min} = 5.88$<br>
+                    $V_{min} = 11.76 \times 7.84 \times 5.88 = 542.13 \text{ cm}^3$<br><br>
+                    $\Delta V_1 = 611.27 - 576 = 35.27$<br>
+                    $\Delta V_2 = 576 - 542.13 = 33.87$<br>
+                    চূড়ান্ত ত্রুটি = $35.27$<br>
+                    শতকরা ত্রুটি = $\frac{35.27}{576} \times 100\% = 6.12\%$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">সৃজনশীল প্রশ্ন ১৯ <span class="board-ref">[নিয়ম ২ - তুলনামূলক বিশ্লেষণ]</span></div>
+                <div class="stem-box">
+                    মিলি এবং লিলি দুটি ভিন্ন স্ক্রু গজ দিয়ে একটি তারের ব্যাস পরিমাপ করল। মিলির যন্ত্রের পিচ $1 \text{ mm}$ এবং বৃত্তাকার স্কেলের ভাগ $100$। লিলির যন্ত্রের পিচ $0.5 \text{ mm}$ এবং বৃত্তাকার স্কেলের ভাগ $100$।
+                </div>
+                <div class="sub-question">গ. লিলির যন্ত্রটির লঘিষ্ঠ গণন মিলিমিটারে নির্ণয় কর।</div>
+                <div class="sub-question">ঘ. কার যন্ত্রটি দিয়ে তারের ব্যাস মাপা বেশি নির্ভুল হবে? গাণিতিক যুক্তিসহ বিশ্লেষণ কর।</div>
+                
+                <button class="solution-btn" onclick="toggleSol('sol19')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol19" class="solution-box">
+                    <strong>গ. এর সমাধান:</strong><br>
+                    লিলির যন্ত্রের পিচ $P = 0.5 \text{ mm}$<br>
+                    বৃত্তাকার স্কেলের ভাগ $N = 100$<br>
+                    লঘিষ্ঠ গণন, $LC = \frac{P}{N} = \frac{0.5}{100} = 0.005 \text{ mm}$ <strong>(Ans.)</strong><br><br>
+                    <strong>ঘ. এর সমাধান:</strong><br>
+                    মিলির যন্ত্রের লঘিষ্ঠ গণন = $\frac{1}{100} = 0.01 \text{ mm}$<br>
+                    লিলির যন্ত্রের লঘিষ্ঠ গণন = $0.005 \text{ mm}$<br><br>
+                    যে যন্ত্রের লঘিষ্ঠ গণন যত কম, সেই যন্ত্র দিয়ে তত বেশি সূক্ষ্মভাবে (বা নির্ভুলভাবে) পরিমাপ করা যায়। কারণ লঘিষ্ঠ গণন কম হওয়ার অর্থ হলো যন্ত্রটি পরিমাপের আরও ছোট ভগ্নাংশ ধরতে পারে।<br>
+                    যেহেতু লিলির যন্ত্রের লঘিষ্ঠ গণন ($0.005 \text{ mm}$) মিলির যন্ত্রের লঘিষ্ঠ গণন ($0.01 \text{ mm}$) অপেক্ষা কম, তাই <strong>লিলির যন্ত্রটি দিয়ে তারের ব্যাস মাপা বেশি নির্ভুল হবে।</strong> <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">সৃজনশীল প্রশ্ন ২০ <span class="board-ref">[নিয়ম ১, ২, ৩]</span></div>
+                <div class="stem-box">
+                    একটি আয়তাকার ধাতব পাতের দৈর্ঘ্য ও প্রস্থ স্লাইড ক্যালিপার্স ($VC=0.01\text{ cm}$) দিয়ে পরিমাপ করে যথাক্রমে $12.5 \text{ cm}$ ও $6.4 \text{ cm}$ পাওয়া গেল। পাতের পুরুত্ব স্ক্রু গজ ($LC=0.01\text{ mm}$) দিয়ে পরিমাপ করে পাওয়া গেল $2.5 \text{ mm}$।
+                </div>
+                <div class="sub-question">গ. পাতের ক্ষেত্রফল বর্গ সেন্টিমিটারে নির্ণয় কর।</div>
+                <div class="sub-question">ঘ. পাতের আয়তন ঘন মিটারে ($m^3$) নির্ণয় কর।</div>
+                
+                <button class="solution-btn" onclick="toggleSol('sol20')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol20" class="solution-box">
+                    <strong>গ. এর সমাধান:</strong><br>
+                    দৈর্ঘ্য, $L = 12.5 \text{ cm}$<br>
+                    প্রস্থ, $W = 6.4 \text{ cm}$<br>
+                    পাতের ক্ষেত্রফল, $A = L \times W = 12.5 \times 6.4 = 80 \text{ cm}^2$ <strong>(Ans.)</strong><br><br>
+                    <strong>ঘ. এর সমাধান:</strong><br>
+                    পুরুত্ব বা উচ্চতা, $H = 2.5 \text{ mm} = 0.25 \text{ cm}$<br>
+                    আয়তন, $V = \text{ক্ষেত্রফল} \times \text{পুরুত্ব} = 80 \times 0.25 = 20 \text{ cm}^3$<br><br>
+                    আমরা জানি, $1 \text{ cm}^3 = 10^{-6} \text{ m}^3$<br>
+                    $\therefore V = 20 \times 10^{-6} \text{ m}^3$<br>
+                    $= 2 \times 10^{-5} \text{ m}^3$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2026 Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+    <script>
+        // উত্তর দেখানোর ফাংশন (Toggle)
+        function toggleSol(id) {
+            const x = document.getElementById(id);
+            const btn = x.previousElementSibling;
+            
+            if (x.style.display === "none" || x.style.display === "") {
+                x.style.display = "block";
+                btn.innerHTML = '<i class="fas fa-eye-slash"></i> সমাধান লুকান';
+                btn.style.background = "#00897b";
+                btn.style.color = "white";
+            } else {
+                x.style.display = "none";
+                btn.innerHTML = '<i class="fas fa-eye"></i> সমাধান দেখুন';
+                btn.style.background = "white";
+                btn.style.color = "#00897b";
+            }
+        }
+    </script>
+
+</body>
+</html>

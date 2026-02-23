@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice - Rule 3 (Area & Volume)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e0f2f1; /* Light Teal Background */
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 60px; 
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #00897b;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #00897b 0%, #004d40 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ইনফো বক্স */
+        .info-box {
+            padding: 15px; margin: 0 20px 20px; background: #e0f2f1;
+            border-radius: 10px; border: 1px solid #80cbc4;
+            text-align: center;
+        }
+        .info-box h3 { margin: 0 0 5px; color: #00695c; }
+        .info-box p { margin: 0; font-size: 14px; color: #004d40; }
+
+        /* প্রশ্ন কার্ড */
+        .math-container { padding: 0 20px; }
+        .question-card {
+            background: #fff; padding: 20px; margin-bottom: 25px;
+            border-radius: 12px; border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-top: 5px solid #00897b;
+        }
+        .q-title {
+            margin-bottom: 10px; font-weight: bold; color: #00796b; font-size: 16px;
+        }
+        .board-ref {
+            font-size: 12px; background: #eee; padding: 2px 8px; 
+            border-radius: 4px; color: #555; margin-left: 10px; font-weight: normal;
+        }
+        .stem-box {
+            background: #f5f5f5; padding: 15px; border-radius: 8px;
+            margin-bottom: 15px; border-left: 4px solid #26a69a;
+            font-size: 15px; line-height: 1.6; color: #333;
+        }
+        
+        /* উত্তর বাটন ও বক্স */
+        .solution-btn {
+            background: white; border: 1px solid #00897b; color: #00897b;
+            padding: 8px 15px; border-radius: 5px; cursor: pointer;
+            font-size: 14px; font-weight: 600; transition: 0.3s;
+            display: inline-flex; align-items: center; gap: 5px;
+        }
+        .solution-btn:hover { background: #00897b; color: white; }
+        
+        .solution-box {
+            display: none; margin-top: 15px; padding: 15px;
+            background: #e0f7fa; border-radius: 8px; color: #006064; 
+            font-size: 15px; border-left: 4px solid #00bcd4;
+            line-height: 1.6;
+        }
+
+        .footer { text-align: center; color: #777; font-size: 13px; margin-top: 30px; padding-bottom: 20px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div><p>অংক লোড হচ্ছে...</p></div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        
+        <div class="header">
+            <a href="phy_ch1_test.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-cube" style="font-size: 40px; margin-bottom: 10px; color: #b2dfdb;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>পদার্থবিজ্ঞান (SSC) | অধ্যায় ১: ভৌত রাশি ও পরিমাপ</p>
+        </div>
+
+        <div class="info-box">
+            <h3>গাণিতিক সমস্যা সমাধান - নিয়ম ৩</h3>
+            <p>টপিক: ক্ষেত্রফল ও আয়তন নির্ণয়</p>
+            <p style="font-size: 12px; margin-top: 5px; opacity: 0.8;">[বোর্ড পরীক্ষায় আসা ১০টি গুরুত্বপূর্ণ প্রশ্ন]</p>
+        </div>
+
+        <div class="math-container">
+            
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০১ <span class="board-ref">[ঢাকা বোর্ড ২০২১]</span>
+                </div>
+                <div class="stem-box">
+                    একটি স্লাইড ক্যালিপার্স দিয়ে একটি ধাতব ঘনকের এক ধারের দৈর্ঘ্য পরিমাপ করে প্রধান স্কেলের পাঠ $2.5 \text{ cm}$ এবং ভার্নিয়ার সমপাতন $4$ পাওয়া গেল। যন্ত্রটির ভার্নিয়ার ধ্রুবক $0.01 \text{ cm}$।<br><br>
+                    <strong>প্রশ্ন:</strong> ঘনকটির আয়তন নির্ণয় কর।
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol1')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol1" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    দেওয়া আছে,<br>
+                    প্রধান স্কেলের পাঠ, $M = 2.5 \text{ cm}$<br>
+                    ভার্নিয়ার সমপাতন, $V = 4$<br>
+                    ভার্নিয়ার ধ্রুবক, $VC = 0.01 \text{ cm}$<br><br>
+                    ঘনকের এক ধারের দৈর্ঘ্য, $a = M + V \times VC$<br>
+                    $= 2.5 + (4 \times 0.01) = 2.54 \text{ cm}$<br><br>
+                    আমরা জানি, ঘনকের আয়তন, $V_c = a^3$<br>
+                    $= (2.54)^3$<br>
+                    $= 16.387 \text{ cm}^3$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০২ <span class="board-ref">[রাজশাহী বোর্ড ২০২০]</span>
+                </div>
+                <div class="stem-box">
+                    একটি স্ক্রু গজের সাহায্যে একটি তারের ব্যাস মাপা হলো। রৈখিক স্কেলের পাঠ $1 \text{ mm}$, বৃত্তাকার স্কেলের পাঠ $25$ এবং লঘিষ্ঠ গণন $0.01 \text{ mm}$।<br><br>
+                    <strong>প্রশ্ন:</strong> তারটির প্রস্থচ্ছেদের ক্ষেত্রফল নির্ণয় কর।
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol2')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol2" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    দেওয়া আছে,<br>
+                    $L = 1 \text{ mm}$, $C = 25$, $LC = 0.01 \text{ mm}$<br><br>
+                    তারের ব্যাস, $D = L + C \times LC$<br>
+                    $= 1 + (25 \times 0.01) = 1.25 \text{ mm}$<br>
+                    ব্যাসার্ধ, $r = \frac{D}{2} = \frac{1.25}{2} = 0.625 \text{ mm}$<br><br>
+                    প্রস্থচ্ছেদের ক্ষেত্রফল, $A = \pi r^2$<br>
+                    $= 3.1416 \times (0.625)^2$<br>
+                    $= 1.227 \text{ mm}^2$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০৩ <span class="board-ref">[কুমিল্লা বোর্ড ২০১৯]</span>
+                </div>
+                <div class="stem-box">
+                    একটি স্লাইড ক্যালিপার্সের সাহায্যে একটি গোলকের ব্যাস মাপার সময় প্রধান স্কেলের পাঠ $4.2 \text{ cm}$ এবং ভার্নিয়ার সমপাতন $5$ পাওয়া যায়। যন্ত্রটির ভার্নিয়ার ধ্রুবক $0.01 \text{ cm}$।<br><br>
+                    <strong>প্রশ্ন:</strong> গোলকটির আয়তন নির্ণয় কর।
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol3')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol3" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    গোলকের ব্যাস, $D = M + V \times VC$<br>
+                    $= 4.2 + (5 \times 0.01)$<br>
+                    $= 4.25 \text{ cm}$<br><br>
+                    ব্যাসার্ধ, $r = \frac{D}{2} = \frac{4.25}{2} = 2.125 \text{ cm}$<br><br>
+                    গোলকের আয়তন, $V = \frac{4}{3} \pi r^3$<br>
+                    $= \frac{4}{3} \times 3.1416 \times (2.125)^3$<br>
+                    $= 40.19 \text{ cm}^3$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০৪ <span class="board-ref">[সিলেট বোর্ড ২০১৮]</span>
+                </div>
+                <div class="stem-box">
+                    একটি আয়তাকার কাঠের খণ্ডের দৈর্ঘ্য $12 \text{ cm}$ এবং প্রস্থ মাপা হলো স্লাইড ক্যালিপার্স দিয়ে। প্রস্থ মাপার সময় প্রধান স্কেলের পাঠ $5 \text{ cm}$, ভার্নিয়ার সমপাতন $4$ এবং ভার্নিয়ার ধ্রুবক $0.01 \text{ cm}$ পাওয়া গেল।<br><br>
+                    <strong>প্রশ্ন:</strong> কাঠের খণ্ডটির উপরিভাগের ক্ষেত্রফল নির্ণয় কর।
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol4')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol4" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    দেওয়া আছে, দৈর্ঘ্য, $l = 12 \text{ cm}$<br><br>
+                    প্রস্থ, $w = M + V \times VC$<br>
+                    $= 5 + (4 \times 0.01)$<br>
+                    $= 5.04 \text{ cm}$<br><br>
+                    উপরিভাগের ক্ষেত্রফল, $A = \text{দৈর্ঘ্য} \times \text{প্রস্থ}$<br>
+                    $= 12 \times 5.04$<br>
+                    $= 60.48 \text{ cm}^2$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০৫ <span class="board-ref">[চট্টগ্রাম বোর্ড ২০২২]</span>
+                </div>
+                <div class="stem-box">
+                    একটি বেলনাকার তামার তারের দৈর্ঘ্য $2 \text{ m}$। একটি স্ক্রু গজ দিয়ে তারটির ব্যাস পরিমাপের সময় রৈখিক স্কেলের পাঠ $2 \text{ mm}$ এবং বৃত্তাকার স্কেলের পাঠ $40$ পাওয়া যায়। যন্ত্রটির লঘিষ্ঠ গণন $0.01 \text{ mm}$।<br><br>
+                    <strong>প্রশ্ন:</strong> তারটির আয়তন ঘনমিটারে ($m^3$) নির্ণয় কর।
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol5')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol5" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    তারের ব্যাস, $D = L + C \times LC$<br>
+                    $= 2 + (40 \times 0.01) = 2.4 \text{ mm}$<br>
+                    মিটারে প্রকাশ করলে, $D = 2.4 \times 10^{-3} \text{ m}$<br>
+                    ব্যাসার্ধ, $r = \frac{D}{2} = 1.2 \times 10^{-3} \text{ m}$<br><br>
+                    দৈর্ঘ্য, $h = 2 \text{ m}$<br><br>
+                    তারের আয়তন (বেলনের আয়তন), $V = \pi r^2 h$<br>
+                    $= 3.1416 \times (1.2 \times 10^{-3})^2 \times 2$<br>
+                    $= 9.048 \times 10^{-6} \text{ m}^3$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০৬ <span class="board-ref">[বরিশাল বোর্ড ২০২০]</span>
+                </div>
+                <div class="stem-box">
+                    একটি নিরেট সিলিন্ডারের উচ্চতা $10 \text{ cm}$। একটি স্লাইড ক্যালিপার্সের সাহায্যে এর ব্যাস পরিমাপ করে পাওয়া গেল $4 \text{ cm}$।<br><br>
+                    <strong>প্রশ্ন:</strong> সিলিন্ডারটির আয়তন কত?
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol6')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol6" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    দেওয়া আছে,<br>
+                    সিলিন্ডারের উচ্চতা, $h = 10 \text{ cm}$<br>
+                    ব্যাস, $D = 4 \text{ cm}$<br>
+                    $\therefore$ ব্যাসার্ধ, $r = \frac{D}{2} = \frac{4}{2} = 2 \text{ cm}$<br><br>
+                    সিলিন্ডারের আয়তন, $V = \pi r^2 h$<br>
+                    $= 3.1416 \times (2)^2 \times 10$<br>
+                    $= 3.1416 \times 4 \times 10$<br>
+                    $= 125.66 \text{ cm}^3$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০৭ <span class="board-ref">[দিনাজপুর বোর্ড ২০১৭]</span>
+                </div>
+                <div class="stem-box">
+                    একটি স্লাইড ক্যালিপার্স দিয়ে একটি সমঘনকের এক বাহু পরিমাপ করার সময় প্রধান স্কেলের পাঠ $3 \text{ cm}$, ভার্নিয়ার সমপাতন $5$ এবং ভার্নিয়ার ধ্রুবক $0.01 \text{ cm}$ পাওয়া গেল।<br><br>
+                    <strong>প্রশ্ন:</strong> সমঘনকটির সমগ্রতলের ক্ষেত্রফল নির্ণয় কর।
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol7')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol7" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    ঘনকের এক বাহুর দৈর্ঘ্য, $a = M + V \times VC$<br>
+                    $= 3 + (5 \times 0.01) = 3.05 \text{ cm}$<br><br>
+                    আমরা জানি, ঘনকের ৬টি তল থাকে।<br>
+                    $\therefore$ সমগ্রতলের ক্ষেত্রফল, $A = 6a^2$<br>
+                    $= 6 \times (3.05)^2$<br>
+                    $= 6 \times 9.3025$<br>
+                    $= 55.815 \text{ cm}^2$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০৮ <span class="board-ref">[যশোর বোর্ড ২০২১]</span>
+                </div>
+                <div class="stem-box">
+                    একটি স্ক্রু গজ দিয়ে একটি বৈদ্যুতিক তারের ব্যাস পরিমাপ করে $1.5 \text{ mm}$ পাওয়া গেল।<br><br>
+                    <strong>প্রশ্ন:</strong> তারটির প্রস্থচ্ছেদের ক্ষেত্রফল বর্গমিটারে ($m^2$) নির্ণয় কর।
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol8')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol8" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    দেওয়া আছে, ব্যাস, $D = 1.5 \text{ mm}$<br>
+                    ব্যাসার্ধ, $r = \frac{1.5}{2} = 0.75 \text{ mm}$<br>
+                    মিটারে প্রকাশ করলে, $r = 0.75 \times 10^{-3} \text{ m}$<br><br>
+                    প্রস্থচ্ছেদের ক্ষেত্রফল, $A = \pi r^2$<br>
+                    $= 3.1416 \times (0.75 \times 10^{-3})^2$<br>
+                    $= 3.1416 \times 5.625 \times 10^{-7}$<br>
+                    $= 1.767 \times 10^{-6} \text{ m}^2$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০৯ <span class="board-ref">[ময়মনসিংহ বোর্ড ২০২০]</span>
+                </div>
+                <div class="stem-box">
+                    একটি নিরেট লোহার গোলকের ব্যাস স্লাইড ক্যালিপার্সের সাহায্যে পরিমাপ করে $2.4 \text{ cm}$ পাওয়া গেল।<br><br>
+                    <strong>প্রশ্ন:</strong> গোলকটির আয়তন SI এককে ($m^3$) প্রকাশ কর।
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol9')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol9" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    দেওয়া আছে, ব্যাস, $D = 2.4 \text{ cm}$<br>
+                    মিটারে প্রকাশ: $D = \frac{2.4}{100} = 0.024 \text{ m}$<br>
+                    ব্যাসার্ধ, $r = \frac{D}{2} = 0.012 \text{ m}$<br><br>
+                    গোলকের আয়তন, $V = \frac{4}{3} \pi r^3$<br>
+                    $= \frac{4}{3} \times 3.1416 \times (0.012)^3$<br>
+                    $= 4.1888 \times 0.000001728$<br>
+                    $= 7.238 \times 10^{-6} \text{ m}^3$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ১০ <span class="board-ref">[ঢাকা বোর্ড ২০১৯]</span>
+                </div>
+                <div class="stem-box">
+                    একটি আয়তাকার বাক্সের মাত্রাগুলো হলো: দৈর্ঘ্য $10 \text{ cm}$, প্রস্থ $5 \text{ cm}$ এবং উচ্চতা $4 \text{ cm}$।<br><br>
+                    <strong>প্রশ্ন:</strong> বাক্সটির আয়তন ও সমগ্রতলের ক্ষেত্রফল নির্ণয় কর।
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol10')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol10" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    দেওয়া আছে, <br>
+                    দৈর্ঘ্য, $a = 10 \text{ cm}$<br>
+                    প্রস্থ, $b = 5 \text{ cm}$<br>
+                    উচ্চতা, $c = 4 \text{ cm}$<br><br>
+                    <strong>আয়তন:</strong><br>
+                    $V = a \times b \times c = 10 \times 5 \times 4 = 200 \text{ cm}^3$<br><br>
+                    <strong>সমগ্রতলের ক্ষেত্রফল:</strong><br>
+                    $A = 2(ab + bc + ca)$<br>
+                    $= 2(10 \times 5 + 5 \times 4 + 4 \times 10)$<br>
+                    $= 2(50 + 20 + 40) = 2 \times 110 = 220 \text{ cm}^2$<br><br>
+                    <strong>Ans:</strong> আয়তন $200 \text{ cm}^3$ এবং ক্ষেত্রফল $220 \text{ cm}^2$।
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2026 Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+    <script>
+        // উত্তর দেখানোর ফাংশন (Toggle)
+        function toggleSol(id) {
+            const x = document.getElementById(id);
+            const btn = x.previousElementSibling;
+            
+            if (x.style.display === "none" || x.style.display === "") {
+                x.style.display = "block";
+                btn.innerHTML = '<i class="fas fa-eye-slash"></i> সমাধান লুকান';
+                btn.style.background = "#00897b";
+                btn.style.color = "white";
+            } else {
+                x.style.display = "none";
+                btn.innerHTML = '<i class="fas fa-eye"></i> সমাধান দেখুন';
+                btn.style.background = "white";
+                btn.style.color = "#00897b";
+            }
+        }
+    </script>
+
+</body>
+</html>

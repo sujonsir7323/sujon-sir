@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 1 - Shortcuts & Formulas</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e0f2f1; /* Light Teal Background */
+            margin: 0; padding: 0; color: #333; 
+            line-height: 1.6; /* বাংলা ফন্ট যেন ওভারল্যাপ না করে */
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 50px; 
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #00897b;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #00897b 0%, #004d40 100%);
+            color: white; padding: 35px 20px 25px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 25px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .header p { margin: 0; font-size: 14px; opacity: 0.9; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.4); }
+
+        /* কন্টেন্ট কন্টেইনার */
+        .content-wrap { padding: 0 20px; }
+
+        /* কার্ড স্টাইল */
+        .rule-card {
+            background: #fff; border-radius: 12px; margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #b2dfdb;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background: #e0f2f1; color: #00695c; padding: 12px 20px;
+            font-size: 18px; font-weight: bold; border-bottom: 2px solid #00897b;
+            display: flex; align-items: center; gap: 10px;
+        }
+        
+        .card-body { padding: 20px; }
+
+        /* সূত্র বক্স */
+        .formula-box {
+            background: #f1f8e9; border: 1px dashed #7cb342;
+            padding: 15px; border-radius: 8px; margin-bottom: 15px;
+            text-align: center; font-size: 18px; color: #2e7d32;
+            overflow-x: auto; line-height: 1.8;
+        }
+        .formula-box span { font-size: 14px; display: block; color: #555; margin-bottom: 5px; font-weight: bold;}
+
+        /* প্রতীক পরিচিতি (আপডেট করা হয়েছে) */
+        .symbol-title { font-weight: bold; color: #00897b; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 15px; }
+        .symbol-list { list-style: none; padding: 0; margin: 0; font-size: 15px; }
+        .symbol-list li { margin-bottom: 10px; display: block; } /* display flex বাদ দেওয়া হয়েছে */
+        .symbol-list li strong { color: #d32f2f; font-size: 16px; margin-right: 5px; }
+
+        /* একক রূপান্তর টেবিল */
+        .conv-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .conv-table th, .conv-table td { border: 1px solid #ddd; padding: 10px; text-align: left; font-size: 15px; }
+        .conv-table th { background: #00897b; color: white; font-weight: normal; }
+        .conv-table tr:nth-child(even) { background: #f9f9f9; }
+
+        .note-box {
+            background: #fff3e0; border-left: 4px solid #ff9800;
+            padding: 15px; font-size: 14px; color: #e65100; margin-top: 15px;
+            border-radius: 0 5px 5px 0; line-height: 1.6;
+        }
+
+        .footer { text-align: center; color: #777; font-size: 13px; margin-top: 30px; padding-bottom: 20px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div><p>সূত্র লোড হচ্ছে...</p></div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        
+        <div class="header">
+            <a href="phy_ch1_test.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-bolt" style="font-size: 45px; margin-bottom: 10px; color: #b2dfdb;"></i>
+            <h1>শর্টকাট ও প্রয়োজনীয় সূত্র</h1>
+            <p>অধ্যায় ১: ভৌত রাশি ও পরিমাপ</p>
+        </div>
+
+        <div class="content-wrap">
+            
+            <div class="rule-card">
+                <div class="card-header"><i class="fas fa-ruler"></i> নিয়ম ১: স্লাইড ক্যালিপার্স</div>
+                <div class="card-body">
+                    <div class="formula-box">
+                        <span>১. ভার্নিয়ার ধ্রুবক (Vernier Constant)</span>
+                        $VC = \frac{s}{n}$
+                    </div>
+                    <div class="formula-box">
+                        <span>২. বস্তুর দৈর্ঘ্য/ব্যাস নির্ণয়</span>
+                        $L = M + V \times VC$
+                    </div>
+                    
+                    <div class="symbol-title"><i class="fas fa-info-circle"></i> প্রতীক পরিচিতি:</div>
+                    <ul class="symbol-list">
+                        <li><strong>$VC$ =</strong> ভার্নিয়ার ধ্রুবক</li>
+                        <li><strong>$s$ =</strong> প্রধান স্কেলের ক্ষুদ্রতম ১ ভাগের দৈর্ঘ্য (সাধারণত 1 mm)</li>
+                        <li><strong>$n$ =</strong> ভার্নিয়ার স্কেলের মোট ভাগ সংখ্যা (সাধারণত 10, 20 বা 50)</li>
+                        <li><strong>$L$ =</strong> নির্ণেয় দৈর্ঘ্য বা ব্যাস</li>
+                        <li><strong>$M$ =</strong> প্রধান স্কেলের পাঠ (Main Scale Reading)</li>
+                        <li><strong>$V$ =</strong> ভার্নিয়ার সমপাতন (Vernier Coincidence)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="card-header"><i class="fas fa-cogs"></i> নিয়ম ২: স্ক্রু গজ</div>
+                <div class="card-body">
+                    <div class="formula-box">
+                        <span>১. লঘিষ্ঠ গণন বা নূন্যাঙ্ক (Least Count)</span>
+                        $LC = \frac{p}{n}$
+                    </div>
+                    <div class="formula-box">
+                        <span>২. বস্তুর ব্যাস/পুরুত্ব নির্ণয়</span>
+                        $D = L + C \times LC$
+                    </div>
+                    
+                    <div class="symbol-title"><i class="fas fa-info-circle"></i> প্রতীক পরিচিতি:</div>
+                    <ul class="symbol-list">
+                        <li><strong>$LC$ =</strong> লঘিষ্ঠ গণন বা নূন্যাঙ্ক</li>
+                        <li><strong>$P$ =</strong> পিচ (Pitch) [বৃত্তাকার স্কেল ১ বার ঘুরালে রৈখিক স্কেলে অতিক্রান্ত দূরত্ব]</li>
+                        <li><strong>$N$ =</strong> বৃত্তাকার স্কেলের মোট ভাগ সংখ্যা (সাধারণত 50 বা 100)</li>
+                        <li><strong>$D$ =</strong> তারের ব্যাস বা পাতের পুরুত্ব</li>
+                        <li><strong>$L$ =</strong> রৈখিক স্কেলের পাঠ (Linear Scale Reading)</li>
+                        <li><strong>$C$ =</strong> বৃত্তাকার স্কেলের পাঠ (Circular Scale Reading)</li>
+                    </ul>
+
+                    <div class="note-box">
+                        <strong>যান্ত্রিক ত্রুটি (Zero Error) থাকলে:</strong><br>
+                        প্রকৃত পাঠ = লব্ধ পাঠ - ($\pm$ যান্ত্রিক ত্রুটি)
+                    </div>
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="card-header"><i class="fas fa-cube"></i> নিয়ম ৩: ক্ষেত্রফল ও আয়তন নির্ণয়</div>
+                <div class="card-body">
+                    <p style="margin-top:0; font-size:15px; color:#555;">স্লাইড ক্যালিপার্স বা স্ক্রু গজ থেকে প্রাপ্ত মান ব্যবহার করে নিচের সূত্রগুলো প্রয়োগ করতে হয়:</p>
+                    
+                    <div class="symbol-title">১. গোলক (Sphere):</div>
+                    <ul class="symbol-list">
+                        <li><strong>আয়তন:</strong> $V = \frac{4}{3} \pi r^3$</li>
+                        <li><strong>পৃষ্ঠতলের ক্ষেত্রফল:</strong> $A = 4 \pi r^2$</li>
+                        <li style="font-size:14px; color:#666;">[এখানে $r =$ ব্যাসার্ধ $= \frac{D}{2}$]</li>
+                    </ul>
+
+                    <div class="symbol-title">২. সিলিন্ডার বা তার (Cylinder/Wire):</div>
+                    <ul class="symbol-list">
+                        <li><strong>প্রস্থচ্ছেদের ক্ষেত্রফল:</strong> $A = \pi r^2$ বা $\frac{\pi D^2}{4}$</li>
+                        <li><strong>আয়তন:</strong> $V = \pi r^2 h$ বা $\pi r^2 L$</li>
+                        <li><strong>সমগ্রতলের ক্ষেত্রফল:</strong> $A = 2\pi r(r + h)$</li>
+                        <li style="font-size:14px; color:#666;">[এখানে $h$ বা $L$ = তারের দৈর্ঘ্য বা উচ্চতা]</li>
+                    </ul>
+
+                    <div class="symbol-title">৩. ঘনক ও আয়তাকার বস্তু:</div>
+                    <ul class="symbol-list">
+                        <li><strong>আয়তাকার বস্তুর আয়তন:</strong> $V = l \times w \times h$ (দৈর্ঘ্য $\times$ প্রস্থ $\times$ উচ্চতা)</li>
+                        <li><strong>আয়তাকার সমগ্রতলের ক্ষেত্রফল:</strong> $A = 2(lw + wh + hl)$</li>
+                        <li><strong>সমঘনকের আয়তন:</strong> $V = a^3$ ($a$ = এক বাহুর দৈর্ঘ্য)</li>
+                        <li><strong>সমঘনকের সমগ্রতলের ক্ষেত্রফল:</strong> $A = 6a^2$</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="card-header"><i class="fas fa-percent"></i> নিয়ম ৪: আপেক্ষিক ও শতকরা ত্রুটি</div>
+                
+                    
+                    <div class="formula-box">
+                        <span> শতকরা আপেক্ষিক ত্রুটি</span>
+                        <div style="display: flex; align-items: center; justify-content: center; margin-top: 10px; font-weight: 600; color: #2e7d32; font-size: 18px; flex-wrap: wrap;">
+                            <div style="margin-right: 10px;">শতকরা ত্রুটি = </div>
+                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                <div style="border-bottom: 2px solid #2e7d32; padding: 0 8px; margin-bottom: 2px;">চূড়ান্ত ত্রুটি</div>
+                                <div style="padding: 0 8px;">পরিমাপকৃত মান</div>
+                            </div>
+                            <div style="margin-left: 10px;">&times; 100%</div>
+                        </div>
+                    </div>
+             
+                    
+                    <div class="note-box">
+                        <strong>বোর্ড পরীক্ষার জন্য স্পেশাল টিপস:</strong><br>
+                        আয়তন বা ক্ষেত্রফল নির্ণয়ের সময় যদি ত্রুটি দেওয়া থাকে, তবে আগে <strong>সর্বোচ্চ মান</strong> ও <strong>সর্বনিম্ন মান</strong> বের করতে হবে। তারপর পরিমাপকৃত মান থেকে এদের পার্থক্য বের করে <strong>যে পার্থক্যটি বড়</strong>, তাকে চূড়ান্ত ত্রুটি ধরতে হবে।
+                    </div>
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="card-header"><i class="fas fa-exchange-alt"></i> প্রয়োজনীয় একক রূপান্তর</div>
+                <div class="card-body">
+                    <p style="margin-top:0; font-size:14px; color:#555;">অংক করার সময় স্লাইড ক্যালিপার্স বা স্ক্রু গজের মান মিলিমিটার বা সেন্টিমিটারে থাকে। সেগুলোকে এস.আই (S.I) একক মিটারে (m) নিতে নিচের ছকটি মনে রাখবে:</p>
+                    
+                    <table class="conv-table">
+                        <tr>
+                            <th>রূপান্তর</th>
+                            <th>কীভাবে করবে? (গুণক)</th>
+                        </tr>
+                        <tr>
+                            <td><strong>cm</strong> থেকে <strong>mm</strong></td>
+                            <td>$\times 10$</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mm</strong> থেকে <strong>cm</strong></td>
+                            <td>$\div 10$ (বা $\times 10^{-1}$)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>cm</strong> থেকে <strong>m</strong></td>
+                            <td>$\div 100$ (বা $\times 10^{-2}$)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mm</strong> থেকে <strong>m</strong></td>
+                            <td>$\div 1000$ (বা $\times 10^{-3}$)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>$\mu\text{m}$</strong> (মাইক্রোমিটার) থেকে <strong>m</strong></td>
+                            <td>$\times 10^{-6}$</td>
+                        </tr>
+                        <tr>
+                            <td><strong>nm</strong> (ন্যানোমিটার) থেকে <strong>m</strong></td>
+                            <td>$\times 10^{-9}$</td>
+                        </tr>
+                    </table>
+
+                    <div class="symbol-title">ক্ষেত্রফল ও আয়তনের রূপান্তর:</div>
+                    <table class="conv-table">
+                        <tr>
+                            <td><strong>$\text{cm}^2$</strong> থেকে <strong>$\text{m}^2$</strong></td>
+                            <td>$\times 10^{-4}$</td>
+                        </tr>
+                        <tr>
+                            <td><strong>$\text{mm}^2$</strong> থেকে <strong>$\text{m}^2$</strong></td>
+                            <td>$\times 10^{-6}$</td>
+                        </tr>
+                        <tr>
+                            <td><strong>$\text{cm}^3$</strong> থেকে <strong>$\text{m}^3$</strong></td>
+                            <td>$\times 10^{-6}$</td>
+                        </tr>
+                        <tr>
+                            <td><strong>$\text{mm}^3$</strong> থেকে <strong>$\text{m}^3$</strong></td>
+                            <td>$\times 10^{-9}$</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2026 Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+</body>
+</html>

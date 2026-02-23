@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice - Rule 4 (Relative Error)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e0f2f1; /* Light Teal Background */
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 60px; 
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #00897b;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #00897b 0%, #004d40 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ইনফো বক্স */
+        .info-box {
+            padding: 15px; margin: 0 20px 20px; background: #e0f2f1;
+            border-radius: 10px; border: 1px solid #80cbc4;
+            text-align: center;
+        }
+        .info-box h3 { margin: 0 0 5px; color: #00695c; }
+        .info-box p { margin: 0; font-size: 14px; color: #004d40; }
+
+        /* প্রশ্ন কার্ড */
+        .math-container { padding: 0 20px; }
+        .question-card {
+            background: #fff; padding: 20px; margin-bottom: 25px;
+            border-radius: 12px; border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-top: 5px solid #00897b;
+        }
+        .q-title {
+            margin-bottom: 10px; font-weight: bold; color: #00796b; font-size: 16px;
+        }
+        .board-ref {
+            font-size: 12px; background: #eee; padding: 2px 8px; 
+            border-radius: 4px; color: #555; margin-left: 10px; font-weight: normal;
+        }
+        .stem-box {
+            background: #f5f5f5; padding: 15px; border-radius: 8px;
+            margin-bottom: 15px; border-left: 4px solid #26a69a;
+            font-size: 15px; line-height: 1.6; color: #333;
+        }
+        
+        /* উত্তর বাটন ও বক্স */
+        .solution-btn {
+            background: white; border: 1px solid #00897b; color: #00897b;
+            padding: 8px 15px; border-radius: 5px; cursor: pointer;
+            font-size: 14px; font-weight: 600; transition: 0.3s;
+            display: inline-flex; align-items: center; gap: 5px;
+        }
+        .solution-btn:hover { background: #00897b; color: white; }
+        
+        .solution-box {
+            display: none; margin-top: 15px; padding: 15px;
+            background: #e0f7fa; border-radius: 8px; color: #006064; 
+            font-size: 15px; border-left: 4px solid #00bcd4;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .footer { text-align: center; color: #777; font-size: 13px; margin-top: 30px; padding-bottom: 20px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div><p>অংক লোড হচ্ছে...</p></div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        
+        <div class="header">
+            <a href="phy_ch1_test.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-percent" style="font-size: 40px; margin-bottom: 10px; color: #b2dfdb;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>পদার্থবিজ্ঞান (SSC) | অধ্যায় ১: ভৌত রাশি ও পরিমাপ</p>
+        </div>
+
+        <div class="info-box">
+            <h3>গাণিতিক সমস্যা সমাধান - নিয়ম ৪</h3>
+            <p>টপিক: আপেক্ষিক ত্রুটি ও শতকরা ত্রুটি নির্ণয়</p>
+            <p style="font-size: 12px; margin-top: 5px; opacity: 0.8;">[বোর্ড পরীক্ষায় আসা ১০টি গুরুত্বপূর্ণ প্রশ্ন]</p>
+        </div>
+
+        <div class="math-container">
+            
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০১ <span class="board-ref">[ঢাকা বোর্ড ২০১৯]</span>
+                </div>
+                <div class="stem-box">
+                    একটি আয়তাকার বস্তুর দৈর্ঘ্য $10 \text{ cm}$, প্রস্থ $5 \text{ cm}$ এবং উচ্চতা $4 \text{ cm}$ মাপা হলো। পরিমাপে সম্ভাব্য ত্রুটি $\pm 0.5 \text{ cm}$।<br><br>
+                    <strong>প্রশ্ন:</strong> বস্তুটির আয়তন পরিমাপে শতকরা আপেক্ষিক ত্রুটি নির্ণয় কর।
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol1')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol1" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    পরিমাপকৃত আয়তন, $V = 10 \times 5 \times 4 = 200 \text{ cm}^3$<br><br>
+                    যেহেতু সম্ভাব্য ত্রুটি $\pm 0.5 \text{ cm}$, তাই<br>
+                    সর্বোচ্চ আয়তন, $V_{max} = 10.5 \times 5.5 \times 4.5 = 259.875 \text{ cm}^3$<br>
+                    সর্বনিম্ন আয়তন, $V_{min} = 9.5 \times 4.5 \times 3.5 = 149.625 \text{ cm}^3$<br><br>
+                    আয়তনের চরম ত্রুটিগুলো হলো:<br>
+                    $\Delta V_1 = |V_{max} - V| = |259.875 - 200| = 59.875 \text{ cm}^3$<br>
+                    $\Delta V_2 = |V - V_{min}| = |200 - 149.625| = 50.375 \text{ cm}^3$<br>
+                    চূড়ান্ত ত্রুটি, $\Delta V = 59.875 \text{ cm}^3$ (বড় মানটি নিতে হবে)<br><br>
+                    শতকরা আপেক্ষিক ত্রুটি = $\frac{\Delta V}{V} \times 100\%$<br>
+                    $= \frac{59.875}{200} \times 100\%$<br>
+                    $= 29.94\%$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০২ <span class="board-ref">[রাজশাহী বোর্ড ২০১৭]</span>
+                </div>
+                <div class="stem-box">
+                    একটি আয়তাকার বইয়ের দৈর্ঘ্য $20 \text{ cm}$ ও প্রস্থ $15 \text{ cm}$। যে স্কেল দিয়ে মাপা হয়েছে তার ক্ষুদ্রতম এক ঘরের মান $1 \text{ mm}$।<br><br>
+                    <strong>প্রশ্ন:</strong> বইটির ক্ষেত্রফল পরিমাপে শতকরা আপেক্ষিক ত্রুটি কত?
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol2')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol2" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    স্কেলের ক্ষুদ্রতম মান $1 \text{ mm} = 0.1 \text{ cm}$। তাই সম্ভাব্য ত্রুটি $\pm \frac{0.1}{2} = \pm 0.05 \text{ cm}$।<br><br>
+                    পরিমাপকৃত ক্ষেত্রফল, $A = 20 \times 15 = 300 \text{ cm}^2$<br><br>
+                    সর্বোচ্চ ক্ষেত্রফল, $A_{max} = 20.05 \times 15.05 = 301.7525 \text{ cm}^2$<br>
+                    সর্বনিম্ন ক্ষেত্রফল, $A_{min} = 19.95 \times 14.95 = 298.2525 \text{ cm}^2$<br><br>
+                    চরম ত্রুটি:<br>
+                    $\Delta A_1 = |301.7525 - 300| = 1.7525 \text{ cm}^2$<br>
+                    $\Delta A_2 = |300 - 298.2525| = 1.7475 \text{ cm}^2$<br>
+                    চূড়ান্ত ত্রুটি, $\Delta A = 1.7525 \text{ cm}^2$<br><br>
+                    শতকরা আপেক্ষিক ত্রুটি = $\frac{1.7525}{300} \times 100\%$<br>
+                    $= 0.584\%$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০৩ <span class="board-ref">[দিনাজপুর বোর্ড ২০১৯]</span>
+                </div>
+                <div class="stem-box">
+                    একটি গোলকের ব্যাসার্ধ পরিমাপ করে $5 \text{ cm}$ পাওয়া গেল। ব্যাসার্ধ পরিমাপে সম্ভাব্য ত্রুটি $\pm 0.5 \text{ cm}$।<br><br>
+                    <strong>প্রশ্ন:</strong> গোলকটির আয়তন পরিমাপে শতকরা আপেক্ষিক ত্রুটি নির্ণয় কর।
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol3')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol3" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    পরিমাপকৃত আয়তন, $V = \frac{4}{3} \pi r^3 = \frac{4}{3} \times 3.1416 \times (5)^3 = 523.6 \text{ cm}^3$<br><br>
+                    সর্বোচ্চ ব্যাসার্ধ, $r_{max} = 5 + 0.5 = 5.5 \text{ cm}$<br>
+                    সর্বনিম্ন ব্যাসার্ধ, $r_{min} = 5 - 0.5 = 4.5 \text{ cm}$<br><br>
+                    সর্বোচ্চ আয়তন, $V_{max} = \frac{4}{3} \pi (5.5)^3 = 696.91 \text{ cm}^3$<br>
+                    সর্বনিম্ন আয়তন, $V_{min} = \frac{4}{3} \pi (4.5)^3 = 381.70 \text{ cm}^3$<br><br>
+                    ত্রুটিসমূহ:<br>
+                    $\Delta V_1 = 696.91 - 523.6 = 173.31 \text{ cm}^3$<br>
+                    $\Delta V_2 = 523.6 - 381.70 = 141.9 \text{ cm}^3$<br>
+                    চূড়ান্ত ত্রুটি, $\Delta V = 173.31 \text{ cm}^3$<br><br>
+                    শতকরা আপেক্ষিক ত্রুটি = $\frac{173.31}{523.6} \times 100\%$<br>
+                    $= 33.1\%$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০৪ <span class="board-ref">[সিলেট বোর্ড ২০২১]</span>
+                </div>
+                <div class="stem-box">
+                    একটি ঘনক আকৃতির বাক্সের এক ধারের দৈর্ঘ্য পরিমাপ করে $10 \text{ cm}$ পাওয়া গেল। পরিমাপে সম্ভাব্য ত্রুটি $10\%$।<br><br>
+                    <strong>প্রশ্ন:</strong> বাক্সটির আয়তন পরিমাপে শতকরা ত্রুটি কত?
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol4')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol4" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    পরিমাপকৃত বাহু, $a = 10 \text{ cm}$<br>
+                    পরিমাপকৃত আয়তন, $V = a^3 = (10)^3 = 1000 \text{ cm}^3$<br><br>
+                    বাহু পরিমাপে ত্রুটি $10\%$ হলে, ত্রুটির পরিমাণ = $10 \text{ cm} \times 10\% = 1 \text{ cm}$।<br>
+                    $\therefore$ সম্ভাব্য ত্রুটি $\pm 1 \text{ cm}$।<br><br>
+                    সর্বোচ্চ আয়তন, $V_{max} = (11)^3 = 1331 \text{ cm}^3$<br>
+                    সর্বনিম্ন আয়তন, $V_{min} = (9)^3 = 729 \text{ cm}^3$<br><br>
+                    ত্রুটিসমূহ:<br>
+                    $\Delta V_1 = 1331 - 1000 = 331 \text{ cm}^3$<br>
+                    $\Delta V_2 = 1000 - 729 = 271 \text{ cm}^3$<br>
+                    চূড়ান্ত ত্রুটি, $\Delta V = 331 \text{ cm}^3$<br><br>
+                    শতকরা ত্রুটি = $\frac{331}{1000} \times 100\%$<br>
+                    $= 33.1\%$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০৫ <span class="board-ref">[কুমিল্লা বোর্ড ২০২০]</span>
+                </div>
+                <div class="stem-box">
+                    একটি বর্গাকার পাতের এক বাহুর দৈর্ঘ্য $100 \text{ mm}$। পরিমাপের ত্রুটি $\pm 1 \text{ mm}$।<br><br>
+                    <strong>প্রশ্ন:</strong> পাতটির ক্ষেত্রফল পরিমাপে শতকরা ত্রুটি কত?
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol5')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol5" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    পরিমাপকৃত ক্ষেত্রফল, $A = (100)^2 = 10000 \text{ mm}^2$<br><br>
+                    সর্বোচ্চ ক্ষেত্রফল, $A_{max} = (101)^2 = 10201 \text{ mm}^2$<br>
+                    সর্বনিম্ন ক্ষেত্রফল, $A_{min} = (99)^2 = 9801 \text{ mm}^2$<br><br>
+                    ত্রুটিসমূহ:<br>
+                    $\Delta A_1 = 10201 - 10000 = 201 \text{ mm}^2$<br>
+                    $\Delta A_2 = 10000 - 9801 = 199 \text{ mm}^2$<br>
+                    চূড়ান্ত ত্রুটি, $\Delta A = 201 \text{ mm}^2$<br><br>
+                    শতকরা ত্রুটি = $\frac{201}{10000} \times 100\%$<br>
+                    $= 2.01\%$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০৬ <span class="board-ref">[বরিশাল বোর্ড ২০১৮]</span>
+                </div>
+                <div class="stem-box">
+                    একটি গোলকের ব্যাস $10 \text{ cm}$ মাপা হলো। যে স্কেল দিয়ে মাপা হয়েছে তার ক্ষুদ্রতম ভাগ $1 \text{ mm}$।<br><br>
+                    <strong>প্রশ্ন:</strong> গোলকটির আয়তন পরিমাপে শতকরা আপেক্ষিক ত্রুটি নির্ণয় কর।
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol6')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol6" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    স্কেলের ক্ষুদ্রতম ভাগ $1 \text{ mm} = 0.1 \text{ cm}$।<br>
+                    তাই ব্যাস পরিমাপে সম্ভাব্য ত্রুটি $\pm \frac{0.1}{2} = \pm 0.05 \text{ cm}$।<br><br>
+                    পরিমাপকৃত ব্যাস, $D = 10 \text{ cm} \implies r = 5 \text{ cm}$<br>
+                    পরিমাপকৃত আয়তন, $V = \frac{4}{3} \pi (5)^3 = 523.6 \text{ cm}^3$<br><br>
+                    সর্বোচ্চ ব্যাস, $D_{max} = 10.05 \text{ cm} \implies r_{max} = 5.025 \text{ cm}$<br>
+                    $V_{max} = \frac{4}{3} \pi (5.025)^3 = 531.49 \text{ cm}^3$<br>
+                    সর্বনিম্ন ব্যাস, $D_{min} = 9.95 \text{ cm} \implies r_{min} = 4.975 \text{ cm}$<br>
+                    $V_{min} = \frac{4}{3} \pi (4.975)^3 = 515.78 \text{ cm}^3$<br><br>
+                    $\Delta V_1 = 531.49 - 523.6 = 7.89 \text{ cm}^3$<br>
+                    $\Delta V_2 = 523.6 - 515.78 = 7.82 \text{ cm}^3$<br>
+                    চূড়ান্ত ত্রুটি, $\Delta V = 7.89 \text{ cm}^3$<br><br>
+                    শতকরা ত্রুটি = $\frac{7.89}{523.6} \times 100\%$<br>
+                    $= 1.51\%$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০৭ <span class="board-ref">[যশোর বোর্ড ২০২২]</span>
+                </div>
+                <div class="stem-box">
+                    একটি তারের ব্যাসার্ধ $2 \text{ mm}$। স্ক্রু গজ দিয়ে মাপার সময় সম্ভাব্য ত্রুটি $0.01 \text{ mm}$ পাওয়া গেল।<br><br>
+                    <strong>প্রশ্ন:</strong> তারের প্রস্থচ্ছেদের ক্ষেত্রফল পরিমাপে শতকরা আপেক্ষিক ত্রুটি কত?
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol7')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol7" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    পরিমাপকৃত ব্যাসার্ধ, $r = 2 \text{ mm}$<br>
+                    পরিমাপকৃত ক্ষেত্রফল, $A = \pi r^2 = 3.1416 \times (2)^2 = 12.5664 \text{ mm}^2$<br><br>
+                    সম্ভাব্য ত্রুটি $\pm 0.01 \text{ mm}$<br>
+                    সর্বোচ্চ ক্ষেত্রফল, $A_{max} = \pi (2.01)^2 = 12.6923 \text{ mm}^2$<br>
+                    সর্বনিম্ন ক্ষেত্রফল, $A_{min} = \pi (1.99)^2 = 12.4414 \text{ mm}^2$<br><br>
+                    ত্রুটিসমূহ:<br>
+                    $\Delta A_1 = 12.6923 - 12.5664 = 0.1259 \text{ mm}^2$<br>
+                    $\Delta A_2 = 12.5664 - 12.4414 = 0.1250 \text{ mm}^2$<br>
+                    চূড়ান্ত ত্রুটি, $\Delta A = 0.1259 \text{ mm}^2$<br><br>
+                    শতকরা ত্রুটি = $\frac{0.1259}{12.5664} \times 100\%$<br>
+                    $= 1.00\%$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০৮ <span class="board-ref">[ঢাকা বোর্ড ২০১৭]</span>
+                </div>
+                <div class="stem-box">
+                    একটি আয়তাকার টেবিলের দৈর্ঘ্য $1.5 \text{ m}$ এবং প্রস্থ $1 \text{ m}$। পরিমাপে সম্ভাব্য ত্রুটি $\pm 0.05 \text{ m}$।<br><br>
+                    <strong>প্রশ্ন:</strong> টেবিলটির ক্ষেত্রফল পরিমাপে আপেক্ষিক ত্রুটি নির্ণয় কর।
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol8')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol8" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    পরিমাপকৃত ক্ষেত্রফল, $A = 1.5 \times 1 = 1.5 \text{ m}^2$<br><br>
+                    সর্বোচ্চ ক্ষেত্রফল, $A_{max} = 1.55 \times 1.05 = 1.6275 \text{ m}^2$<br>
+                    সর্বনিম্ন ক্ষেত্রফল, $A_{min} = 1.45 \times 0.95 = 1.3775 \text{ m}^2$<br><br>
+                    ত্রুটিসমূহ:<br>
+                    $\Delta A_1 = 1.6275 - 1.5 = 0.1275 \text{ m}^2$<br>
+                    $\Delta A_2 = 1.5 - 1.3775 = 0.1225 \text{ m}^2$<br>
+                    চূড়ান্ত ত্রুটি, $\Delta A = 0.1275 \text{ m}^2$<br><br>
+                    আপেক্ষিক ত্রুটি = $\frac{\text{চূড়ান্ত ত্রুটি}}{\text{পরিমাপকৃত মান}}$<br>
+                    $= \frac{0.1275}{1.5}$<br>
+                    $= 0.085$ <strong>(Ans.)</strong><br>
+                    *(নোট: শতকরা চাইলে $0.085 \times 100\% = 8.5\%$ হবে)*
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০৯ <span class="board-ref">[চট্টগ্রাম বোর্ড ২০২১]</span>
+                </div>
+                <div class="stem-box">
+                    একটি ঘনকের এক বাহুর দৈর্ঘ্য $4 \text{ cm}$। পরিমাপে সম্ভাব্য ত্রুটি $\pm 0.5 \text{ cm}$।<br><br>
+                    <strong>প্রশ্ন:</strong> ঘনকটির আয়তন পরিমাপের চূড়ান্ত ত্রুটি কত?
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol9')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol9" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    পরিমাপকৃত আয়তন, $V = (4)^3 = 64 \text{ cm}^3$<br><br>
+                    সর্বোচ্চ আয়তন, $V_{max} = (4.5)^3 = 91.125 \text{ cm}^3$<br>
+                    সর্বনিম্ন আয়তন, $V_{min} = (3.5)^3 = 42.875 \text{ cm}^3$<br><br>
+                    ত্রুটিসমূহ:<br>
+                    $\Delta V_1 = 91.125 - 64 = 27.125 \text{ cm}^3$<br>
+                    $\Delta V_2 = 64 - 42.875 = 21.125 \text{ cm}^3$<br><br>
+                    চূড়ান্ত ত্রুটি বলতে সম্ভাব্য সর্বোচ্চ ত্রুটিকে বোঝায়।<br>
+                    $\therefore$ চূড়ান্ত ত্রুটি = $27.125 \text{ cm}^3$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ১০ <span class="board-ref">[মডেল প্রশ্ন]</span>
+                </div>
+                <div class="stem-box">
+                    রফিক একটি দণ্ডের দৈর্ঘ্য মাপল $50 \text{ cm}$ এবং শফিক অপর একটি দণ্ডের দৈর্ঘ্য মাপল $100 \text{ cm}$। উভয়ের ব্যবহৃত স্কেলের ক্ষুদ্রতম ভাগ $1 \text{ mm}$।<br><br>
+                    <strong>প্রশ্ন:</strong> গাণিতিক বিশ্লেষণের সাহায্যে দেখাও যে কার পরিমাপটি বেশি নির্ভুল।
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol10')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol10" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    স্কেলের ক্ষুদ্রতম ভাগ $1 \text{ mm} = 0.1 \text{ cm}$। তাই উভয়ের ক্ষেত্রেই সম্ভাব্য ত্রুটি $\pm \frac{0.1}{2} = \pm 0.05 \text{ cm}$।<br><br>
+                    <strong>রফিকের ক্ষেত্রে:</strong><br>
+                    শতকরা আপেক্ষিক ত্রুটি = $\frac{\text{ত্রুটি}}{\text{পরিমাপকৃত মান}} \times 100\%$<br>
+                    $= \frac{0.05}{50} \times 100\% = 0.1\%$<br><br>
+                    <strong>শফিকের ক্ষেত্রে:</strong><br>
+                    শতকরা আপেক্ষিক ত্রুটি = $\frac{0.05}{100} \times 100\% = 0.05\%$<br><br>
+                    <strong>সিদ্ধান্ত:</strong> যার শতকরা আপেক্ষিক ত্রুটি কম, তার পরিমাপ তত বেশি নির্ভুল। এখানে শফিকের শতকরা ত্রুটি ($0.05\%$) রফিকের শতকরা ত্রুটি ($0.1\%$) অপেক্ষা কম। তাই <strong>শফিকের পরিমাপটি বেশি নির্ভুল। (Ans.)</strong>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2026 Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+    <script>
+        // উত্তর দেখানোর ফাংশন (Toggle)
+        function toggleSol(id) {
+            const x = document.getElementById(id);
+            const btn = x.previousElementSibling;
+            
+            if (x.style.display === "none" || x.style.display === "") {
+                x.style.display = "block";
+                btn.innerHTML = '<i class="fas fa-eye-slash"></i> সমাধান লুকান';
+                btn.style.background = "#00897b";
+                btn.style.color = "white";
+            } else {
+                x.style.display = "none";
+                btn.innerHTML = '<i class="fas fa-eye"></i> সমাধান দেখুন';
+                btn.style.background = "white";
+                btn.style.color = "#00897b";
+            }
+        }
+    </script>
+
+</body>
+</html>

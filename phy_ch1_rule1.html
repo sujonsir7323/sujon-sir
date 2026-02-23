@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice - Rule 1 (Slide Calipers)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e0f2f1; /* Light Teal Background */
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 60px; 
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #00897b;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #00897b 0%, #004d40 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ইনফো বক্স */
+        .info-box {
+            padding: 15px; margin: 0 20px 20px; background: #e0f2f1;
+            border-radius: 10px; border: 1px solid #80cbc4;
+            text-align: center;
+        }
+        .info-box h3 { margin: 0 0 5px; color: #00695c; }
+        .info-box p { margin: 0; font-size: 14px; color: #004d40; }
+
+        /* প্রশ্ন কার্ড */
+        .math-container { padding: 0 20px; }
+        .question-card {
+            background: #fff; padding: 20px; margin-bottom: 25px;
+            border-radius: 12px; border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-top: 5px solid #00897b;
+        }
+        .q-title {
+            margin-bottom: 10px; font-weight: bold; color: #00796b; font-size: 16px;
+        }
+        .board-ref {
+            font-size: 12px; background: #eee; padding: 2px 8px; 
+            border-radius: 4px; color: #555; margin-left: 10px; font-weight: normal;
+        }
+        .stem-box {
+            background: #f5f5f5; padding: 15px; border-radius: 8px;
+            margin-bottom: 15px; border-left: 4px solid #26a69a;
+            font-size: 15px; line-height: 1.6; color: #333;
+        }
+        
+        /* উত্তর বাটন ও বক্স */
+        .solution-btn {
+            background: white; border: 1px solid #00897b; color: #00897b;
+            padding: 8px 15px; border-radius: 5px; cursor: pointer;
+            font-size: 14px; font-weight: 600; transition: 0.3s;
+            display: inline-flex; align-items: center; gap: 5px;
+        }
+        .solution-btn:hover { background: #00897b; color: white; }
+        
+        .solution-box {
+            display: none; margin-top: 15px; padding: 15px;
+            background: #e0f7fa; border-radius: 8px; color: #006064; 
+            font-size: 15px; border-left: 4px solid #00bcd4;
+            line-height: 1.6;
+        }
+
+        .footer { text-align: center; color: #777; font-size: 13px; margin-top: 30px; padding-bottom: 20px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div><p>অংক লোড হচ্ছে...</p></div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        
+        <div class="header">
+            <a href="phy_ch1_test.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-ruler" style="font-size: 40px; margin-bottom: 10px; color: #b2dfdb;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>পদার্থবিজ্ঞান (SSC) | অধ্যায় ১: ভৌত রাশি ও পরিমাপ</p>
+        </div>
+
+        <div class="info-box">
+            <h3>গাণিতিক সমস্যা সমাধান - নিয়ম ১</h3>
+            <p>টপিক: স্লাইড ক্যালিপার্স ও ভার্নিয়ার স্কেল (দৈর্ঘ্য নির্ণয়)</p>
+            <p style="font-size: 12px; margin-top: 5px; opacity: 0.8;">[বোর্ড পরীক্ষায় আসা ১০টি গুরুত্বপূর্ণ প্রশ্ন]</p>
+        </div>
+
+        <div class="math-container">
+            
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০১ <span class="board-ref">[ঢাকা বোর্ড ২০২০]</span>
+                </div>
+                <div class="stem-box">
+                    একটি স্লাইড ক্যালিপার্সের সাহায্যে একটি আয়তাকার বস্তুর দৈর্ঘ্য মাপার সময় প্রধান স্কেলের পাঠ $4.2 \text{ cm}$ এবং ভার্নিয়ার সমপাতন $5$ পাওয়া গেল। ভার্নিয়ার স্কেলের $20$ ভাগ প্রধান স্কেলের $19$ ভাগের সমান। প্রধান স্কেলের ক্ষুদ্রতম ১ ভাগের মান $1 \text{ mm}$।<br><br>
+                    <strong>প্রশ্ন:</strong> বস্তুটির দৈর্ঘ্য নির্ণয় কর।
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol1')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol1" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    দেওয়া আছে,<br>
+                    প্রধান স্কেলের পাঠ, $M = 4.2 \text{ cm}$<br>
+                    ভার্নিয়ার সমপাতন, $V = 5$<br>
+                    ভার্নিয়ার স্কেলের ভাগ সংখ্যা, $n = 20$<br>
+                    প্রধান স্কেলের ১ ভাগের মান, $s = 1 \text{ mm}$<br><br>
+                    আমরা জানি, ভার্নিয়ার ধ্রুবক, $VC = \frac{s}{n}$<br>
+                    $VC = \frac{1}{20} \text{ mm} = 0.05 \text{ mm} = 0.005 \text{ cm}$<br><br>
+                    $\therefore$ বস্তুর দৈর্ঘ্য, $L = M + V \times VC$<br>
+                    $= 4.2 + (5 \times 0.005)$<br>
+                    $= 4.2 + 0.025$<br>
+                    $= 4.225 \text{ cm}$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০২ <span class="board-ref">[রাজশাহী বোর্ড ২০১৯]</span>
+                </div>
+                <div class="stem-box">
+                    একটি দণ্ডকে স্লাইড ক্যালিপার্সে স্থাপন করলে প্রধান স্কেলের পাঠ $2.5 \text{ cm}$ এবং ভার্নিয়ার সমপাতন $7$ পাওয়া যায়। যন্ত্রটির ভার্নিয়ার ধ্রুবক $0.1 \text{ mm}$। যন্ত্রটিতে কোনো যান্ত্রিক ত্রুটি নেই।<br><br>
+                    <strong>প্রশ্ন:</strong> দণ্ডটির দৈর্ঘ্য কত?
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol2')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol2" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    দেওয়া আছে,<br>
+                    প্রধান স্কেলের পাঠ, $M = 2.5 \text{ cm}$<br>
+                    ভার্নিয়ার সমপাতন, $V = 7$<br>
+                    ভার্নিয়ার ধ্রুবক, $VC = 0.1 \text{ mm} = 0.01 \text{ cm}$<br><br>
+                    আমরা জানি, দৈর্ঘ্য, $L = M + V \times VC$<br>
+                    $= 2.5 + (7 \times 0.01)$<br>
+                    $= 2.5 + 0.07$<br>
+                    $= 2.57 \text{ cm}$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০৩ <span class="board-ref">[দিনাজপুর বোর্ড ২০১৭]</span>
+                </div>
+                <div class="stem-box">
+                    একটি স্লাইড ক্যালিপার্সের ভার্নিয়ার স্কেলের $10$ ভাগ প্রধান স্কেলের $9$ ভাগের সমান। প্রধান স্কেলের ক্ষুদ্রতম ১ ভাগের মান $1 \text{ mm}$। যন্ত্রটি দিয়ে একটি বইয়ের পুরুত্ব মাপার সময় প্রধান স্কেলের পাঠ $12 \text{ mm}$ এবং ভার্নিয়ার সমপাতন $6$ পাওয়া গেল।<br><br>
+                    <strong>প্রশ্ন:</strong> বইয়ের পুরুত্ব কত সেন্টিমিটার (cm)?
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol3')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol3" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    দেওয়া আছে,<br>
+                    প্রধান স্কেলের পাঠ, $M = 12 \text{ mm}$<br>
+                    ভার্নিয়ার সমপাতন, $V = 6$<br>
+                    ভার্নিয়ার স্কেলের ভাগ সংখ্যা, $n = 10$<br>
+                    প্রধান স্কেলের ১ ভাগের মান, $s = 1 \text{ mm}$<br><br>
+                    ভার্নিয়ার ধ্রুবক, $VC = \frac{s}{n} = \frac{1}{10} \text{ mm} = 0.1 \text{ mm}$<br><br>
+                    পুরুত্ব, $L = M + V \times VC$<br>
+                    $= 12 + (6 \times 0.1)$<br>
+                    $= 12 + 0.6 = 12.6 \text{ mm}$<br><br>
+                    সেন্টিমিটারে প্রকাশ করলে: $\frac{12.6}{10} = 1.26 \text{ cm}$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০৪ <span class="board-ref">[সিলেট বোর্ড ২০২০]</span>
+                </div>
+                <div class="stem-box">
+                    ল্যাবরেটরিতে একটি গোলকের ব্যাস মাপার জন্য ব্যবহৃত স্লাইড ক্যালিপার্সের ভার্নিয়ার ধ্রুবক $0.05 \text{ mm}$। গোলকটির ব্যাস মাপার সময় প্রধান স্কেলের পাঠ $5.5 \text{ cm}$ এবং ভার্নিয়ার সমপাতন $4$ পাওয়া গেল।<br><br>
+                    <strong>প্রশ্ন:</strong> গোলকটির ব্যাসার্ধ নির্ণয় কর।
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol4')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol4" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    দেওয়া আছে,<br>
+                    প্রধান স্কেলের পাঠ, $M = 5.5 \text{ cm}$<br>
+                    ভার্নিয়ার সমপাতন, $V = 4$<br>
+                    ভার্নিয়ার ধ্রুবক, $VC = 0.05 \text{ mm} = 0.005 \text{ cm}$<br><br>
+                    গোলকের ব্যাস, $D = M + V \times VC$<br>
+                    $= 5.5 + (4 \times 0.005)$<br>
+                    $= 5.5 + 0.02 = 5.52 \text{ cm}$<br><br>
+                    $\therefore$ ব্যাসার্ধ, $r = \frac{D}{2} = \frac{5.52}{2} = 2.76 \text{ cm}$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০৫ <span class="board-ref">[কুমিল্লা বোর্ড ২০১৯]</span>
+                </div>
+                <div class="stem-box">
+                    একটি ভার্নিয়ার স্কেলের $50$ ভাগ প্রধান স্কেলের $49$ ভাগের সমান। প্রধান স্কেলের ক্ষুদ্রতম ১ ভাগের মান $1 \text{ mm}$। যন্ত্রটি দিয়ে একটি ঘনকের এক ধারের দৈর্ঘ্য মাপার সময় প্রধান স্কেলের পাঠ $3.2 \text{ cm}$ এবং ভার্নিয়ার সমপাতন $12$ পাওয়া গেল।<br><br>
+                    <strong>প্রশ্ন:</strong> ঘনকটির এক ধারের দৈর্ঘ্য মিটারে (m) প্রকাশ কর।
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol5')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol5" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    দেওয়া আছে,<br>
+                    ভার্নিয়ার স্কেলের ভাগ সংখ্যা, $n = 50$<br>
+                    প্রধান স্কেলের ১ ভাগের মান, $s = 1 \text{ mm}$<br>
+                    ভার্নিয়ার ধ্রুবক, $VC = \frac{s}{n} = \frac{1}{50} = 0.02 \text{ mm} = 0.002 \text{ cm}$<br><br>
+                    প্রধান স্কেলের পাঠ, $M = 3.2 \text{ cm}$<br>
+                    ভার্নিয়ার সমপাতন, $V = 12$<br><br>
+                    দৈর্ঘ্য, $L = M + V \times VC$<br>
+                    $= 3.2 + (12 \times 0.002)$<br>
+                    $= 3.2 + 0.024 = 3.224 \text{ cm}$<br><br>
+                    মিটারে প্রকাশ: $\frac{3.224}{100} = 0.03224 \text{ m}$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০৬ <span class="board-ref">[চট্টগ্রাম বোর্ড ২০১৮]</span>
+                </div>
+                <div class="stem-box">
+                    একটি ফাঁপা নলের অভ্যন্তরীণ ব্যাস মাপার জন্য স্লাইড ক্যালিপার্স ব্যবহার করা হলো। যন্ত্রটির প্রধান স্কেলের পাঠ $4.1 \text{ cm}$, ভার্নিয়ার সমপাতন $6$ এবং ভার্নিয়ার ধ্রুবক $0.005 \text{ cm}$।<br><br>
+                    <strong>প্রশ্ন:</strong> নলটির অভ্যন্তরীণ ব্যাস কত?
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol6')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol6" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    দেওয়া আছে,<br>
+                    প্রধান স্কেলের পাঠ, $M = 4.1 \text{ cm}$<br>
+                    ভার্নিয়ার সমপাতন, $V = 6$<br>
+                    ভার্নিয়ার ধ্রুবক, $VC = 0.005 \text{ cm}$<br><br>
+                    অভ্যন্তরীণ ব্যাস, $D = M + V \times VC$<br>
+                    $= 4.1 + (6 \times 0.005)$<br>
+                    $= 4.1 + 0.03$<br>
+                    $= 4.13 \text{ cm}$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০৭ <span class="board-ref">[বরিশাল বোর্ড ২০২১]</span>
+                </div>
+                <div class="stem-box">
+                    একটি স্লাইড ক্যালিপার্সের ভার্নিয়ার ধ্রুবক $0.05 \text{ mm}$। এটি দিয়ে একটি ধাতব খণ্ডের দৈর্ঘ্য মাপার সময় প্রধান স্কেলের পাঠ পাওয়া গেল $15 \text{ cm}$ এবং ভার্নিয়ার সমপাতন পাওয়া গেল $8$। যন্ত্রে কোনো যান্ত্রিক ত্রুটি নেই।<br><br>
+                    <strong>প্রশ্ন:</strong> ধাতব খণ্ডটির দৈর্ঘ্য মিলিমিটারে (mm) নির্ণয় কর।
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol7')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol7" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    দেওয়া আছে,<br>
+                    প্রধান স্কেলের পাঠ, $M = 15 \text{ cm} = 150 \text{ mm}$<br>
+                    ভার্নিয়ার সমপাতন, $V = 8$<br>
+                    ভার্নিয়ার ধ্রুবক, $VC = 0.05 \text{ mm}$<br><br>
+                    ধাতব খণ্ডের দৈর্ঘ্য, $L = M + V \times VC$<br>
+                    $= 150 + (8 \times 0.05)$<br>
+                    $= 150 + 0.4$<br>
+                    $= 150.4 \text{ mm}$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০৮ <span class="board-ref">[যশোর বোর্ড ২০১৯]</span>
+                </div>
+                <div class="stem-box">
+                    একটি স্লাইড ক্যালিপার্সের ভার্নিয়ার স্কেলের $20$ ঘর প্রধান স্কেলের $19$ ঘরের সমান। প্রধান স্কেলের ১ ঘরের মান $1 \text{ mm}$। একটি বস্তুর দৈর্ঘ্য মাপতে গিয়ে প্রধান স্কেলের পাঠ $8.4 \text{ cm}$ এবং ভার্নিয়ার সমপাতন $3$ পাওয়া গেল।<br><br>
+                    <strong>প্রশ্ন:</strong> ভার্নিয়ার ধ্রুবক ও বস্তুটির দৈর্ঘ্য নির্ণয় কর।
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol8')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol8" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    ভার্নিয়ার ধ্রুবক, $VC = \frac{s}{n} = \frac{1 \text{ mm}}{20} = 0.05 \text{ mm} = 0.005 \text{ cm}$<br><br>
+                    দেওয়া আছে,<br>
+                    $M = 8.4 \text{ cm}$<br>
+                    $V = 3$<br><br>
+                    বস্তুর দৈর্ঘ্য, $L = M + V \times VC$<br>
+                    $= 8.4 + (3 \times 0.005)$<br>
+                    $= 8.4 + 0.015$<br>
+                    $= 8.415 \text{ cm}$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ০৯ <span class="board-ref">[ঢাকা বোর্ড ২০১৭]</span>
+                </div>
+                <div class="stem-box">
+                    একটি লোহার দণ্ডের দৈর্ঘ্য মাপার জন্য একটি স্লাইড ক্যালিপার্স ব্যবহার করা হলো যার ভার্নিয়ার ধ্রুবক $0.01 \text{ cm}$। পরিমাপের সময় প্রধান স্কেলের পাঠ $10.2 \text{ cm}$ এবং ভার্নিয়ার সমপাতন $5$ পাওয়া গেল।<br><br>
+                    <strong>প্রশ্ন:</strong> লোহার দণ্ডটির দৈর্ঘ্য কত?
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol9')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol9" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    দেওয়া আছে,<br>
+                    প্রধান স্কেলের পাঠ, $M = 10.2 \text{ cm}$<br>
+                    ভার্নিয়ার সমপাতন, $V = 5$<br>
+                    ভার্নিয়ার ধ্রুবক, $VC = 0.01 \text{ cm}$<br><br>
+                    লোহার দণ্ডের দৈর্ঘ্য, $L = M + V \times VC$<br>
+                    $= 10.2 + (5 \times 0.01)$<br>
+                    $= 10.2 + 0.05$<br>
+                    $= 10.25 \text{ cm}$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-title">
+                    প্রশ্ন ১০ <span class="board-ref">[রাজশাহী বোর্ড ২০২২]</span>
+                </div>
+                <div class="stem-box">
+                    একটি স্লাইড ক্যালিপার্সের ভার্নিয়ার স্কেলের $10$ ঘর প্রধান স্কেলের $9$ ঘরের সমান (প্রধান স্কেলের ক্ষুদ্রতম ১ ঘরের মান $1 \text{ mm}$)। যন্ত্রটি দিয়ে মাপা একটি বস্তুর প্রকৃত দৈর্ঘ্য $4.56 \text{ cm}$। পরিমাপের সময় প্রধান স্কেলের পাঠ $4.5 \text{ cm}$ পাওয়া গিয়েছিল।<br><br>
+                    <strong>প্রশ্ন:</strong> উক্ত পরিমাপে ভার্নিয়ার সমপাতন কত ছিল?
+                </div>
+                <button class="solution-btn" onclick="toggleSol('sol10')"><i class="fas fa-eye"></i> সমাধান দেখুন</button>
+                <div id="sol10" class="solution-box">
+                    <strong>সমাধান:</strong><br>
+                    ভার্নিয়ার ধ্রুবক, $VC = \frac{1 \text{ mm}}{10} = 0.1 \text{ mm} = 0.01 \text{ cm}$<br><br>
+                    দেওয়া আছে,<br>
+                    বস্তুর দৈর্ঘ্য, $L = 4.56 \text{ cm}$<br>
+                    প্রধান স্কেলের পাঠ, $M = 4.5 \text{ cm}$<br>
+                    ভার্নিয়ার সমপাতন, $V = ?$ <br><br>
+                    আমরা জানি, $L = M + V \times VC$<br>
+                    বা, $4.56 = 4.5 + V \times 0.01$<br>
+                    বা, $V \times 0.01 = 4.56 - 4.5$<br>
+                    বা, $V \times 0.01 = 0.06$<br>
+                    বা, $V = \frac{0.06}{0.01}$<br>
+                    $\therefore V = 6$ <strong>(Ans.)</strong>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2026 Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+    <script>
+        // উত্তর দেখানোর ফাংশন (Toggle)
+        function toggleSol(id) {
+            const x = document.getElementById(id);
+            const btn = x.previousElementSibling;
+            
+            if (x.style.display === "none" || x.style.display === "") {
+                x.style.display = "block";
+                btn.innerHTML = '<i class="fas fa-eye-slash"></i> সমাধান লুকান';
+                btn.style.background = "#00897b";
+                btn.style.color = "white";
+            } else {
+                x.style.display = "none";
+                btn.innerHTML = '<i class="fas fa-eye"></i> সমাধান দেখুন';
+                btn.style.background = "white";
+                btn.style.color = "#00897b";
+            }
+        }
+    </script>
+
+</body>
+</html>
