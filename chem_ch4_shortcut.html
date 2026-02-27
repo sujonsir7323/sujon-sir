@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemistry Shortcuts - অধ্যায় ৪</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e0f2f1; /* Light Teal Background */
+            margin: 0; padding: 0; color: #333; line-height: 1.6;
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+            padding-bottom: 50px;
+        }
+
+        /* Header Style */
+        .header {
+            background: linear-gradient(135deg, #00897b 0%, #004d40 100%);
+            color: white; padding: 40px 20px 30px; text-align: center;
+            border-bottom-left-radius: 30px; border-bottom-right-radius: 30px;
+            position: relative; margin-bottom: 30px;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 26px; font-weight: 700; }
+        .header p { margin: 0; opacity: 0.9; font-size: 16px; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.4); }
+
+        .content-area { padding: 0 20px; }
+
+        /* Card Style */
+        .card {
+            background: #fff; border-radius: 12px; padding: 25px;
+            margin-bottom: 25px; border: 1px solid #b2dfdb;
+            border-left: 5px solid #00897b;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            transition: 0.3s;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.08); }
+        
+        .card-title {
+            font-size: 20px; font-weight: 700; color: #00695c;
+            margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;
+            border-bottom: 2px dashed #b2dfdb; padding-bottom: 10px;
+        }
+
+        /* Lists & Rules */
+        .rule-list { list-style: none; padding: 0; margin: 0; }
+        .rule-list li {
+            background: #f1f8e9; margin-bottom: 10px; padding: 15px;
+            border-radius: 8px; border-left: 4px solid #7cb342;
+        }
+        .rule-title { font-weight: bold; color: #33691e; display: block; margin-bottom: 5px; font-size: 17px; }
+
+        /* Table Style */
+        .trend-table {
+            width: 100%; border-collapse: collapse; margin-top: 15px;
+            text-align: center; border-radius: 8px; overflow: hidden;
+        }
+        .trend-table th, .trend-table td { padding: 12px; border: 1px solid #ddd; }
+        .trend-table th { background: #00897b; color: white; font-weight: 600; }
+        .trend-table tr:nth-child(even) { background: #e0f2f1; }
+        .trend-table tr:hover { background: #b2dfdb; }
+
+        /* Mnemonics (ছন্দ) */
+        .mnemonic-grid {
+            display: grid; grid-template-columns: 1fr; gap: 15px;
+        }
+        .mnemonic-box {
+            background: #fff3e0; padding: 15px; border-radius: 8px;
+            border: 1px solid #ffe0b2; border-left: 4px solid #f57c00;
+        }
+        .m-group { font-weight: bold; color: #e65100; font-size: 16px; margin-bottom: 5px; }
+        .m-text { font-size: 18px; color: #333; font-style: italic; margin-bottom: 5px; }
+        .m-elements { font-size: 14px; color: #666; font-family: 'Courier New', Courier, monospace; font-weight: bold;}
+
+        /* Highlight text */
+        .highlight { background: #fff9c4; padding: 2px 6px; border-radius: 4px; font-weight: bold; color: #f57f17; }
+
+        .footer { text-align: center; color: #777; font-size: 14px; margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <a href="chem_ch4_test.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-magic" style="font-size: 40px; color: #ffeb3b; margin-bottom: 10px;"></i>
+            <h1><b>Self Study With Sujon Sir</b></h1>
+            <h3>শর্টকাট ও টেকনিক</h3>
+            <p>রসায়ন | অধ্যায় ৪: পর্যায় সারণি</p>
+        </div>
+
+        <div class="content-area">
+
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-atom"></i> পর্যায় ও গ্রুপ নির্ণয়ের শর্টকাট রুল</h2>
+                <ul class="rule-list">
+                    <li>
+                        <span class="rule-title">পর্যায় (Period) নির্ণয়:</span>
+                        ইলেকট্রন বিন্যাসে সবচেয়ে বাইরের প্রধান শক্তিস্তরের নম্বরই (সর্বোচ্চ $n$ এর মান) হলো ঐ মৌলের পর্যায়। <br>
+                        <em>উদাহরণ:</em> $K (19) = 1s^2 2s^2 2p^6 3s^2 3p^6 \mathbf{4}s^1$ (সর্বোচ্চ শক্তিস্তর 4, তাই পর্যায় 4)।
+                    </li>
+                    <li>
+                        <span class="rule-title">গ্রুপ নির্ণয় - রুল ১ (শুধু s ব্লক):</span>
+                        সর্ববহিঃস্থ স্তরে শুধু $s$ অরবিটাল থাকলে, $s$ অরবিটালের ইলেকট্রন সংখ্যাই তার গ্রুপ। <br>
+                        <em>শর্টকাট:</em> Group = $ns$ এর ইলেকট্রন।
+                    </li>
+                    <li>
+                        <span class="rule-title">গ্রুপ নির্ণয় - রুল ২ (s ও p ব্লক):</span>
+                        সর্ববহিঃস্থ স্তরে $s$ ও $p$ অরবিটাল থাকলে, তাদের মোট ইলেকট্রনের সাথে <span class="highlight">10 যোগ</span> করতে হয়। <br>
+                        <em>শর্টকাট:</em> Group = $(ns + np) + 10$
+                    </li>
+                    <li>
+                        <span class="rule-title">গ্রুপ নির্ণয় - রুল ৩ (s ও d ব্লক):</span>
+                        সর্ববহিঃস্থ স্তরে $s$ এবং তার আগের স্তরে $d$ অরবিটাল থাকলে, $s$ ও $d$ এর মোট ইলেকট্রন সংখ্যাই তার গ্রুপ। <br>
+                        <em>শর্টকাট:</em> Group = $ns + (n-1)d$ এর ইলেকট্রন।
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-chart-line"></i> পর্যায়বৃত্ত ধর্মের শর্টকাট (ম্যাজিক ট্রিক)</h2>
+                <p style="margin-top: 0;"><strong>মাস্টার ট্রিক:</strong> শুধু <span class="highlight">পারমাণবিক আকার (ব্যাসার্ধ)</span> মনে রাখো। বাকি তিনটি (আয়নিকরণ শক্তি, ইলেকট্রন আসক্তি, তড়িৎ ঋণাত্মকতা) ঠিক এর <strong>উল্টো</strong> হবে!</p>
+                
+                <table class="trend-table">
+                    <tr>
+                        <th>ধর্মের নাম</th>
+                        <th>একই পর্যায়ে (বাম $\rightarrow$ ডানে)</th>
+                        <th>একই গ্রুপে (উপর $\downarrow$ নিচে)</th>
+                    </tr>
+                    <tr>
+                        <td>পারমাণবিক আকার/ব্যাসার্ধ</td>
+                        <td>হ্রাস পায় (কমে)</td>
+                        <td>বৃদ্ধি পায় (বাড়ে)</td>
+                    </tr>
+                    <tr>
+                        <td>আয়নিকরণ শক্তি</td>
+                        <td>বৃদ্ধি পায় (বাড়ে)</td>
+                        <td>হ্রাস পায় (কমে)</td>
+                    </tr>
+                    <tr>
+                        <td>ইলেকট্রন আসক্তি</td>
+                        <td>বৃদ্ধি পায় (বাড়ে)</td>
+                        <td>হ্রাস পায় (কমে)</td>
+                    </tr>
+                    <tr>
+                        <td>তড়িৎ ঋণাত্মকতা</td>
+                        <td>বৃদ্ধি পায় (বাড়ে)</td>
+                        <td>হ্রাস পায় (কমে)</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-lightbulb"></i> গ্রুপভিত্তিক মৌল মনে রাখার ফানি ছন্দ</h2>
+                
+                <div class="mnemonic-grid">
+                    <div class="mnemonic-box">
+                        <div class="m-group">গ্রুপ ১ (ক্ষার ধাতু):</div>
+                        <div class="m-text">"হা লি না কে রুবি সাজাবে ফ্রান্সে"</div>
+                        <div class="m-elements">H, Li, Na, K, Rb, Cs, Fr</div>
+                    </div>
+                    
+                    <div class="mnemonic-box">
+                        <div class="m-group">গ্রুপ ২ (মৃৎক্ষার ধাতু):</div>
+                        <div class="m-text">"বিধবা মায়ের ক্যাডার সন্তান বাদশা রহিম"</div>
+                        <div class="m-elements">Be, Mg, Ca, Sr, Ba, Ra</div>
+                    </div>
+
+                    <div class="mnemonic-box">
+                        <div class="m-group">গ্রুপ ১৩:</div>
+                        <div class="m-text">"বোরহান আলীকে গেলো ইন্ডিয়া তেকে" (তেকে = Tl)</div>
+                        <div class="m-elements">B, Al, Ga, In, Tl</div>
+                    </div>
+
+                    <div class="mnemonic-box">
+                        <div class="m-group">গ্রুপ ১৭ (হ্যালোজেন):</div>
+                        <div class="m-text">"ফেল করলে ব্রেনে আয়োডিন আটে"</div>
+                        <div class="m-elements">F, Cl, Br, I, At</div>
+                    </div>
+
+                    <div class="mnemonic-box">
+                        <div class="m-group">গ্রুপ ১৮ (নিষ্ক্রিয় গ্যাস):</div>
+                        <div class="m-text">"হেনা আর করিম যাবে রমনায়"</div>
+                        <div class="m-elements">He, Ne, Ar, Kr, Xe, Rn</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-star"></i> এক নজরে গুরুত্বপূর্ণ তথ্য (MCQ এর জন্য)</h2>
+                <ul style="padding-left: 20px; line-height: 1.8;">
+                    <li><strong>মুদ্রা ধাতু:</strong> গ্রুপ ১১ এর মৌল (Cu, Ag, Au, Rg)।</li>
+                    <li><strong>অবস্থান্তর মৌল:</strong> গ্রুপ ৩ থেকে গ্রুপ ১২ পর্যন্ত মৌলসমূহ (d-ব্লক মৌল)।</li>
+                    <li><strong>সবচেয়ে বেশি তড়িৎ ঋণাত্মক মৌল:</strong> ফ্লোরিন (F)।</li>
+                    <li><strong>সবচেয়ে বেশি ইলেকট্রন আসক্তি:</strong> ক্লোরিন (Cl) [ব্যতিক্রম: F এর চেয়ে Cl এর বেশি]।</li>
+                    <li>ল্যান্থানাইড ও অ্যাকটিনাইড সারির মৌল সংখ্যা: প্রতিটিতে <strong>১৫টি</strong> করে মোট ৩০টি।</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2026 Self Study with Sujon Sir | Science Lab
+        </div>
+    </div>
+
+</body>
+</html>

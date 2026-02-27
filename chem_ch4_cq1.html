@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemistry CQ - অধ্যায় ৪ (মডেল ১)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e0f7fa; /* Light Cyan Background */
+            margin: 0; padding: 0; color: #333; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 60px; 
+        }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #00838f;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #00838f 0%, #006064 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .back-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            color: white; font-size: 20px; text-decoration: none; 
+            background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ইনফো বক্স */
+        .info-box {
+            padding: 15px; margin: 0 20px 20px; background: #e0f2f1;
+            border-radius: 10px; border: 1px solid #b2dfdb;
+            text-align: center;
+        }
+        .timer { font-size: 22px; font-weight: bold; color: #c62828; margin-top: 5px; }
+
+        /* সৃজনশীল প্রশ্ন কার্ড */
+        .cq-container { padding: 0 20px; }
+        .question-card {
+            background: #fff; padding: 20px; margin-bottom: 25px;
+            border-radius: 12px; border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-top: 5px solid #00838f;
+        }
+        .stem-box {
+            background: #f5f5f5; padding: 15px; border-radius: 8px;
+            margin-bottom: 15px; border-left: 4px solid #ff6f00;
+            font-size: 16px; line-height: 1.6;
+            overflow-x: auto;
+        }
+        
+        .stem-table {
+            width: 100%; border-collapse: collapse; margin-top: 10px; background: white;
+            text-align: center;
+        }
+        .stem-table th, .stem-table td {
+            border: 1px solid #ccc; padding: 8px;
+        }
+        .stem-table th { background: #e0f7fa; color: #00838f; }
+
+        .sub-questions { list-style: none; padding: 0; }
+        .sub-questions li {
+            margin-bottom: 10px; padding: 8px 0;
+            border-bottom: 1px dashed #eee; font-size: 15px;
+        }
+        .sub-questions li:last-child { border-bottom: none; }
+        .mark {
+            float: right; font-size: 12px; background: #00838f;
+            color: white; padding: 2px 8px; border-radius: 10px;
+        }
+
+        .footer { text-align: center; color: #777; font-size: 13px; margin-top: 30px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div><p>প্রশ্ন তৈরি হচ্ছে...</p></div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        
+        <div class="header">
+            <a href="chem_ch4_test.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-flask" style="font-size: 40px; margin-bottom: 10px; color: #ffeb3b;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>রসায়ন | অধ্যায় ৪: পর্যায় সারণি - CQ মডেল ১</p>
+        </div>
+
+        <div class="info-box">
+            <h3 style="margin:0;">সৃজনশীল পরীক্ষা (CQ)</h3>
+            <p style="font-size: 13px; color: #555; margin: 5px 0;">পূর্ণমান: ৩০ | সময়: ৩০ মিনিট</p>
+            <div class="timer" id="timer">সময় বাকি: ৩০:০০ মিনিট</div>
+        </div>
+
+        <div class="cq-container">
+            
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #00838f;">প্রশ্ন নং - ০১ [ঢাকা বোর্ড - ২০২২]</div>
+                
+                <div class="stem-box">
+                    উদ্দীপকটি লক্ষ করো এবং প্রশ্নগুলোর উত্তর দাও:
+                    <table class="stem-table">
+                        <tr>
+                            <th>পর্যায়</th>
+                            <th>গ্রুপ-১</th>
+                            <th>গ্রুপ-২</th>
+                            <th>গ্রুপ-১৭</th>
+                        </tr>
+                        <tr>
+                            <td>৩য়</td>
+                            <td>X</td>
+                            <td>Y</td>
+                            <td>Z</td>
+                        </tr>
+                    </table>
+                    <div style="font-size: 13px; color: #666; margin-top: 5px; text-align: center;">(এখানে X, Y, Z প্রচলিত কোনো মৌলের প্রতীক নয়)</div>
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> আধুনিক পর্যায় সূত্রটি বিবৃত করো। <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> অবস্থান্তর মৌল বলতে কী বোঝায়? ব্যাখ্যা করো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> উদ্দীপকের 'Z' মৌলটির ইলেকট্রন বিন্যাস করে পর্যায় সারণিতে এর অবস্থান নির্ণয় করো। <span class="mark">৩</span>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> উদ্দীপকের X, Y এবং Z মৌলগুলোর মধ্যে কোনটির পারমাণবিক আকার সবচেয়ে ছোট? যুক্তিসহ বিশ্লেষণ করো। <span class="mark">৪</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #00838f;">প্রশ্ন নং - ০২ [রাজশাহী বোর্ড - ২০২৩]</div>
+                
+                <div class="stem-box">
+                    নিচের ইলেকট্রন বিন্যাস দুটি লক্ষ করো:<br><br>
+                    $A = 1s^2 2s^2 2p^6 3s^1$<br>
+                    $B = 1s^2 2s^2 2p^6 3s^2 3p^5$
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> হ্যালোজেন অর্থ কী? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> $Ca$ কে মৃৎক্ষার ধাতু বলা হয় কেন? <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> উদ্দীপকের 'B' মৌলটির পর্যায় ও গ্রুপ নির্ণয় করো। <span class="mark">৩</span>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> উদ্দীপকের A ও B মৌল দুটির মধ্যে কোনটির আয়নিকরণ শক্তির মান বেশি? কারণ বিশ্লেষণ করো। <span class="mark">৪</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="question-card">
+                <div style="margin-bottom: 10px; font-weight: bold; color: #00838f;">প্রশ্ন নং - ০৩ [সিলেট বোর্ড - ২০২২]</div>
+                
+                <div class="stem-box">
+                    P, Q এবং R তিনটি মৌল যাদের পারমাণবিক সংখ্যা যথাক্রমে 6, 8 এবং 11। <br>
+                    (এখানে P, Q, R প্রচলিত কোনো মৌলের প্রতীক নয়)
+                </div>
+
+                <ul class="sub-questions">
+                    <li>
+                        <strong>(ক)</strong> পর্যায় সারণির জনক কে? <span class="mark">১</span>
+                    </li>
+                    <li>
+                        <strong>(খ)</strong> মেন্ডেলিফের পর্যায় সূত্রটি লেখো। <span class="mark">২</span>
+                    </li>
+                    <li>
+                        <strong>(গ)</strong> উদ্দীপকের P ও Q এর মধ্যে কার তড়িৎ ঋণাত্মকতা বেশি? ব্যাখ্যা করো। <span class="mark">৩</span>
+                    </li>
+                    <li>
+                        <strong>(ঘ)</strong> উদ্দীপকের P, Q ও R এর পারমাণবিক আকারের ক্রম যুক্তিসহ বিশ্লেষণ করো। <span class="mark">৪</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2026 Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+    <script>
+        // টাইমার সেটআপ
+        let timeLeft = 30 * 60; 
+        const timerElement = document.getElementById('timer');
+        
+        const countdown = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "সময় শেষ!";
+                alert("পরীক্ষার সময় শেষ হয়েছে!");
+            }
+            timeLeft--;
+        }, 1000);
+    </script>
+
+</body>
+</html>
