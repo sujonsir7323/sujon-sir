@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>রসায়ন MCQ - অধ্যায় ৩</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        /* ফন্ট ফ্যামিলি পরিবর্তন করা হয়েছে */
+        body { font-family: 'Noto Sans Bengali', sans-serif; background: #f0f2f5; margin: 0; padding: 0; color: #333; user-select: none; }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; min-height: 100vh; padding-bottom: 60px; }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #00695c;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #00695c 0%, #004d40 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .back-btn { color: white; float: left; font-size: 22px; text-decoration: none; margin-top: 5px; }
+
+        /* ইনফো বক্স */
+        .info-box {
+            padding: 20px; margin: 0 20px 25px; background: #e0f2f1;
+            border-radius: 12px; border: 1px solid #b2dfdb;
+            text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .input-field {
+            width: 85%; padding: 12px; border-radius: 8px; border: 1px solid #00796b;
+            font-family: 'Noto Sans Bengali', sans-serif; font-size: 16px; margin-top: 10px;
+            outline: none; transition: 0.3s;
+        }
+        .input-field:focus { box-shadow: 0 0 8px rgba(0, 150, 136, 0.4); }
+        .timer { font-size: 22px; font-weight: bold; color: #d32f2f; margin-top: 15px; }
+
+        /* প্রশ্ন কার্ড */
+        .mcq-container { padding: 0 20px; }
+        .question-card {
+            background: #fff; padding: 20px; margin-bottom: 20px;
+            border-radius: 12px; border: 1px solid #e0e0e0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+            transition: 0.3s;
+        }
+        .question-card:hover { border-color: #80cbc4; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        
+        .q-header { font-weight: 600; font-size: 18px; margin-bottom: 15px; display: flex; gap: 10px; align-items: flex-start; color: #222; }
+        .board-tag { font-size: 12px; background: #e0e0e0; color: #444; padding: 3px 8px; border-radius: 6px; white-space: nowrap; margin-top: 2px; }
+        
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .option {
+            display: flex; align-items: center; padding: 12px; border: 1px solid #cfd8dc;
+            border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 16px; color: #444;
+        }
+        .option:hover { background: #f5f5f5; border-color: #b0bec5; }
+        .option input { margin-right: 12px; transform: scale(1.3); cursor: pointer; }
+
+        /* উত্তর কালার */
+        .correct-ans { background-color: #d4edda !important; border-color: #c3e6cb !important; color: #155724 !important; font-weight: bold; }
+        .wrong-ans { background-color: #f8d7da !important; border-color: #f5c6cb !important; color: #721c24 !important; font-weight: bold; }
+        .missed-ans { border: 2px dashed #ffb300 !important; background-color: #fff8e1; }
+
+        /* বাটন */
+        .submit-btn {
+            display: block; width: 90%; margin: 30px auto; padding: 16px;
+            background: #00695c; color: white; font-size: 20px; font-weight: bold;
+            border: none; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 105, 92, 0.4); transition: 0.3s;
+        }
+        .submit-btn:hover { background: #004d40; transform: translateY(-2px); }
+
+        /* রেজাল্ট পপআপ */
+        .result-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center;
+        }
+        .result-box {
+            background: white; width: 90%; max-width: 400px; padding: 35px 25px;
+            border-radius: 20px; text-align: center; position: relative; animation: popUp 0.4s ease;
+        }
+        @keyframes popUp { from {transform: scale(0.5); opacity: 0;} to {transform: scale(1); opacity: 1;} }
+        
+        .score-circle {
+            width: 130px; height: 130px; background: #e0f2f1; border-radius: 50%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin: 0 auto 20px; border: 6px solid #00695c;
+            box-shadow: 0 0 20px rgba(0, 105, 92, 0.2);
+        }
+        .score-number { font-size: 40px; font-weight: bold; color: #00695c; line-height: 1; }
+        .score-label { font-size: 14px; color: #555; margin-top: 5px; }
+
+        .close-btn {
+            background: #d32f2f; color: white; border: none; padding: 12px 25px;
+            border-radius: 8px; margin-top: 20px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%;
+        }
+        .close-btn:hover { background: #b71c1c; }
+
+        @media (max-width: 500px) {
+            .options-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="spinner"></div>
+        <p style="color: #00695c; font-weight: bold;">প্রশ্ন লোড হচ্ছে...</p>
+    </div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        <div class="header">
+            <a href="chem_ch3_test.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-atom" style="font-size: 45px; margin-bottom: 15px; color: #ffeb3b;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>রসায়ন | অধ্যায় ৩: পদার্থের গঠন (MCQ টেস্ট)</p>
+        </div>
+
+        <form id="quizForm">
+            <input type="hidden" name="_subject" value="Chemistry MCQ Result: Chapter 3">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="obtained_score" id="hiddenScore">
+
+            <div class="info-box">
+                <h3 style="margin:0 0 10px; color: #004d40;">বোর্ড স্ট্যান্ডার্ড মডেল টেস্ট</h3>
+                <input type="text" name="Student_Name" id="studentName" class="input-field" placeholder="তোমার নাম লিখ (বাধ্যতামূলক)..." required>
+                <div class="timer" id="timer">সময় বাকি: ২০:০০ মিনিট</div>
+            </div>
+
+            <div class="mcq-container">
+                
+                <div class="question-card">
+                    <div class="q-header">
+                        <span>০১.</span> <span class="board-tag">[ঢাকা ২০]</span>
+                        <span>রাদারফোর্ডের আলফা কণা বিচ্ছুরণ পরীক্ষায় কোন ধাতুর পাত ব্যবহার করা হয়?</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option"><input type="radio" name="q1" value="a" data-correct="true"> সোনার</label>
+                        <label class="option"><input type="radio" name="q1" value="b"> রূপার</label>
+                        <label class="option"><input type="radio" name="q1" value="c"> তামার</label>
+                        <label class="option"><input type="radio" name="q1" value="d"> দস্তার</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="q-header">
+                        <span>০২.</span> <span class="board-tag">[রাজশাহী ১৯]</span>
+                        <span>বোর পরমাণু মডেল কত সালে প্রস্তাবিত হয়?</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option"><input type="radio" name="q2" value="a"> 1911</label>
+                        <label class="option"><input type="radio" name="q2" value="b" data-correct="true"> 1913</label>
+                        <label class="option"><input type="radio" name="q2" value="c"> 1897</label>
+                        <label class="option"><input type="radio" name="q2" value="d"> 1932</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="q-header">
+                        <span>০৩.</span> <span class="board-tag">[কুমিল্লা ২১]</span>
+                        <span>M শক্তিস্তরে সর্বোচ্চ ইলেকট্রন ধারণ ক্ষমতা কত?</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option"><input type="radio" name="q3" value="a"> 2</label>
+                        <label class="option"><input type="radio" name="q3" value="b"> 8</label>
+                        <label class="option"><input type="radio" name="q3" value="c" data-correct="true"> 18</label>
+                        <label class="option"><input type="radio" name="q3" value="d"> 32</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="q-header">
+                        <span>০৪.</span> <span class="board-tag">[যশোর ১৯]</span>
+                        <span>3d অরবিটালে l এর মান কত?</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option"><input type="radio" name="q4" value="a"> 0</label>
+                        <label class="option"><input type="radio" name="q4" value="b"> 1</label>
+                        <label class="option"><input type="radio" name="q4" value="c" data-correct="true"> 2</label>
+                        <label class="option"><input type="radio" name="q4" value="d"> 3</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="q-header">
+                        <span>০৫.</span> <span class="board-tag">[সিলেট ২০]</span>
+                        <span>নিচের কোনটি ডিউটেরিয়ামের সংকেত?</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option"><input type="radio" name="q5" value="a"> $^1_1H$</label>
+                        <label class="option"><input type="radio" name="q5" value="b" data-correct="true"> $^2_1H$</label>
+                        <label class="option"><input type="radio" name="q5" value="c"> $^3_1H$</label>
+                        <label class="option"><input type="radio" name="q5" value="d"> $^4_2He$</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="q-header">
+                        <span>০৬.</span> <span class="board-tag">[চট্টগ্রাম ২২]</span>
+                        <span>নিউট্রন কণা আবিষ্কার করেন কে?</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option"><input type="radio" name="q6" value="a"> রাদারফোর্ড</label>
+                        <label class="option"><input type="radio" name="q6" value="b" data-correct="true"> চ্যাডউইক</label>
+                        <label class="option"><input type="radio" name="q6" value="c"> থমসন</label>
+                        <label class="option"><input type="radio" name="q6" value="d"> নীলস বোর</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="q-header">
+                        <span>০৭.</span> <span class="board-tag">[বরিশাল ১৯]</span>
+                        <span>কোন আইসোটোপ হাড়ের চিকিৎসায় ব্যবহার করা হয়?</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option"><input type="radio" name="q7" value="a"> Co<sub>60</sub></label>
+                        <label class="option"><input type="radio" name="q7" value="b" data-correct="true"> p<sub>32</sub> </label>
+                        <label class="option"><input type="radio" name="q7" value="c"> C<sub>6</sub></label>
+                        <label class="option"><input type="radio" name="q7" value="d"> H<sub>2</sub></label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="q-header">
+                        <span>০৮.</span> <span class="board-tag">[দিনাজপুর ২১]</span>
+                        <span>$3d$ অরবিটালের জন্য $(n+l)$ এর মান কত?</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option"><input type="radio" name="q8" value="a"> 3</label>
+                        <label class="option"><input type="radio" name="q8" value="b"> 4</label>
+                        <label class="option"><input type="radio" name="q8" value="c" data-correct="true"> 5</label>
+                        <label class="option"><input type="radio" name="q8" value="d"> 6</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="q-header">
+                        <span>০৯.</span> <span class="board-tag">[ময়মনসিংহ ২২]</span>
+                        <span>পটাশিয়ামের (K) ১৯তম ইলেকট্রনটি কোন অরবিটালে প্রবেশ করে?</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option"><input type="radio" name="q9" value="a"> $3s$</label>
+                        <label class="option"><input type="radio" name="q9" value="b"> $3p$</label>
+                        <label class="option"><input type="radio" name="q9" value="c"> $3d$</label>
+                        <label class="option"><input type="radio" name="q9" value="d" data-correct="true"> $4s$</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="q-header">
+                        <span>১০.</span> <span class="board-tag">[ঢাকা ২১]</span>
+                        <span>আপেক্ষিক পারমাণবিক ভর নির্ণয়ে কার্বন-১২ আইসোটোপের ভরের কত অংশ ধরা হয়?</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option"><input type="radio" name="q10" value="a" data-correct="true"> ১/১২</label>
+                        <label class="option"><input type="radio" name="q10" value="b"> ১/১৪</label>
+                        <label class="option"><input type="radio" name="q10" value="c"> ১/১৬</label>
+                        <label class="option"><input type="radio" name="q10" value="d"> ১/১০</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="q-header">
+                        <span>১১.</span> <span class="board-tag">[রাজশাহী ২২]</span>
+                        <span>আইসোবার (Isobar) এর ক্ষেত্রে নিচের কোনটি সমান থাকে?</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option"><input type="radio" name="q11" value="a"> প্রোটন সংখ্যা</label>
+                        <label class="option"><input type="radio" name="q11" value="b"> নিউট্রন সংখ্যা</label>
+                        <label class="option"><input type="radio" name="q11" value="c" data-correct="true"> ভরসংখ্যা</label>
+                        <label class="option"><input type="radio" name="q11" value="d"> ইলেকট্রন সংখ্যা</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="q-header">
+                        <span>১২.</span> <span class="board-tag">[যশোর ২২]</span>
+                        <span>ক্যান্সার চিকিৎসায় বা টিউমারের উপস্থিতি নির্ণয়ে কোন আইসোটোপ ব্যবহৃত হয়?</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option"><input type="radio" name="q12" value="a" data-correct="true"> $^{60}Co$</label>
+                        <label class="option"><input type="radio" name="q12" value="b"> $^{131}I$</label>
+                        <label class="option"><input type="radio" name="q12" value="c"> $^{32}P$</label>
+                        <label class="option"><input type="radio" name="q12" value="d"> $^{99}Tc$</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="q-header">
+                        <span>১৩.</span> <span class="board-tag">[সিলেট ২১]</span>
+                        <span>$Na^+$ আয়নে ইলেকট্রন সংখ্যা কত?</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option"><input type="radio" name="q13" value="a" data-correct="true"> 10</label>
+                        <label class="option"><input type="radio" name="q13" value="b"> 11</label>
+                        <label class="option"><input type="radio" name="q13" value="c"> 12</label>
+                        <label class="option"><input type="radio" name="q13" value="d"> 23</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="q-header">
+                        <span>১৪.</span> <span class="board-tag">[কুমিল্লা ২২]</span>
+                        <span>প্রধান কোয়ান্টাম সংখ্যা $n=4$ হলে উপশক্তিস্তর বা অরবিটাল কয়টি হবে?</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option"><input type="radio" name="q14" value="a"> 2</label>
+                        <label class="option"><input type="radio" name="q14" value="b"> 3</label>
+                        <label class="option"><input type="radio" name="q14" value="c" data-correct="true"> 4</label>
+                        <label class="option"><input type="radio" name="q14" value="d"> 16</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="q-header">
+                        <span>১৫.</span> <span class="board-tag">[দিনাজপুর ২২]</span>
+                        <span>$Al^{3+}$ আয়নের ইলেকট্রন বিন্যাস কোন নিষ্ক্রিয় গ্যাসের অনুরূপ?</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option"><input type="radio" name="q15" value="a"> He</label>
+                        <label class="option"><input type="radio" name="q15" value="b" data-correct="true"> Ne</label>
+                        <label class="option"><input type="radio" name="q15" value="c"> Ar</label>
+                        <label class="option"><input type="radio" name="q15" value="d"> Kr</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="q-header">
+                        <span>১৬.</span> <span class="board-tag">[বরিশাল ২০]</span>
+                        <span>রক্তের লিউকোমিয়া রোগের চিকিৎসায় কোনটি ব্যবহৃত হয়?</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option"><input type="radio" name="q16" value="a" data-correct="true"> $^{32}P$</label>
+                        <label class="option"><input type="radio" name="q16" value="b"> $^{131}I$</label>
+                        <label class="option"><input type="radio" name="q16" value="c"> $^{60}Co$</label>
+                        <label class="option"><input type="radio" name="q16" value="d"> $^{14}C$</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="q-header">
+                        <span>১৭.</span> <span class="board-tag">[চট্টগ্রাম ১৯]</span>
+                        <span>কপারের (Cu) সঠিক ইলেকট্রন বিন্যাস কোনটি?</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option"><input type="radio" name="q17" value="a"> $[Ar] 3d^9 4s^2$</label>
+                        <label class="option"><input type="radio" name="q17" value="b" data-correct="true"> $[Ar] 3d^{10} 4s^1$</label>
+                        <label class="option"><input type="radio" name="q17" value="c"> $[Ar] 3d^8 4s^2$</label>
+                        <label class="option"><input type="radio" name="q17" value="d"> $[Ar] 3d^{10} 4s^2$</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="q-header">
+                        <span>১৮.</span> <span class="board-tag">[ঢাকা ২২]</span>
+                        <span>থাইরয়েড গ্রন্থির চিকিৎসায় কোন আইসোটোপ ব্যবহৃত হয়?</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option"><input type="radio" name="q18" value="a"> $^{60}Co$</label>
+                        <label class="option"><input type="radio" name="q18" value="b" data-correct="true"> $^{131}I$</label>
+                        <label class="option"><input type="radio" name="q18" value="c"> $^{14}C$</label>
+                        <label class="option"><input type="radio" name="q18" value="d"> $^{32}P$</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="q-header">
+                        <span>১৯.</span> <span class="board-tag">[রাজশাহী ২১]</span>
+                        <span>ক্রোমিয়ামের (Cr) পারমাণবিক সংখ্যা কত?</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option"><input type="radio" name="q19" value="a"> 20</label>
+                        <label class="option"><input type="radio" name="q19" value="b"> 22</label>
+                        <label class="option"><input type="radio" name="q19" value="c" data-correct="true"> 24</label>
+                        <label class="option"><input type="radio" name="q19" value="d"> 26</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="q-header">
+                        <span>২০.</span> <span class="board-tag">[সিলেট ২২]</span>
+                        <span>$p$ অরবিটাল সর্বোচ্চ কয়টি ইলেকট্রন ধারণ করতে পারে?</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option"><input type="radio" name="q20" value="a"> 2</label>
+                        <label class="option"><input type="radio" name="q20" value="b" data-correct="true"> 6</label>
+                        <label class="option"><input type="radio" name="q20" value="c"> 10</label>
+                        <label class="option"><input type="radio" name="q20" value="d"> 14</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <i class="fas fa-paper-plane"></i> সাবমিট করুন
+            </button>
+        </form>
+
+        <div class="result-overlay" id="resultOverlay">
+            <div class="result-box">
+                <h2 style="color: #00695c; margin-top: 0; font-weight: 700;">অভিনন্দন!</h2>
+                <div class="score-circle">
+                    <div class="score-number" id="displayScore">0</div>
+                    <div class="score-label">নম্বর ২০ এর মধ্যে</div>
+                </div>
+                <p style="font-size: 18px;">নাম: <span id="displayName" style="font-weight: bold; color: #d32f2f;"></span></p>
+                <p id="sendStatus" style="font-size: 14px; font-weight: 600;"></p>
+                <button class="close-btn" onclick="closeResult()">উত্তরপত্র দেখুন</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // এডমিন ইমেইল পরিবর্তন করতে চাইলে এখানে চেঞ্জ করুন
+        const ADMIN_EMAIL = "leeminho7323@gmail.com";
+
+        // টাইমার সেটআপ (২০ মিনিট)
+        let timeLeft = 20 * 60; 
+        const timerElement = document.getElementById('timer');
+        let countdown;
+
+        function startTimer() {
+             countdown = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+                
+                timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    alert("সময় শেষ! স্বয়ংক্রিয়ভাবে খাতা সাবমিট হচ্ছে...");
+                    submitQuiz();
+                }
+                timeLeft--;
+            }, 1000);
+        }
+        startTimer();
+
+        // ফরম সাবমিশন
+        const form = document.getElementById('quizForm');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            submitQuiz();
+        });
+
+        function submitQuiz() {
+            const name = document.getElementById('studentName').value;
+            if(!name) { 
+                alert("পরীক্ষা জমা দেওয়ার আগে দয়া করে তোমার নাম লেখো!"); 
+                document.getElementById('studentName').focus();
+                return; 
+            }
+
+            clearInterval(countdown);
+            const btn = document.getElementById('submitBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ডাটা পাঠানো হচ্ছে...';
+            btn.disabled = true;
+            
+            let score = 0;
+            const questionCards = document.querySelectorAll('.question-card');
+
+            // খাতা মূল্যায়ন
+            questionCards.forEach(card => {
+                const inputs = card.querySelectorAll('input[type="radio"]');
+                let correctAnswer = null;
+                let userAnswer = null;
+
+                inputs.forEach(input => {
+                    if (input.getAttribute('data-correct') === 'true') {
+                        correctAnswer = input.value;
+                    }
+                    if (input.checked) {
+                        userAnswer = input.value;
+                    }
+                    input.disabled = true; 
+                });
+
+                inputs.forEach(input => {
+                    const label = input.parentElement;
+                    if (input.value === correctAnswer) {
+                        label.classList.add('correct-ans');
+                        label.innerHTML += ' <i class="fas fa-check-circle" style="margin-left:auto;"></i>';
+                    }
+                    if (userAnswer === input.value && userAnswer !== correctAnswer) {
+                        label.classList.add('wrong-ans');
+                        label.innerHTML += ' <i class="fas fa-times-circle" style="margin-left:auto;"></i>';
+                    }
+                });
+
+                if (userAnswer === correctAnswer) {
+                    score++;
+                } else if (!userAnswer) {
+                    card.classList.add('missed-ans');
+                }
+            });
+
+            document.getElementById('hiddenScore').value = score + " / 20";
+            const finalFormData = new FormData(form);
+
+            fetch(`https://formsubmit.co/ajax/${ADMIN_EMAIL}`, {
+                method: "POST",
+                body: finalFormData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('sendStatus').textContent = "রেজাল্ট সফলভাবে স্যারের ইমেইলে পাঠানো হয়েছে!";
+                document.getElementById('sendStatus').style.color = "green";
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('sendStatus').textContent = "ইন্টারনেট সমস্যার কারণে ইমেইল পাঠানো যায়নি, তবে তুমি রেজাল্ট দেখতে পারবে।";
+                document.getElementById('sendStatus').style.color = "red";
+            });
+
+            document.getElementById('displayScore').textContent = score;
+            document.getElementById('displayName').textContent = name;
+            document.getElementById('resultOverlay').style.display = 'flex';
+            
+            btn.style.display = 'none';
+            document.querySelector('.info-box').scrollIntoView({behavior: 'smooth'});
+        }
+
+        function closeResult() {
+            document.getElementById('resultOverlay').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
