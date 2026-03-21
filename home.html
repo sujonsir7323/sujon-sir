@@ -7,6 +7,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* নতুন ফন্ট লোডিং */
+        @font-face { font-family: 'en2'; src: url('englishfont5.otf');format: 'opentype'; }
+        @font-face { font-family: 'bn3'; src: url('banglafont3.ttf'); }
+
         body { font-family: 'Hind Siliguri', sans-serif; background: #e0f7fa; margin: 0; padding: 0; color: #333; }
         .container { max-width: 600px; margin: 0 auto; min-height: 100vh; background: #fff; box-shadow: 0 0 20px rgba(0,0,0,0.08); overflow-x: hidden; }
         
@@ -14,41 +18,84 @@
         .header { 
             background: linear-gradient(135deg, #004d40 0%, #00796b 100%); 
             color: white; 
-            padding: 30px 20px 50px 20px; 
+            padding: 20px 20px 45px 20px; /* উপরের ফাঁকা অংশ কমানো হয়েছে */
             text-align: center; 
             border-bottom-right-radius: 50% 20px; 
             border-bottom-left-radius: 50% 20px; 
             margin-bottom: 0; 
             position: relative;
         }
-        .header h1 { margin: 10px 0 5px; font-size: 26px; font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.2); }
-        .header p { font-size: 14px; opacity: 0.95; color: #b2dfdb; letter-spacing: 0.5px; }
+
+        /* নতুন গোল লোগো */
+        .logo-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid #ffeb3b;
+            margin-bottom: 10px;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .header h1 { 
+            margin: 5px 0; 
+            font-size: 28px; 
+            font-family: 'en2', sans-serif; /* ইংরেজি ফন্ট ২ ব্যবহার করা হয়েছে */
+            font-weight: 700; 
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2); 
+        }
+        .header p { font-size: 14px; opacity: 0.95; color: #b2dfdb; letter-spacing: 0.5px; margin-top: 0; }
         
-        /* Training Image Section (New) */
-        .image-container {
-            text-align: center;
-            margin-top: -40px; /* Pulls image up into header */
-            margin-bottom: 20px;
-            padding: 0 20px;
+        /* Image Section - একদম নিশ্চিতভাবে উপরে রাখার জন্য */
+.image-container {
+    text-align: center;
+    position: relative;
+    z-index: 10; /* যাতে এটি হেডারের উপরে ভেসে থাকে */
+    margin-top: -60px; /* এই মানটি আরও বাড়ানো হয়েছে যাতে ছবিটি অনেক উপরে ওঠে */
+    margin-bottom: 10px;
+    padding: 0 20px;
+}
+
+.training-img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 15px;
+    border: 5px solid #fff;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    display: inline-block;
+}
+        .training-img:hover { transform: scale(1.02); }
+
+        /* নতুন শিক্ষক পরিচিতি বাটন */
+        .teacher-intro-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+            text-decoration: none;
+            margin: 0 20px 20px;
+            padding: 12px;
+            border-radius: 10px;
+            font-family: 'bn3', sans-serif; /* বাংলা ফন্ট ৩ ব্যবহার করা হয়েছে */
+            font-size: 18px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(245, 124, 0, 0.3);
+            transition: 0.3s;
         }
-        .training-img {
-            width: 100%;
-            max-width: 500px;
-            height: auto;
-            border-radius: 15px;
-            border: 5px solid #fff;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15); /* Deep Shadow */
-            transition: transform 0.3s ease;
-        }
-        .training-img:hover {
-            transform: scale(1.02);
+        .teacher-intro-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 124, 0, 0.4);
+            filter: brightness(1.1);
         }
 
         /* Quote Box */
         .quote-box { 
             background: #fff3e0; 
             padding: 15px 20px; 
-            margin: 10px 20px 25px; 
+            margin: 0 20px 25px; 
             border-radius: 10px; 
             border-left: 5px solid #ff9800; 
             font-style: italic; 
@@ -85,14 +132,12 @@
             flex-shrink: 0;
         }
         
-        /* Gradients */
-        .math-bg { background: linear-gradient(135deg, #43a047, #66bb6a); box-shadow: 0 4px 10px rgba(67, 160, 71, 0.3); }
-        .phy-bg { background: linear-gradient(135deg, #1976d2, #42a5f5); box-shadow: 0 4px 10px rgba(25, 118, 210, 0.3); }
-        .chem-bg { background: linear-gradient(135deg, #8e24aa, #ab47bc); box-shadow: 0 4px 10px rgba(142, 36, 170, 0.3); }
-        
-        .phy1-bg { background: linear-gradient(135deg, #0277bd, #4fc3f7); box-shadow: 0 4px 10px rgba(2, 119, 189, 0.3); }
-        .phy2-bg { background: linear-gradient(135deg, #283593, #7986cb); box-shadow: 0 4px 10px rgba(40, 53, 147, 0.3); }
-        .ict-bg { background: linear-gradient(135deg, #00695c, #4db6ac); box-shadow: 0 4px 10px rgba(0, 105, 92, 0.3); }
+        .math-bg { background: linear-gradient(135deg, #43a047, #66bb6a); }
+        .phy-bg { background: linear-gradient(135deg, #1976d2, #42a5f5); }
+        .chem-bg { background: linear-gradient(135deg, #8e24aa, #ab47bc); }
+        .phy1-bg { background: linear-gradient(135deg, #0277bd, #4fc3f7); }
+        .phy2-bg { background: linear-gradient(135deg, #283593, #7986cb); }
+        .ict-bg { background: linear-gradient(135deg, #00695c, #4db6ac); }
         
         .info h3 { margin: 0 0 3px; font-size: 17px; font-weight: 700; color: #444; }
         .info span { font-size: 12px; color: #777; font-weight: 500; }
@@ -105,7 +150,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <i class="fas fa-graduation-cap" style="font-size: 40px; color: #ffeb3b; margin-bottom: 10px; display: inline-block;"></i>
+            <img src="logosujonsir.png" alt="Sujon Sir Logo" class="logo-img">
             <h1>Self Study with Sujon Sir</h1>
             <p>"তোমার স্বপ্ন, আমাদের দিকনির্দেশনা"</p>
         </div>
@@ -113,6 +158,11 @@
         <div class="image-container">
             <img src="training.jpg" alt="Classroom Training" class="training-img">
         </div>
+
+        <a href="mydetails.html" class="teacher-intro-btn">
+            <i class="fas fa-user-tie"></i>
+            শিক্ষক পরিচিতি
+        </a>
 
         <div class="quote-box">
             <i class="fas fa-lightbulb" style="font-size: 20px;"></i>
@@ -122,55 +172,32 @@
         <div class="grid">
             <a href="math_subject.html" class="card">
                 <div class="icon-box math-bg"><i class="fas fa-calculator"></i></div>
-                <div class="info">
-                    <h3>গণিত (Mathematics)</h3>
-                    <span>নবম-দশম শ্রেণি • সকল অধ্যায়</span>
-                </div>
+                <div class="info"><h3>গণিত (Mathematics)</h3><span>নবম-দশম শ্রেণি • সকল অধ্যায়</span></div>
                 <i class="fas fa-chevron-right arrow"></i>
             </a>
-
             <a href="physics_subject.html" class="card">
                 <div class="icon-box phy-bg"><i class="fas fa-atom"></i></div>
-                <div class="info">
-                    <h3>পদার্থবিজ্ঞান (Physics)</h3>
-                    <span>নবম-দশম শ্রেণি • সকল অধ্যায়</span>
-                </div>
+                <div class="info"><h3>পদার্থবিজ্ঞান (Physics)</h3><span>নবম-দশম শ্রেণি • সকল অধ্যায়</span></div>
                 <i class="fas fa-chevron-right arrow"></i>
             </a>
-
             <a href="chemistry_subject.html" class="card">
                 <div class="icon-box chem-bg"><i class="fas fa-flask"></i></div>
-                <div class="info">
-                    <h3>রসায়ন (Chemistry)</h3>
-                    <span>নবম-দশম শ্রেণি • সকল অধ্যায়</span>
-                </div>
+                <div class="info"><h3>রসায়ন (Chemistry)</h3><span>নবম-দশম শ্রেণি • সকল অধ্যায়</span></div>
                 <i class="fas fa-chevron-right arrow"></i>
             </a>
-
             <a href="hsc_phy1_subject.html" class="card">
                 <div class="icon-box phy1-bg"><i class="fas fa-magnet"></i></div>
-                <div class="info">
-                    <h3>পদার্থবিজ্ঞান ১ম পত্র</h3>
-                    <span>একাদশ-দ্বাদশ শ্রেণি • সকল অধ্যায়</span>
-                </div>
+                <div class="info"><h3>পদার্থবিজ্ঞান ১ম পত্র</h3><span>একাদশ-দ্বাদশ শ্রেণি • সকল অধ্যায়</span></div>
                 <i class="fas fa-chevron-right arrow"></i>
             </a>
-
             <a href="hsc_phy2_subject.html" class="card">
                 <div class="icon-box phy2-bg"><i class="fas fa-bolt"></i></div>
-                <div class="info">
-                    <h3>পদার্থবিজ্ঞান ২য় পত্র</h3>
-                    <span>একাদশ-দ্বাদশ শ্রেণি • সকল অধ্যায়</span>
-                </div>
+                <div class="info"><h3>পদার্থবিজ্ঞান ২য় পত্র</h3><span>একাদশ-দ্বাদশ শ্রেণি • সকল অধ্যায়</span></div>
                 <i class="fas fa-chevron-right arrow"></i>
             </a>
-
             <a href="hsc_ict_subject.html" class="card">
                 <div class="icon-box ict-bg"><i class="fas fa-laptop-code"></i></div>
-                <div class="info">
-                    <h3>তথ্য ও যোগাযোগ প্রযুক্তি (ICT)</h3>
-                    <span>একাদশ-দ্বাদশ শ্রেণি • সকল অধ্যায়</span>
-                </div>
+                <div class="info"><h3>তথ্য ও যোগাযোগ প্রযুক্তি (ICT)</h3><span>একাদশ-দ্বাদশ শ্রেণি • সকল অধ্যায়</span></div>
                 <i class="fas fa-chevron-right arrow"></i>
             </a>
         </div>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>শিক্ষক পরিচিতি | মাহমুদুল হাসান সুজন</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* ফন্ট লোডিং */
+        @font-face { font-family: 'bn4'; src: url('banglafont4.ttf'); }
+        @font-face { font-family: 'bn5'; src: url('banglafont3.ttf'); }
+        @font-face { font-family: 'en1'; src: url('englishfont1.ttf'); }
+
+        :root {
+            --header-font: 'bn4', sans-serif;
+            --body-font: 'bn5', sans-serif;
+            --navy-deep: #000814;
+            --navy-light: #001d3d;
+            --sky-accent: #81d4fa;
+            --white: #ffffff;
+            --glass-card: rgba(255, 255, 255, 0.03);
+        }
+
+        body {
+            margin: 0; padding: 0;
+            background: radial-gradient(circle at center, var(--navy-light), var(--navy-deep), #000000);
+            background-attachment: fixed;
+            color: var(--white);
+            font-family: var(--body-font), sans-serif;
+            line-height: 1.5;
+        }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+
+        .hero-box {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 50px 20px;
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+
+        .hero-box img {
+            width: 190px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 4px solid var(--sky-accent);
+            box-shadow: 0 0 30px rgba(129, 212, 250, 0.5);
+            margin-bottom: 25px;
+        }
+
+        .hero-box h1 {
+            font-family: var(--header-font);
+            font-size: 3rem;
+            margin: 10px 0;
+        }
+
+        .hero-box p { font-size: 1.4rem; color: var(--sky-accent); margin: 0; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-bottom: 40px; }
+
+        .card {
+            background: var(--glass-card);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: 0.3s;
+        }
+
+        h3 {
+            font-family: var(--header-font);
+            font-size: 1.7rem;
+            color: var(--sky-accent);
+            border-bottom: 2px solid var(--sky-accent);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* আধুনিক প্রফেশনাল লিস্ট - গোল বুলেট সহ */
+        .prof-list { list-style: none; padding: 0; margin: 0; }
+        .prof-list li { 
+            position: relative; 
+            padding-left: 25px; 
+            margin-bottom: 20px; 
+        }
+        .prof-list li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 10px;
+            height: 10px;
+            background-color: var(--sky-accent);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--sky-accent);
+        }
+        .prof-list h4 { 
+            margin: 0; /* গ্যাপ কমানো হয়েছে */
+            color: #d1d1d1; 
+            font-size: 1.05rem; 
+            font-weight: normal;
+        }
+        .prof-list strong { display: block; margin-bottom: 2px; }
+
+        /* টেবিল ডিজাইন */
+        .table-container { width: 100%; overflow-x: auto; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; text-align: left; }
+        th { background: rgba(129, 212, 250, 0.1); color: var(--sky-accent); padding: 15px; font-family: var(--header-font); }
+        td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+        /* ছোট ফন্ট সাইজ (গাজীপুর, উত্তরা-ঢাকা) */
+        .small-text { font-size: 0.9rem; color: #b0b0b0; }
+
+        .skill-list { list-style: none; padding: 0; }
+        .skill-list li { margin-bottom: 12px; display: flex; align-items: center; }
+        .skill-list i { color: var(--sky-accent); margin-right: 12px; width: 20px; }
+
+        /* --- নতুন গ্যালারি সেকশন সিএসএস শুরু --- */
+        /* ভিডিও সেকশন বাদ দেওয়ার কারণে গ্যালারি টাইটেল এবং গ্রিড আপডেট */
+.gallery-section {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(15px);
+    border-radius: 25px;
+    padding: 40px;
+    margin-top: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.image-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* ছবির সংখ্যা বেশি হওয়ায় সাইজ কিছুটা কমানো হয়েছে */
+    gap: 15px;
+}
+
+.gallery-item {
+    overflow: hidden;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    transition: 0.4s;
+    height: 220px; /* একটি স্ট্যান্ডার্ড উচ্চতা */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.gallery-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* এর ফলে Portrait বা Landscape কোনো ছবিই কাটবে না */
+}
+
+       
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="hero-box">
+        <img src="Passportphoto.jpg" alt="মাহমুদুল হাসান সুজন">
+        <h2>মাহমুদুল হাসান সুজন</h2>
+        <p>বিএসসি (অনার্স) - পদার্থবিজ্ঞান</p>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <h3>পেশাগত পরিচয়</h3>
+            <ul class="prof-list">
+                <li>
+                    <strong>সহকারী শিক্ষক (পদার্থবিজ্ঞান)</strong>
+                    <small>০১/০৯/২০২৩ - ৩০/০৬/২০২৪</small>
+                    <h4>সাদেকপুর ইউনিয়ন হাই স্কুল এন্ড কলেজ</h4>
+                </li>
+                <li>
+                    <strong>প্রভাষক (তথ্য ও যোগাযোগ প্রযুক্তি)</strong>
+                    <small>০১/০৭/২০২৪ - ৩০/০৫/২০২৫</small>
+                    <h4>সাদেকপুর ইউনিয়ন হাই স্কুল এন্ড কলেজ</h4>
+                </li>
+            </ul>
+        </div>
+        <div class="card" style="grid-column: 1 / -1;">
+            <h3>শিক্ষাগত যোগ্যতা</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>পরীক্ষার স্তর</th>
+                            <th>বিষয়</th>
+                            <th>শিক্ষা প্রতিষ্ঠান</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>বিএসসি (অনার্স)</td>
+                            <td>পদার্থবিজ্ঞান</td>
+                            <td>জাতীয় বিশ্ববিদ্যালয়, <span class="small-text">গাজীপুর</span></td>
+                        </tr>
+                        <tr>
+                            <td>এইচএসসি</td>
+                            <td>বিজ্ঞান</td>
+                            <td>মাইলস্টোন কলেজ, <span class="small-text">উত্তরা-ঢাকা</span></td>
+                        </tr>
+                        <tr>
+                            <td>এসএসসি</td>
+                            <td>বিজ্ঞান</td>
+                            <td>ব্রাহ্মণবাড়িয়া রেসিডেন্সিয়াল স্কুল এন্ড কলেজ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>কারিগরি দক্ষতা</h3>
+            <ul class="skill-list">
+                <li><i class="fas fa-desktop"></i> কম্পিউটার ট্রেড কোর্স<br>
+                <span class="small-text">বাংলাদেশ কারিগরি শিক্ষা বোর্ড, ঢাকা</span></li>
+                <li><i class="fas fa-car"></i> ড্রাইভিং উইথ অটো-মেকানিক্স<br>
+                <span class="small-text">কারিগরি প্রশিক্ষণ কেন্দ্র, ব্রাহ্মণবাড়িয়া</span></li>
+            </ul>
+        </div>
+    </div> <div class="gallery-section">
+        <h2 class="gallery-title">ফটো গ্যালারি</h2>
+        
+        <div class="image-gallery"> <div class="gallery-item"><img src="webphoto1.jpg" alt="Activity 1"></div> <div class="gallery-item"><img src="webphoto2.jpg" alt="Activity 2"></div> <div class="gallery-item"><img src="webphoto3.jpg" alt="Activity 3"></div> <div class="gallery-item"><img src="webphoto4.jpeg" alt="Activity 4"></div> <div class="gallery-item"><img src="webphoto5.jpg" alt="Activity 5"></div> <div class="gallery-item"><img src="webphoto6.jpg" alt="Activity 6"></div> <div class="gallery-item"><img src="webphoto7.jpg" alt="Activity 7"></div> <div class="gallery-item"><img src="webphoto8.jpeg" alt="Activity 8"></div> <div class="gallery-item"><img src="webphoto9.jpeg" alt="Activity 9"></div> <div class="gallery-item"><img src="webphoto10.jpeg" alt="Activity 10"></div> </div>
+        </div>
+
+     
+        </div>
+    </div>
+    </div>
+
+</body>
+</html>
