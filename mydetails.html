@@ -157,7 +157,81 @@
     max-height: 100%;
     object-fit: contain; /* এর ফলে Portrait বা Landscape কোনো ছবিই কাটবে না */
 }
+/* গ্যালারি আইটেমের ভেতরে ভিডিওটি যেন সুন্দর দেখায় */
+.gallery-item iframe {
+    display: block;
+    border-radius: 8px; /* আপনার ছবির মতো রাউন্ড কর্নার থাকলে এটি দিন */
+    object-fit: cover;
+}
 
+/* যদি ভিডিওটি অনেক লম্বা হয়ে যায়, তবে এটি ব্যবহার করুন */
+.video-container {
+    max-width: 270px; /* ভিডিওর অরিজিনাল প্রস্থ অনুযায়ী */
+    margin: 0 auto;   /* মাঝখানে রাখার জন্য */
+    background: #000; /* ভিডিও লোড হওয়ার সময় কালো ব্যাকগ্রাউন্ড */
+}
+/* আপনার গ্যালারি আইটেমের কন্টেইনার */
+.video-box {
+    position: relative;
+    width: 100%;
+    max-width: 270px; /* ভিডিওর প্রস্থ অনুযায়ী */
+    height: 480px;    /* ভিডিওর উচ্চতা অনুযায়ী */
+    margin: 0 auto;
+    overflow: hidden; /* বাইরের অংশ কেটে ফেলার জন্য */
+    background: #000;
+    border-radius: 8px; /* ছবির মতো রাউন্ড শেপ দিতে */
+}
+
+/* আইফ্রেমটি যেন পুরো বক্স দখল করে থাকে */
+.video-box iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%) scale(1.4); /* এখানে scale(1.4) ড্রাইভের বর্ডার লুকাবে */
+    border: none;
+}
+
+/* মোবাইলের জন্য রেসপনসিভ সেটিংস */
+@media (max-width: 600px) {
+    .video-box {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 9 / 16;
+    }
+}
+/* ২য় ভিডিওর কন্টেইনার (Landscape) */
+.video-box-landscape {
+    position: relative;
+    width: 100%;
+    max-width: 480px; /* ভিডিওর প্রস্থ অনুযায়ী */
+    height: 270px;    /* ভিডিওর উচ্চতা অনুযায়ী */
+    margin: 0 auto;
+    overflow: hidden;
+    background: #000;
+    border-radius: 8px;
+}
+
+/* আইফ্রেমটি ফিট করার জন্য */
+.video-box-landscape iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%) scale(1.1); /* ল্যান্ডস্কেপের জন্য স্কেল কিছুটা কম */
+    border: none;
+}
+
+/* মোবাইলের জন্য রেসপনসিভ */
+@media (max-width: 600px) {
+    .video-box-landscape {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9; /* চ্যাপ্টা ভিডিওর অনুপাত */
+    }
+}
        
     </style>
 </head>
@@ -230,7 +304,15 @@
     </div> <div class="gallery-section">
         <h2 class="gallery-title">ফটো গ্যালারি</h2>
         
-        <div class="image-gallery"> <div class="gallery-item"><img src="webphoto1.jpg" alt="Activity 1"></div> <div class="gallery-item"><img src="webphoto2.jpg" alt="Activity 2"></div> <div class="gallery-item"><img src="webphoto3.jpg" alt="Activity 3"></div> <div class="gallery-item"><img src="webphoto4.jpeg" alt="Activity 4"></div> <div class="gallery-item"><img src="webphoto5.jpg" alt="Activity 5"></div> <div class="gallery-item"><img src="webphoto6.jpg" alt="Activity 6"></div> <div class="gallery-item"><img src="webphoto7.jpg" alt="Activity 7"></div> <div class="gallery-item"><img src="webphoto8.jpeg" alt="Activity 8"></div> <div class="gallery-item"><img src="webphoto9.jpeg" alt="Activity 9"></div> <div class="gallery-item"><img src="webphoto10.jpeg" alt="Activity 10"></div> </div>
+        <div class="image-gallery"> <div class="gallery-item"><img src="webphoto1.jpg" alt="Activity 1"></div> <div class="gallery-item"><img src="webphoto2.jpg" alt="Activity 2"></div> <div class="gallery-item"><img src="webphoto3.jpg" alt="Activity 3"></div> <div class="gallery-item"><img src="webphoto4.jpeg" alt="Activity 4"></div> <div class="gallery-item"><img src="webphoto5.jpg" alt="Activity 5"></div> <div class="gallery-item video-box">
+    <iframe src="https://drive.google.com/file/d/1UihRYBrKFilKkzByrWCFJgHEF4CvZuS4/preview" 
+            allow="autoplay" allowfullscreen>
+    </iframe>
+</div> <div class="gallery-item video-box-landscape">
+    <iframe src="https://drive.google.com/file/d/1UmCbM0Nb8K1sGShp2wNSPevOeGjUhDE_/preview" 
+            allow="autoplay" allowfullscreen>
+    </iframe>
+</div> <div class="gallery-item"><img src="webphoto11.jpg" alt="Activity 8"></div> <div class="gallery-item"><img src="webphoto9.jpeg" alt="Activity 9"></div> 
         </div>
 
      
