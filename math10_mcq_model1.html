@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>গণিত MCQ - অধ্যায় ১০ (মডেল ১)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { font-family: 'Noto Sans Bengali', sans-serif; background: #e0f2f1; margin: 0; padding: 0; color: #333; user-select: none; }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; min-height: 100vh; padding-bottom: 60px; }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #00695c;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #00695c 0%, #004d40 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+
+        /* ইনফো বক্স */
+        .info-box {
+            padding: 20px; margin: 0 20px 25px; background: #e0f2f1;
+            border-radius: 12px; border: 1px solid #b2dfdb;
+            text-align: center;
+        }
+        .input-field {
+            width: 85%; padding: 12px; border-radius: 8px; border: 1px solid #00796b;
+            font-family: 'Noto Sans Bengali', sans-serif; font-size: 16px; margin-top: 10px;
+            outline: none;
+        }
+        .timer { font-size: 22px; font-weight: bold; color: #d32f2f; margin-top: 15px; }
+
+        /* প্রশ্ন কার্ড */
+        .mcq-container { padding: 0 20px; }
+        .question-card {
+            background: #fff; padding: 20px; margin-bottom: 20px;
+            border-radius: 12px; border: 1px solid #e0e0e0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+            transition: 0.3s;
+        }
+        
+        .q-header { font-weight: 600; font-size: 18px; margin-bottom: 15px; display: flex; gap: 10px; align-items: flex-start; }
+        .board-tag { font-size: 12px; background: #e0e0e0; color: #444; padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
+        
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .option {
+            display: flex; align-items: center; padding: 12px; border: 1px solid #cfd8dc;
+            border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 16px;
+        }
+        .option input { margin-right: 12px; transform: scale(1.3); }
+
+        /* উত্তর কালার */
+        .correct-ans { background-color: #d4edda !important; border-color: #c3e6cb !important; color: #155724 !important; font-weight: bold; }
+        .wrong-ans { background-color: #f8d7da !important; border-color: #f5c6cb !important; color: #721c24 !important; }
+        .missed-ans { border: 2px dashed #ffb300 !important; }
+
+        /* বাটন */
+        .submit-btn {
+            display: block; width: 90%; margin: 30px auto; padding: 16px;
+            background: #00695c; color: white; font-size: 20px; font-weight: bold;
+            border: none; border-radius: 50px; cursor: pointer;
+        }
+
+        /* রেজাল্ট পপআপ */
+        .result-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center;
+        }
+        .result-box {
+            background: white; width: 90%; max-width: 400px; padding: 35px 25px;
+            border-radius: 20px; text-align: center;
+        }
+        .score-circle {
+            width: 130px; height: 130px; background: #e0f2f1; border-radius: 50%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin: 0 auto 20px; border: 6px solid #00695c;
+        }
+        .close-btn {
+            background: #d32f2f; color: white; border: none; padding: 12px 25px;
+            border-radius: 8px; margin-top: 20px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%;
+        }
+
+        @media (max-width: 500px) { .options-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="spinner"></div>
+        <p>লোড হচ্ছে...</p>
+    </div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        <div class="header">
+            <h1>Self Study with Sujon Sir</h1>
+            <p>গণিত | অধ্যায় ১০: দূরত্ব ও উচ্চতা</p>
+        </div>
+
+        <form id="quizForm">
+            <input type="hidden" name="Subject" value="Math Ch-10 MCQ Result">
+            <input type="hidden" name="obtained_score" id="hiddenScore">
+
+            <div class="info-box">
+                <input type="text" name="Student_Name" id="studentName" class="input-field" placeholder="তোমার নাম লিখ (বাধ্যতামূলক)..." required>
+                <div class="timer" id="timer">সময় বাকি: ৩০:০০ মিনিট</div>
+            </div>
+
+            <div class="mcq-container">
+                
+                <script>
+                    const mathQuestions = [
+                        { q: "ভূ-রেখার অপর নাম কী?", o: ["উলম্ব রেখা", "শয়ন রেখা", "সরল রেখা", "বক্র রেখা"], c: "b", b: "সকল বোর্ড" },
+                        { q: "উন্নতি কোণ ভূ-রেখার কোন দিকে উৎপন্ন হয়?", o: ["নিচে", "উপরে", "ডানে", "বামে"], c: "b", b: "ঢাকা ১৭" },
+                        { q: "অবনতি কোণ ভূ-রেখার সাপেক্ষে কোন দিকে থাকে?", o: ["উপরে", "নিচে", "সরলরেখায়", "শীর্ষে"], c: "b", b: "যশোর ১৯" },
+                        { q: "সূর্যের উন্নতি কোণ কত হলে খুঁটির দৈর্ঘ্য ও ছায়ার দৈর্ঘ্য সমান হয়?", o: ["$30^\\circ$", "$45^\\circ$", "$60^\\circ$", "$90^\\circ$"], c: "b", b: "রাজশাহী ২১" },
+                        { q: "একটি টাওয়ারের উচ্চতা $10\\sqrt{3}$ মি. এবং ছায়ার দৈর্ঘ্য ১০ মি. হলে উন্নতি কোণ কত?", o: ["$30^\\circ$", "$45^\\circ$", "$60^\\circ$", "$90^\\circ$"], c: "c", b: "কুমিল্লা ২০" },
+                        { q: "$\\triangle ABC$ এ $\\angle B=90^\\circ$, $AB=5$ এবং $BC=5\\sqrt{3}$ হলে $\\angle C$ কত?", o: ["$30^\\circ$", "$45^\\circ$", "$60^\\circ$", "$90^\\circ$"], c: "a", b: "চট্টগ্রাম ১৯" },
+                        { q: "একটি খুঁটি ভেঙে ভূমির সাথে $30^\\circ$ কোণ উৎপন্ন করলে খুঁটির উচ্চতা ও ভাঙ্গা অংশের অনুপাত কত?", o: ["$1:2$", "$2:1$", "$1:\\sqrt{3}$", "$\\sqrt{3}:1$"], c: "a", b: "দিনাজপুর ২১" },
+                        { q: "উন্নতি কোণ $60^\\circ$ হলে লম্ব ও ভূমির অনুপাত কত?", o: ["$1:\\sqrt{3}$", "$\\sqrt{3}:1$", "$1:2$", "$\\sqrt{2}:1$"], c: "b", b: "সিলেট ২০" },
+                        { q: "একটি মই দেয়ালের সাথে $60^\\circ$ কোণ উৎপন্ন করে। পাদদেশ ৫ মি. দূরে থাকলে মইটির দৈর্ঘ্য কত?", o: ["১০ মি.", "$৫\\sqrt{3}$ মি.", "৫ মি.", "১৫ মি."], c: "a", b: "বরিশাল ২২" },
+                        { q: "চিত্র অঙ্কনের ক্ষেত্রে $45^\\circ$ কোণের জন্য কোনটি সঠিক?", o: ["ভূমি > লম্ব", "ভূমি < লম্ব", "ভূমি = লম্ব", "লম্ব = অতিভুজ"], c: "c", b: "যশোর ১৭" },
+                        { q: "একটি টাওয়ারের পাদদেশ হতে ২০ মি. দূরে চূড়ার উন্নতি কোণ $30^\\circ$ হলে টাওয়ারের উচ্চতা কত?", o: ["$20\\sqrt{3}$ মি.", "$20/\\sqrt{3}$ মি.", "১০ মি.", "$10\\sqrt{3}$ মি."], c: "b", b: "ঢাকা ১৯" },
+                        { q: "উন্নতি কোণ $30^\\circ$ হলে নিচের কোনটি সঠিক?", o: ["ভূমি > লম্ব", "ভূমি < লম্ব", "ভূমি = লম্ব", "লম্ব > ভূমি"], c: "a", b: "কুমিল্লা ২১" },
+                        { q: "একটি গাছের উচ্চতা ও ছায়ার অনুপাত $1:\\sqrt{3}$ হলে উন্নতি কোণ কত?", o: ["$30^\\circ$", "$45^\\circ$", "$60^\\circ$", "$90^\\circ$"], c: "a", b: "সিলেট ১৯" },
+                        { q: "অবনতি কোণ $60^\\circ$ হলে উন্নতি কোণ কত?", o: ["$30^\\circ$", "$45^\\circ$", "$60^\\circ$", "$90^\\circ$"], c: "c", b: "বরিশাল ১৯" },
+                        { q: "একটি ঘরের চালের উন্নতি কোণ $30^\\circ$ এবং উচ্চতা ৩ মি. হলে চালের দৈর্ঘ্য কত?", o: ["৬ মি.", "৩ মি.", "$৩\\sqrt{3}$ মি.", "৯ মি."], c: "a", b: "রাজশাহী ১৭" },
+                        { q: "সমকোণী ত্রিভুজে অতিভুজ ও লম্বের সম্পর্ক নিচের কোনটির সাথে?", o: ["$\\sin \\theta$", "$\\cos \\theta$", "$\\tan \\theta$", "$\\cot \\theta$"], c: "a", b: "সকল বোর্ড" },
+                        { q: "একটি গাছ ঝড়ে ভেঙে অবিচ্ছিন্ন হয়ে ভূমির সাথে $45^\\circ$ কোণ করলে ভাঙ্গা অংশের দৈর্ঘ্য ১৮ মি. হলে গাছের উচ্চতা কত?", o: ["$১৮+৯\\sqrt{2}$ মি.", "$১৮\\sqrt{2}$ মি.", "$৯\\sqrt{2}$ মি.", "$১৮+১৮\\sqrt{2}$ মি."], c: "a", b: "যশোর ১৮" },
+                        { q: "উন্নতি কোণ $45^\\circ$ হলে লম্ব ও অতিভুজের অনুপাত কত?", o: ["$1:2$", "$1:\\sqrt{2}$", "$\\sqrt{3}:2$", "$1:1$"], c: "b", b: "ঢাকা ২০" },
+                        { q: "একটি খুঁটি ১৮ মি. লম্বা। এর ছায়ার দৈর্ঘ্য কত হলে উন্নতি কোণ $30^\\circ$ হবে?", o: ["$১৮\\sqrt{3}$ মি.", "$৬\\sqrt{3}$ মি.", "৯ মি.", "৩৬ মি."], c: "a", b: "কুমিল্লা ২২" },
+                        { q: "নিচের কোনটি অক্ষে রেখা বা উলম্ব রেখা?", o: ["ভূ-রেখা", "শয়ন রেখা", "পাদদেশ রেখা", "খাড়া রেখা"], c: "d", b: "দিনাজপুর ১৭" },
+                        { q: "একটি মইয়ের দৈর্ঘ্য ১০ মি. এবং উন্নতি কোণ $45^\\circ$ হলে দেয়ালের উচ্চতা কত?", o: ["$৫\\sqrt{2}$ মি.", "$১০\\sqrt{2}$ মি.", "৫ মি.", "১০ মি."], c: "a", b: "রাজশাহী ২২" },
+                        { q: "সূর্যের উন্নতি কোণ $60^\\circ$ হলে লম্ব ও ছায়ার অনুপাত কত?", o: ["$\\sqrt{3}:1$", "$1:\\sqrt{3}$", "$1:2$", "$2:1$"], c: "a", b: "চট্টগ্রাম ২২" },
+                        { q: "উন্নতি কোণ $30^\\circ$ হলে অতিভুজ লম্বের কত গুণ?", o: ["$\\sqrt{3}$ গুণ", "২ গুণ", "১.৫ গুণ", "$\\sqrt{2}$ গুণ"], c: "b", b: "সিলেট ২২" },
+                        { q: "একটি টাওয়ারের উচ্চতা ৫০ মি.। উন্নতি কোণ $30^\\circ$ হলে পাদদেশ থেকে বিন্দুর দূরত্ব কত?", o: ["$৫০\\sqrt{3}$ মি.", "$২৫\\sqrt{3}$ মি.", "১০০ মি.", "২৫ মি."], c: "a", b: "ময়মনসিংহ ২০" },
+                        { q: "অবনতি কোণ ৩০ ডিগ্রি হলে ভূ-রেখা ও অতিভুজের মধ্যবর্তী কোণ কত?", o: ["$30^\\circ$", "$60^\\circ$", "$90^\\circ$", "$45^\\circ$"], c: "a", b: "ঢাকা ১৫" },
+                        { q: "লম্ব ৩ মি. ও ভূমি ৩ মি. হলে উন্নতি কোণ কত?", o: ["$30^\\circ$", "$45^\\circ$", "$60^\\circ$", "$90^\\circ$"], c: "b", b: "বরিশাল ২১" },
+                        { q: "একটি খুঁটি ভেঙে ভূমির সাথে ৩০ ডিগ্রি কোণ করে। খুঁটির উচ্চতা ২৪ মি. হলে গোড়া থেকে ছায়ার দূরত্ব কত?", o: ["$১২\\sqrt{3}$ মি.", "১২ মি.", "$৮\\sqrt{3}$ মি.", "$২৪\\sqrt{3}$ মি."], c: "a", b: "দিনাজপুর ১৯" },
+                        { q: "উন্নতি কোণ $60^\\circ$ হলে অতিভুজ ভূমির কত গুণ?", o: ["২ গুণ", "$\\sqrt{3}$ গুণ", "৩ গুণ", "১.৫ গুণ"], c: "a", b: "রাজশাহী ২০" },
+                        { q: "একটি গাছের উচ্চতা ও ভাঙ্গা অংশের অনুপাত $1:2$ হলে উন্নতি কোণ কত?", o: ["$30^\\circ$", "$45^\\circ$", "$60^\\circ$", "$90^\\circ$"], c: "a", b: "যশোর ২১" },
+                        { q: "দূরত্ব ও উচ্চতা বিষয়ক অংকে সাধারণত কোন কোণগুলো ব্যবহৃত হয়?", o: ["$30, 45, 60$", "$0, 30, 90$", "$45, 60, 90$", "$30, 60, 90$"], c: "a", b: "সকল বোর্ড" }
+                    ];
+
+                    const area = document.querySelector('.mcq-container');
+                    mathQuestions.forEach((item, index) => {
+                        let qHtml = `
+                        <div class="question-card">
+                            <div class="q-header">
+                                <span>${index + 1 < 10 ? '০' + (index + 1) : index + 1}.</span> 
+                                <span class="board-tag">[${item.b}]</span>
+                                <span>${item.q}</span>
+                            </div>
+                            <div class="options-grid">
+                                <label class="option"><input type="radio" name="q${index + 1}" value="a" ${item.c === 'a' ? 'data-correct="true"' : ''}> (ক) ${item.o[0]}</label>
+                                <label class="option"><input type="radio" name="q${index + 1}" value="b" ${item.c === 'b' ? 'data-correct="true"' : ''}> (খ) ${item.o[1]}</label>
+                                <label class="option"><input type="radio" name="q${index + 1}" value="c" ${item.c === 'c' ? 'data-correct="true"' : ''}> (গ) ${item.o[2]}</label>
+                                <label class="option"><input type="radio" name="q${index + 1}" value="d" ${item.c === 'd' ? 'data-correct="true"' : ''}> (ঘ) ${item.o[3]}</label>
+                            </div>
+                        </div>`;
+                        area.insertAdjacentHTML('beforeend', qHtml);
+                    });
+                </script>
+
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">সাবমিট করুন</button>
+        </form>
+
+        <div class="result-overlay" id="resultOverlay">
+            <div class="result-box">
+                <h2 style="color: #00695c;">অভিনন্দন!</h2>
+                <div class="score-circle">
+                    <div id="displayScore" style="font-size: 40px; font-weight: bold; color: #00695c;">0</div>
+                    <div style="font-size: 14px; color: #555;">নম্বর ৩০ এর মধ্যে</div>
+                </div>
+                <p>নাম: <span id="displayName" style="font-weight: bold; color: #d32f2f;"></span></p>
+                <p id="sendStatus" style="font-size: 14px; font-weight: 600;"></p>
+                <button class="close-btn" onclick="closeResult()">উত্তরপত্র দেখুন</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const ADMIN_EMAIL = "leeminho7323@gmail.com";
+        let timeLeft = 30 * 60; 
+        const timerElement = document.getElementById('timer');
+        let countdown;
+
+        function startTimer() {
+             countdown = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+                timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+                if (timeLeft <= 0) { clearInterval(countdown); submitQuiz(); }
+                timeLeft--;
+            }, 1000);
+        }
+        startTimer();
+
+        const form = document.getElementById('quizForm');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            submitQuiz();
+        });
+
+        function submitQuiz() {
+            const name = document.getElementById('studentName').value;
+            if(!name) { alert("তোমার নাম লেখো!"); return; }
+
+            clearInterval(countdown);
+            const btn = document.getElementById('submitBtn');
+            btn.innerHTML = 'ডাটা পাঠানো হচ্ছে...';
+            btn.disabled = true;
+            
+            let score = 0;
+            const questionCards = document.querySelectorAll('.question-card');
+
+            questionCards.forEach(card => {
+                const inputs = card.querySelectorAll('input[type="radio"]');
+                let correctAnswer = null, userAnswer = null;
+
+                inputs.forEach(input => {
+                    if (input.getAttribute('data-correct') === 'true') correctAnswer = input.value;
+                    if (input.checked) userAnswer = input.value;
+                    input.disabled = true; 
+                });
+
+                inputs.forEach(input => {
+                    const label = input.parentElement;
+                    if (input.value === correctAnswer) label.classList.add('correct-ans');
+                    if (userAnswer === input.value && userAnswer !== correctAnswer) label.classList.add('wrong-ans');
+                });
+
+                if (userAnswer === correctAnswer) score++;
+                else if (!userAnswer) card.classList.add('missed-ans');
+            });
+
+            document.getElementById('hiddenScore').value = score + " / 30";
+            fetch(`https://formsubmit.co/ajax/${ADMIN_EMAIL}`, {
+                method: "POST",
+                body: new FormData(form)
+            })
+            .then(() => {
+                document.getElementById('sendStatus').textContent = "রেজাল্ট সফলভাবে স্যারের ইমেইলে পাঠানো হয়েছে!";
+            });
+
+            document.getElementById('displayScore').textContent = score;
+            document.getElementById('displayName').textContent = name;
+            document.getElementById('resultOverlay').style.display = 'flex';
+            btn.style.display = 'none';
+        }
+
+        function closeResult() {
+            document.getElementById('resultOverlay').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
