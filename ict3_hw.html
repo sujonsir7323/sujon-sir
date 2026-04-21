@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICT ৩য় অধ্যায় - সংখ্যা পদ্ধতি টেস্ট</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\\\(', '\\\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #f0f4f8; 
+            margin: 0; padding: 0; color: #2c3e50;
+            user-select: none;
+        }
+        .container { 
+            max-width: 800px; margin: 0 auto; background: white; 
+            min-height: 100vh; padding-bottom: 40px; box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        }
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #006064;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .header {
+            background: linear-gradient(135deg, #006064 0%, #004d40 100%);
+            color: white; padding: 45px 20px; text-align: center;
+            border-bottom-left-radius: 35px; border-bottom-right-radius: 35px;
+        }
+        .header h1 { margin: 0; font-size: 30px; font-weight: 700; }
+        .quote { 
+            font-style: italic; font-size: 16px; margin-top: 10px; 
+            color: #e0f2f1; display: block;
+        }
+
+        .timer-box {
+            background: #fff; padding: 12px 25px; margin: -25px auto 20px;
+            width: fit-content; border-radius: 50px; text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-weight: bold;
+            color: #d32f2f; border: 2px solid #006064; font-size: 18px;
+        }
+
+        .cq-card {
+            background: #fff; margin: 20px; padding: 25px;
+            border-radius: 15px; border: 1px solid #e0e0e0;
+            border-left: 6px solid #006064;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+        .q-title { font-weight: 700; color: #006064; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .board-tag { background: #e0f2f1; font-size: 12px; padding: 4px 12px; border-radius: 20px; color: #004d40; }
+        
+        .stem { 
+            background: #fcfcfc; padding: 15px; border-radius: 8px; 
+            margin: 10px 0; border: 1px dashed #b2dfdb; font-style: italic; color: #555;
+        }
+        .question-text { font-size: 17px; line-height: 1.6; color: #333; }
+
+        .footer { text-align: center; padding: 30px; color: #95a5a6; font-size: 14px; border-top: 1px solid #eee; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="spinner"></div>
+        <p>প্রশ্নপত্র তৈরি হচ্ছে...</p>
+    </div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        <div class="header">
+            <h1>Self Study with Sujon Sir</h1>
+            <span class="quote">"গণিত মুখস্থ করার বিষয় নয়, এটি বোঝার ও চর্চা করার বিষয়।"</span>
+            <p style="margin-top: 15px; opacity: 0.8;">ICT অধ্যায় ৩: সংখ্যা পদ্ধতি (Home Work)</p>
+        </div>
+
+        <div class="timer-box" id="timer">সময় বাকি: ৩০:০০ মিনিট</div>
+
+        <div class="cq-card">
+            <div class="q-title"><span>প্রশ্ন ০১</span><span class="board-tag">ঢাকা বোর্ড ২০১৯</span></div>
+            <div class="stem">উদ্দীপক: রাজুর আইসিটি নম্বর $(৭৭.৭২৮)_{১০}$।</div>
+            <p class="question-text">ক) রাজুর প্রাপ্ত নম্বরটিকে বাইনারি সংখ্যা পদ্ধতিতে রূপান্তর করো।</p>
+        </div>
+
+        <div class="cq-card">
+            <div class="q-title"><span>প্রশ্ন ০২</span><span class="board-tag">রাজশাহী বোর্ড ২০১৭</span></div>
+            <div class="stem">উদ্দীপক: একটি পণ্যের গায়ের মূল্য $(১২৫.৩৪১)_{১০}$ টাকা।</div>
+            <p class="question-text">ক) উদ্দীপকের মূল্যটিকে অক্টাল সংখ্যা পদ্ধতিতে প্রকাশ করো।</p>
+        </div>
+
+        <div class="cq-card">
+            <div class="q-title"><span>প্রশ্ন ০৩</span><span class="board-tag">কুমিল্লা বোর্ড ২০১৬</span></div>
+            <p class="question-text">ক) ডেসিমেল সংখ্যা $(১০৫২.৩৯৮)_{১০}$ কে হেক্সাডেসিমেল সংখ্যায় রূপান্তর করো।</p>
+        </div>
+
+        <div class="cq-card">
+            <div class="q-title"><span>প্রশ্ন ০৪</span><span class="board-tag">সিলেট বোর্ড ২০১৯</span></div>
+            <div class="stem">উদ্দীপক: রহিমের বয়স $(৩৫.৬২৫)_{১০}$ বছর।</div>
+            <p class="question-text">ক) রহিমের বয়সকে বাইনারিতে রূপান্তর করো।</p>
+        </div>
+
+        <div class="cq-card">
+            <div class="q-title"><span>প্রশ্ন ০৫</span><span class="board-tag">দিনাজপুর বোর্ড ২০১৯</span></div>
+            <p class="question-text">ক) $(৪৭.১২৫)_{১০}$ কে অক্টাল সংখ্যা পদ্ধতিতে রূপান্তর করো।</p>
+        </div>
+
+        <div class="cq-card">
+            <div class="q-title"><span>প্রশ্ন ০৬</span><span class="board-tag">যশোর বোর্ড ২০১৯</span></div>
+            <p class="question-text">ক) ডেসিমেল সংখ্যা $(৫০০.৫৬৪)_{১০}$ কে হেক্সাডেসিমেলে রূপান্তর করো।</p>
+        </div>
+
+        <div class="cq-card">
+            <div class="q-title"><span>প্রশ্ন ০৭</span><span class="board-tag">চট্টগ্রাম বোর্ড ২০১৭</span></div>
+            <p class="question-text">ক) $(৯৯.৭৫)_{১০}$ সংখ্যাটিকে বাইনারিতে প্রকাশ করো।</p>
+        </div>
+
+        <div class="cq-card">
+            <div class="q-title"><span>প্রশ্ন ০৮</span><span class="board-tag">বরিশাল বোর্ড ২০১৬</span></div>
+            <p class="question-text">ক) ডেসিমেল সংখ্যা $(২৭৩.৭৭৮)_{১০}$ কে অক্টালে রূপান্তর করো।</p>
+        </div>
+
+        <div class="cq-card">
+            <div class="q-title"><span>প্রশ্ন ০৯</span><span class="board-tag">সকল বোর্ড ২০১৮</span></div>
+            <p class="question-text">ক) $(২৫৫.৬২৫)_{১০}$ কে হেক্সাডেসিমেলে প্রকাশ করো (৪ দশমিক স্থান পর্যন্ত)।</p>
+        </div>
+
+        <div class="cq-card">
+            <div class="q-title"><span>প্রশ্ন ১০</span><span class="board-tag">ঢাকা বোর্ড ২০১৫</span></div>
+            <p class="question-text">ক) $(২০.১২)_{১০}$ ডেসিমেল সংখ্যাটিকে বাইনারিতে রূপান্তর করো।</p>
+        </div>
+
+        <div class="footer">
+            &copy; 2024 Self Study with Sujon Sir | অল রাইটস রিজার্ভড।
+        </div>
+    </div>
+
+    <script>
+        // ৩০ মিনিটের কাউন্টডাউন টাইমার
+        let timeLeft = 30 * 60; 
+        const timerElement = document.getElementById('timer');
+        
+        const countdown = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "সময় শেষ!";
+                timerElement.style.color = "red";
+                alert("আপনার পরীক্ষার সময় শেষ হয়েছে!");
+            }
+            timeLeft--;
+        }, 1000);
+    </script>
+</body>
+</html>

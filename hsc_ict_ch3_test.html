@@ -10,7 +10,7 @@
     <style>
         body { 
             font-family: 'Hind Siliguri', sans-serif; 
-            background: #e0f7fa; /* ICT এর জন্য হালকা সায়ান ব্যাকগ্রাউন্ড */
+            background: #e0f7fa; 
             margin: 0; 
             padding: 0; 
             color: #333;
@@ -23,7 +23,6 @@
             padding-bottom: 20px;
         }
         
-        /* ১. হেডার ডিজাইন */
         .header {
             background: linear-gradient(135deg, #00838f 0%, #006064 100%);
             color: white;
@@ -38,7 +37,6 @@
         .header h1 { font-size: 26px; margin: 10px 0 5px; font-weight: 700; }
         .header p { font-size: 14px; color: #b2dfdb; margin-top: 5px; }
         
-        /* ব্যাক বাটন */
         .back-btn {
             position: absolute; top: 20px; left: 20px;
             color: white; font-size: 20px; text-decoration: none;
@@ -49,7 +47,6 @@
         }
         .back-btn:hover { background: rgba(255,255,255,0.3); }
 
-        /* ২. বাণী সেকশন */
         .quote-box {
             background: #e0f2f1;
             padding: 15px;
@@ -63,7 +60,6 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        /* ৩. পেজ টাইটেল */
         .title-wrapper { text-align: center; margin-bottom: 20px; }
         .page-title {
             text-align: center; font-size: 20px; font-weight: bold; color: #00838f;
@@ -71,15 +67,14 @@
             display: inline-block; padding-bottom: 5px;
         }
 
-        /* টেস্ট কার্ড ডিজাইন */
         .test-wrapper {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
             padding: 0 20px;
+            margin-bottom: 20px;
         }
 
-        /* সূত্র বাটন ডিজাইন */
         .formula-link {
             display: flex;
             align-items: center;
@@ -88,10 +83,19 @@
             border-radius: 12px;
             text-decoration: none;
             box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-            border-left: 6px solid #ff6f00; /* কমলা বর্ডার হাইলাইট */
+            border-left: 6px solid #ff6f00; 
             transition: transform 0.2s, box-shadow 0.2s;
-            margin-bottom: 5px;
         }
+        
+        /* বাড়ির কাজ স্পেশাল স্টাইল */
+        .hw-link {
+            border-left: 6px solid #2e7d32; /* সবুজ বর্ডার */
+        }
+        .hw-icon-box {
+            background: #e8f5e9 !important;
+            color: #2e7d32 !important;
+        }
+
         .formula-link:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 12px rgba(0,0,0,0.1);
@@ -109,13 +113,13 @@
         .f-content p { margin: 2px 0 0; font-size: 13px; color: #666; }
         .f-arrow { margin-left: auto; color: #bbb; }
 
-        /* সাধারণ টেস্ট কার্ড */
         .test-card {
             background: white;
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             border-top: 5px solid #00838f;
+            margin: 0 20px 20px 20px;
         }
         
         .test-header {
@@ -129,7 +133,6 @@
         .test-name { font-size: 20px; font-weight: 700; color: #333; }
         .test-info { font-size: 13px; color: #666; background: #eee; padding: 3px 8px; border-radius: 4px;}
 
-        /* বাটন গ্রুপ */
         .btn-group { display: flex; gap: 10px; }
         
         .action-btn {
@@ -171,7 +174,6 @@
         </div>
 
         <div class="test-wrapper">
-
             <a href="ict3_shortcut.html" class="formula-link">
                 <div class="f-icon-box">
                     <i class="fas fa-bolt"></i>
@@ -185,75 +187,88 @@
                 </div>
             </a>
 
-            <div class="test-card">
-                <div class="test-header">
-                    <div class="test-name">মডেল টেস্ট - ০১</div>
-                    <div class="test-info">পূর্ণমান: ৫৫</div>
+            <a href="ict3_hw.html" class="formula-link hw-link">
+                <div class="f-icon-box hw-icon-box">
+                    <i class="fas fa-book-open"></i>
                 </div>
-                <div class="btn-group">
-                    <a href="ict3_cq_model1.html" class="action-btn btn-cq">
-                        <i class="fas fa-pen-alt btn-icon"></i>
-                        সৃজনশীল (CQ)
-                    </a>
-                    <a href="ict3_mcq_model1.html" class="action-btn btn-mcq">
-                        <i class="fas fa-list-ul btn-icon"></i>
-                        বহুনির্বাচনি (MCQ)
-                    </a>
+                <div class="f-content">
+                    <h3>বাড়ির কাজ (Homework)</h3>
+                    <p>আজকের ক্লাসের প্র্যাকটিস টাস্ক</p>
                 </div>
-            </div>
-
-            <div class="test-card">
-                <div class="test-header">
-                    <div class="test-name">মডেল টেস্ট - ০২</div>
-                    <div class="test-info">পূর্ণমান: ৫৫</div>
+                <div class="f-arrow">
+                    <i class="fas fa-chevron-right"></i>
                 </div>
-                <div class="btn-group">
-                    <a href="ict3_cq_model2.html" class="action-btn btn-cq">
-                        <i class="fas fa-pen-alt btn-icon"></i>
-                        সৃজনশীল (CQ)
-                    </a>
-                    <a href="ict3_mcq_model2.html" class="action-btn btn-mcq">
-                        <i class="fas fa-list-ul btn-icon"></i>
-                        বহুনির্বাচনি (MCQ)
-                    </a>
-                </div>
-            </div>
-
-            <div class="test-card">
-                <div class="test-header">
-                    <div class="test-name">মডেল টেস্ট - ০৩</div>
-                    <div class="test-info">পূর্ণমান: ৫৫</div>
-                </div>
-                <div class="btn-group">
-                    <a href="ict3_cq_model3.html" class="action-btn btn-cq">
-                        <i class="fas fa-pen-alt btn-icon"></i>
-                        সৃজনশীল (CQ)
-                    </a>
-                    <a href="ict3_mcq_model3.html" class="action-btn btn-mcq">
-                        <i class="fas fa-list-ul btn-icon"></i>
-                        বহুনির্বাচনি (MCQ)
-                    </a>
-                </div>
-            </div>
-
-            <div class="test-card">
-                <div class="test-header">
-                    <div class="test-name">মডেল টেস্ট - ০৪</div>
-                    <div class="test-info">পূর্ণমান: ৫৫</div>
-                </div>
-                <div class="btn-group">
-                    <a href="ict3_cq_model4.html" class="action-btn btn-cq">
-                        <i class="fas fa-pen-alt btn-icon"></i>
-                        সৃজনশীল (CQ)
-                    </a>
-                    <a href="ict3_mcq_model4.html" class="action-btn btn-mcq">
-                        <i class="fas fa-list-ul btn-icon"></i>
-                        বহুনির্বাচনি (MCQ)
-                    </a>
-                </div>
-            </div>
-
+            </a>
         </div>
+
+        <div class="test-card">
+            <div class="test-header">
+                <div class="test-name">মডেল টেস্ট - ০১</div>
+                <div class="test-info">পূর্ণমান: ৫৫</div>
+            </div>
+            <div class="btn-group">
+                <a href="ict3_cq_model1.html" class="action-btn btn-cq">
+                    <i class="fas fa-pen-alt btn-icon"></i>
+                    সৃজনশীল (CQ)
+                </a>
+                <a href="ict3_mcq_model1.html" class="action-btn btn-mcq">
+                    <i class="fas fa-list-ul btn-icon"></i>
+                    বহুনির্বাচনি (MCQ)
+                </a>
+            </div>
+        </div>
+
+        <div class="test-card">
+            <div class="test-header">
+                <div class="test-name">মডেল টেস্ট - ০২</div>
+                <div class="test-info">পূর্ণমান: ৫৫</div>
+            </div>
+            <div class="btn-group">
+                <a href="ict3_cq_model2.html" class="action-btn btn-cq">
+                    <i class="fas fa-pen-alt btn-icon"></i>
+                    সৃজনশীল (CQ)
+                </a>
+                <a href="ict3_mcq_model2.html" class="action-btn btn-mcq">
+                    <i class="fas fa-list-ul btn-icon"></i>
+                    বহুনির্বাচনি (MCQ)
+                </a>
+            </div>
+        </div>
+
+        <div class="test-card">
+            <div class="test-header">
+                <div class="test-name">মডেল টেস্ট - ০৩</div>
+                <div class="test-info">পূর্ণমান: ৫৫</div>
+            </div>
+            <div class="btn-group">
+                <a href="ict3_cq_model3.html" class="action-btn btn-cq">
+                    <i class="fas fa-pen-alt btn-icon"></i>
+                    সৃজনশীল (CQ)
+                </a>
+                <a href="ict3_mcq_model3.html" class="action-btn btn-mcq">
+                    <i class="fas fa-list-ul btn-icon"></i>
+                    বহুনির্বাচনি (MCQ)
+                </a>
+            </div>
+        </div>
+
+        <div class="test-card">
+            <div class="test-header">
+                <div class="test-name">মডেল টেস্ট - ০৪</div>
+                <div class="test-info">পূর্ণমান: ৫৫</div>
+            </div>
+            <div class="btn-group">
+                <a href="ict3_cq_model4.html" class="action-btn btn-cq">
+                    <i class="fas fa-pen-alt btn-icon"></i>
+                    সৃজনশীল (CQ)
+                </a>
+                <a href="ict3_mcq_model4.html" class="action-btn btn-mcq">
+                    <i class="fas fa-list-ul btn-icon"></i>
+                    বহুনির্বাচনি (MCQ)
+                </a>
+            </div>
+        </div>
+
     </div>
 
 </body>
