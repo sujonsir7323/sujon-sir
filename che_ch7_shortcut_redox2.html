@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>জারণ-বিজারণ বিক্রিয়া ও জারণ সংখ্যা নোট</title>
+    <!-- FontAwesome & Google Fonts -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax for Chemistry Formulas & Equations -->
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        :root {
+            --primary: #7b1fa2;
+            --primary-dark: #4a148c;
+            --accent-ox: #d32f2f;
+            --accent-red: #388e3c;
+            --bg: #f3e5f5;
+            --card-bg: #ffffff;
+            --text-dark: #263238;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fafafa;
+            min-height: 100vh;
+            padding-bottom: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.08);
+        }
+
+        /* Header Style */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .header h1 { font-size: 24px; margin: 10px 0 5px; font-weight: 700; }
+        .header p { font-size: 14px; color: #e1bee7; margin: 0; }
+        
+        .back-btn {
+            position: absolute; top: 20px; left: 20px;
+            color: white; font-size: 18px; text-decoration: none;
+            background: rgba(255,255,255,0.2);
+            width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.3); }
+
+        /* Rule Card */
+        .rule-card {
+            background: #fff;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .rule-title {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary-dark);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Number Line Graphic Styling */
+        .number-line-box {
+            background: #ede7f6;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 15px;
+            border: 1px dashed var(--primary);
+        }
+        .number-line {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin: 15px 0;
+            font-weight: bold;
+            font-size: 16px;
+            overflow-x: auto;
+        }
+        .num-item {
+            background: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            min-width: 25px;
+        }
+        .direction-arrow {
+            font-size: 13px;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 5px;
+            color: white;
+        }
+        .arrow-right { background: var(--accent-ox); }
+        .arrow-left { background: var(--accent-red); }
+
+        /* Reaction Cards */
+        .rxn-card {
+            background: #fff;
+            margin: 20px;
+            padding: 22px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            border: 1px solid #eee;
+            position: relative;
+        }
+        .rxn-header {
+            background: #f3e5f5;
+            color: var(--primary-dark);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .main-equation {
+            font-size: 18px;
+            background: #fafafa;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 15px;
+            overflow-x: auto;
+        }
+
+        .spectator-box {
+            background: #e0f7fa;
+            border-left: 4px solid #00acc1;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .half-rxn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .half-box {
+            padding: 12px 15px;
+            border-radius: 10px;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .ox-box {
+            background: #ffebee;
+            border: 1px solid #ffcdd2;
+            color: #b71c1c;
+        }
+
+        .red-box {
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            color: #1b5e20;
+        }
+
+        .tag {
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        .tag-ox { background: var(--accent-ox); }
+        .tag-red { background: var(--accent-red); }
+
+        .num-line-explain {
+            background: #fffde7;
+            border: 1px solid #fff59d;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 13.5px;
+            margin-top: 10px;
+            color: #574c00;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #777;
+            border-top: 1px solid #eee;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Header -->
+        <div class="header">
+            <a href="#" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-flask" style="font-size: 35px; color: #ffeb3b; margin-bottom: 10px;"></i>
+            <h2>Self Study With Sujon Sir</h2>
+            <h1>জারণ-বিজারণ ও দর্শক আয়ন নোট</h1>
+        </div>
+
+        <!-- Rules & Theory Section -->
+        <div class="rule-card">
+            <div class="rule-title">
+                <i class="fas fa-book-open"></i> মূল তত্ত্ব ও চেনার উপায়
+            </div>
+            
+            <ul style="padding-left: 20px; margin: 5px 0;">
+                <li><strong>জারণ অর্ধ-বিক্রিয়া:</strong><br> <ul type="disc"><li>+ এর মান বৃদ্ধি পায়</li><li> - এর মান হ্রাস পায়<li>ইলেকট্রন ত্যাগ করে(-)</li></li></ul></ul>
+                <ul style="padding-left: 20px; margin: 5px 0;">
+ <li><strong>জারণ অর্ধ-বিক্রিয়া:</strong><br> <ul type="disc"><li>+ এর মান হ্রাস পায়</li><li> - এর মান বৃদ্ধি পায়<li>ইলেকট্রন গ্রহন করে(+)</li></li></ul></ul>
+  <ul style="padding-left: 20px; margin: 5px 0;">
+                <li><strong>দর্শক আয়ন (Spectator Ion):</strong> জারন বিজারন বিক্রিয়ায় যে সকল মৌল, যৌগমূলক বা আয়নের রাসায়নিক বিক্রিয়ার পূর্বে ও পরে জারণ সংখ্যার কোনো পরিবর্তন হয় না তাদেরকে দর্শক আয়ন বলে।</li>
+            </ul>
+
+            <!-- Visual Number Line Explanation -->
+            <div class="number-line-box">
+                <strong><i class="fas fa-arrows-alt-h"></i> জারণ সংখ্যার রেখা (Number Line) কৌশল:</strong>
+                
+                <div class="number-line">
+                    <span class="num-item">-3</span>
+                    <span class="num-item">-2</span>
+                    <span class="num-item">-1</span>
+                    <span class="num-item">0</span>
+                    <span class="num-item">+1</span>
+                    <span class="num-item">+2</span>
+                    <span class="num-item">+3</span>
+                </div>
+
+                <div style="display: flex; justify-content: space-around; font-size: 13px;">
+                    <span class="direction-arrow arrow-right"><i class="fas fa-arrow-right"></i> ডানদিকে গেলে: (+) এর মান বাড়ে ও (-) এর মান কমে অর্থাৎ জারন অর্ধ বিক্রিয়া </span>
+                    <span class="direction-arrow arrow-left"><i class="fas fa-arrow-left"></i> বামদিকে গেলে:(+) এর মান কমে ও (-) এর মান বাড়ে অর্থাৎ বিজারন অর্ধ বিক্রিয়া</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reaction 1 -->
+        <div class="rxn-card">
+            <div class="rxn-header">বিক্রিয়া 0১</div>
+            <div class="main-equation">
+                $\overset{0}{\text{Zn}} + \overset{+2}{\text{Cu}}\overset{+6}{\text{S}}\overset{-2}{\text{O}_4} \longrightarrow \overset{+2}{\text{Zn}}\overset{+6}{\text{S}}\overset{-2}{\text{O}_4} + \overset{0}{\text{Cu}}$
+            </div>
+
+            <div class="spectator-box">
+                <i class="fas fa-eye"></i> <strong>দর্শক আয়ন:</strong> $\text{SO}_4^{2-}$ (সালফেট আয়ন)। 
+                <br><em>কারণ:</em> বিক্রিয়ার উভয় পাশে $\text{SO}_4^{2-}$ এর জারণ সংখ্যা ($-2$) অপরিবর্তিত রয়েছে।
+            </div>
+
+            <div class="half-rxn-container">
+                <div class="half-box ox-box">
+                    <span class="tag tag-ox">জারণ অর্ধ</span>
+                    <i class="fas fa-long-arrow-alt-right"></i>
+                    $\text{Zn}^0 - 2e^- \longrightarrow \text{Zn}^{2+}$
+                </div>
+                <div class="half-box red-box">
+                    <span class="tag tag-red">বিজারণ অর্ধ</span>
+                    <i class="fas fa-long-arrow-alt-right"></i>
+                    $\text{Cu}^{2+} + 2e^- \longrightarrow \text{Cu}^0$
+                </div>
+            </div>
+
+            <div class="num-line-explain">
+                <i class="fas fa-info-circle"></i> <strong>সংখ্যা রেখা ব্যাখ্যা:</strong> $\text{Zn}$ এর চার্জ $0$ থেকে বেড়ে $+2$ হয়েছে (ডানদিকে গেছে $\rightarrow$ জারণ)। অপরপক্ষে $\text{Cu}$ এর চার্জ $+2$ থেকে কমে $0$ হয়েছে (বামদিকে গেছে $\leftarrow$ বিজারণ)।
+            </div>
+        </div>
+
+        <!-- Reaction 2 -->
+        <div class="rxn-card">
+            <div class="rxn-header">বিক্রিয়া 0২</div>
+            <div class="main-equation">
+                $\overset{0}{\text{Mg}} + 2\overset{+1}{\text{H}}\overset{-1}{\text{Cl}} \longrightarrow \overset{+2}{\text{Mg}}\overset{-1}{\text{Cl}_2} + \overset{0}{\text{H}_2}$
+            </div>
+
+            <div class="spectator-box">
+                <i class="fas fa-eye"></i> <strong>দর্শক আয়ন:</strong> $\text{Cl}^-$ (ক্লোরাইড আয়ন)।
+                <br><em>কারণ:</em> বিক্রিয়ার পূর্বে ও পরে $\text{Cl}^-$ এর জারণ মান $-1$ অপরিবর্তিত ছিল।
+            </div>
+
+            <div class="half-rxn-container">
+                <div class="half-box ox-box">
+                    <span class="tag tag-ox">জারণ অর্ধ</span>
+                    <i class="fas fa-long-arrow-alt-right"></i>
+                    $\text{Mg}^0 - 2e^- \longrightarrow \text{Mg}^{2+}$
+                </div>
+                <div class="half-box red-box">
+                    <span class="tag tag-red">বিজারণ অর্ধ</span>
+                    <i class="fas fa-long-arrow-alt-right"></i>
+                    $2\text{H}^+ + 2e^- \longrightarrow \text{H}_2^0$
+                </div>
+            </div>
+
+            <div class="num-line-explain">
+                <i class="fas fa-info-circle"></i> <strong>সংখ্যা রেখা ব্যাখ্যা:</strong> $\text{Mg}$ এর পজিটিভ চার্জের মান $0$ থেকে বৃদ্ধি পেয়ে $+2$ হয়েছে (জারণ)। $\text{H}^+$ এর পজিটিভ চার্জ $+1$ থেকে হ্রাস পেয়ে $0$ হয়েছে (বিজারণ)।
+            </div>
+        </div>
+
+        <!-- Reaction 3 -->
+        <div class="rxn-card">
+            <div class="rxn-header">বিক্রিয়া 0৩</div>
+            <div class="main-equation">
+                $2\overset{+1}{\text{K}}\overset{-1}{\text{I}} + \overset{0}{\text{Cl}_2} \longrightarrow 2\overset{+1}{\text{K}}\overset{-1}{\text{Cl}} + \overset{0}{\text{I}_2}$
+            </div>
+
+            <div class="spectator-box">
+                <i class="fas fa-eye"></i> <strong>দর্শক আয়ন:</strong> $\text{K}^+$ (পটাশিয়াম আয়ন)।
+                <br><em>কারণ:</em> $\text{K}^+$ আয়নের জারণ সংখ্যা উভয়পক্ষে $+1$ এ স্থির ছিল।
+            </div>
+
+            <div class="half-rxn-container">
+                <div class="half-box ox-box">
+                    <span class="tag tag-ox">জারণ অর্ধ</span>
+                    <i class="fas fa-long-arrow-alt-right"></i>
+                    $2\text{I}^- - 2e^- \longrightarrow \text{I}_2^0$
+                </div>
+                <div class="half-box red-box">
+                    <span class="tag tag-red">বিজারণ অর্ধ</span>
+                    <i class="fas fa-long-arrow-alt-right"></i>
+                    $\text{Cl}_2^0 + 2e^- \longrightarrow 2\text{Cl}^-$
+                </div>
+            </div>
+
+            <div class="num-line-explain">
+                <i class="fas fa-info-circle"></i> <strong>সংখ্যা রেখা ব্যাখ্যা:</strong> $\text{I}^-$ এর নেগেটিভ চার্জের মান $-1$ থেকে কমে $0$ হয়েছে (সংখ্যা রেখায় ডানদিকে সরছে $\rightarrow$ জারণ)। অন্যদিকে $\text{Cl}_2$ এর নেগেটিভ চার্জ $0$ থেকে বেড়ে $-1$ হয়েছে (বামদিকে সরছে $\leftarrow$ বিজারণ)।
+            </div>
+        </div>
+
+        <!-- Reaction 4 -->
+        <div class="rxn-card">
+            <div class="rxn-header">বিক্রিয়া 0৪</div>
+            <div class="main-equation">
+                $2\overset{+2}{\text{Fe}}\overset{-1}{\text{Cl}_2} + \overset{0}{\text{Cl}_2} \longrightarrow 2\overset{+3}{\text{Fe}}\overset{-1}{\text{Cl}_3}$
+            </div>
+
+            <div class="spectator-box">
+                <i class="fas fa-eye"></i> <strong>দর্শক আয়ন:</strong> $\text{Cl}^-$ (ফেরোস ও ফেরিক ক্লোরাইডের সাথে যুক্ত দর্শক আয়ন)।
+                <br><em>কারণ:</em> বিক্রিয়ক $2\text{FeCl}_2$ এর সাথে থাকা ক্লোরাইড আয়নের জারণ সংখ্যা ($-1$) পরিবর্তিত হয়নি।
+            </div>
+
+            <div class="half-rxn-container">
+                <div class="half-box ox-box">
+                    <span class="tag tag-ox">জারণ অর্ধ</span>
+                    <i class="fas fa-long-arrow-alt-right"></i>
+                    $2\text{Fe}^{2+} - 2e^- \longrightarrow 2\text{Fe}^{3+}$
+                </div>
+                <div class="half-box red-box">
+                    <span class="tag tag-red">বিজারণ অর্ধ</span>
+                    <i class="fas fa-long-arrow-alt-right"></i>
+                    $\text{Cl}_2^0 + 2e^- \longrightarrow 2\text{Cl}^-$
+                </div>
+            </div>
+
+            <div class="num-line-explain">
+                <i class="fas fa-info-circle"></i> <strong>সংখ্যা রেখা ব্যাখ্যা:</strong> $\text{Fe}$ এর ক্ষেত্রে পজিটিভ চার্জের মান $+2$ থেকে বৃদ্ধি পেয়ে $+3$ হয়েছে (জারণ)। মুক্ত $\text{Cl}_2$ এর জারণ সংখ্যা $0$ থেকে হ্রাস পেয়ে $-1$ হয়েছে (বিজারণ)।
+            </div>
+        </div>
+
+        <!-- Reaction 5 -->
+        <div class="rxn-card">
+            <div class="rxn-header">বিক্রিয়া 0৫</div>
+            <div class="main-equation">
+                $\overset{0}{\text{Cu}} + 2\overset{+1}{\text{Ag}}\overset{+5}{\text{N}}\overset{-2}{\text{O}_3} \longrightarrow \overset{+2}{\text{Cu}}(\overset{+5}{\text{N}}\overset{-2}{\text{O}_3})_2 + 2\overset{0}{\text{Ag}}$
+            </div>
+
+            <div class="spectator-box">
+                <i class="fas fa-eye"></i> <strong>দর্শক আয়ন:</strong> $\text{NO}_3^-$ (নাইট্রেট আয়ন)।
+                <br><em>কারণ:</em> বিক্রিয়ার শুরু ও শেষে $\text{NO}_3^-$ আয়নের মোট চার্জ $-1$ অপরিবর্তিত ছিল।
+            </div>
+
+            <div class="half-rxn-container">
+                <div class="half-box ox-box">
+                    <span class="tag tag-ox">জারণ অর্ধ</span>
+                    <i class="fas fa-long-arrow-alt-right"></i>
+                    $\text{Cu}^0 - 2e^- \longrightarrow \text{Cu}^{2+}$
+                </div>
+                <div class="half-box red-box">
+                    <span class="tag tag-red">বিজারণ অর্ধ</span>
+                    <i class="fas fa-long-arrow-alt-right"></i>
+                    $2\text{Ag}^+ + 2e^- \longrightarrow 2\text{Ag}^0$
+                </div>
+            </div>
+
+            <div class="num-line-explain">
+                <i class="fas fa-info-circle"></i> <strong>সংখ্যা রেখা ব্যাখ্যা:</strong> $\text{Cu}$ এর চার্জের মান $0$ থেকে বৃদ্ধি পেয়ে $+2$ হয়েছে (সংখ্যা রেখায় ডানদিকে বৃদ্ধি $\rightarrow$ জারণ)। $\text{Ag}^+$ এর চার্জ $+1$ থেকে কমে $0$ হয়েছে (সংখ্যা রেখায় বামদিকে হ্রাস $\leftarrow$ বিজারণ)।
+            </div>
+        </div>
+
+        <div class="footer">
+            &copy; 2026 Self Study with Sujon Sir | Chemistry Learning Module
+        </div>
+
+    </div>
+
+</body>
+</html>

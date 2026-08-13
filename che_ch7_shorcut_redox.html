@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC Chemistry - জারণ-বিজারণ (Redox)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #f3e5f5; /* Light Purple Background */
+            margin: 0; padding: 0; color: #333; 
+            line-height: 1.6;
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #fff; 
+            min-height: 100vh; 
+            padding-bottom: 50px; 
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #7b1fa2 0%, #4a148c 100%);
+            color: white; padding: 35px 20px 25px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 25px; position: relative;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 24px; font-weight: 700; }
+        .header p { margin: 0; font-size: 15px; opacity: 0.9; }
+        
+        .content-wrap { padding: 0 20px; }
+
+        /* কার্ড স্টাইল */
+        .rule-card {
+            background: #fff; border-radius: 12px; margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #ce93d8;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background: #f3e5f5; color: #6a1b9a; padding: 12px 20px;
+            font-size: 18px; font-weight: bold; border-bottom: 2px solid #ab47bc;
+            display: flex; align-items: center; gap: 10px;
+        }
+        
+        .card-body { padding: 20px; font-size: 16px; }
+
+        /* শর্টকাট বক্স */
+        .trick-box {
+            background: #e8f5e9; border: 1px dashed #43a047;
+            padding: 15px; border-radius: 8px; margin-bottom: 15px;
+            text-align: center; font-size: 18px; color: #2e7d32;
+            font-weight: bold; line-height: 1.8;
+        }
+        .trick-box span { font-size: 15px; display: block; color: #555; margin-bottom: 5px; font-weight: normal;}
+
+        .trick-box-alt {
+            background: #ffebee; border: 1px dashed #e53935;
+            padding: 15px; border-radius: 8px; margin-bottom: 15px;
+            text-align: center; font-size: 18px; color: #c62828;
+            font-weight: bold; line-height: 1.8;
+        }
+        .trick-box-alt span { font-size: 15px; display: block; color: #555; margin-bottom: 5px; font-weight: normal;}
+
+        /* লিস্ট স্টাইল */
+        .feature-list { list-style: none; padding: 0; margin: 0; }
+        .feature-list li { margin-bottom: 10px; padding-left: 25px; position: relative; }
+        .feature-list li::before {
+            content: "\f058"; font-family: "Font Awesome 5 Free"; font-weight: 900;
+            position: absolute; left: 0; color: #ab47bc; top: 2px;
+        }
+
+        .note-box {
+            background: #fff3e0; border-left: 4px solid #ff9800;
+            padding: 15px; font-size: 15px; color: #e65100; margin-top: 15px;
+            border-radius: 0 5px 5px 0; line-height: 1.6;
+        }
+
+        .footer { text-align: center; color: #777; font-size: 13px; margin-top: 30px; padding-bottom: 20px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="header">
+            <i class="fas fa-flask" style="font-size: 45px; margin-bottom: 10px; color: #e1bee7;"></i>
+            <h1>Self Study With Sujon Sir</h1>
+            <h1>শর্টকাট ও বেসিক কনসেপ্ট</h1>
+            <p>এসএসসি রসায়ন - ৭ম অধ্যায় (রাসায়নিক বিক্রিয়া)</p>
+        </div>
+
+        <div class="content-wrap">
+            
+            <!-- বেসিক সংজ্ঞা -->
+            <div class="rule-card">
+                <div class="card-header"><i class="fas fa-book-open"></i> বেসিক সংজ্ঞা</div>
+                <div class="card-body">
+                    <ul class="feature-list">
+                        <li><strong>জারণ-বিজারণ (Redox):</strong> যে রাসায়নিক বিক্রিয়ায় ইলেকট্রনের ত্যাগ ও গ্রহন ঘটে তাকে রেডক্স বা জারণ-বিজারণ বিক্রিয়া বলে।</li>
+                        <li><strong>জারণ অর্ধ-বিক্রিয়া:</strong> জারণ-বিজারণ বিক্রিয়ার যে অর্ধাংশে ইলেকট্রনের ত্যাগ ঘটে তাকে জারণ অর্ধ-বিক্রিয়া বলে।</li>
+                        <li><strong>বিজারণ অর্ধ-বিক্রিয়া:</strong> জারণ-বিজারণ বিক্রিয়ার যে অর্ধাংশে ইলেকট্রনের গ্রহন ঘটে তাকে বিজারণ অর্ধ-বিক্রিয়া বলে।</li>
+                        <li><strong>জারক পদার্থ (Oxidizing Agent):</strong> জারণ-বিজারণ বিক্রিয়ায় যে পদার্থ ইলেকট্রন গ্রহন করে তাকে জারক পদার্থ বলে।</li>
+                        <li><strong>বিজারক পদার্থ (Reducing Agent):</strong> জারণ-বিজারণ বিক্রিয়ায় যে পদার্থ ইলেকট্রন ত্যাগ করে তাকে বিজারক পদার্থ বলে।</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- শর্টকাট ট্রিকস -->
+            <div class="rule-card">
+                <div class="card-header"><i class="fas fa-magic"></i> জারণ-বিজারণ মনে রাখার স্পেশাল ট্রিকস</div>
+                <div class="card-body">
+                    
+                    <div class="trick-box">
+                        <span>ইলেকট্রন ত্যাগের ক্ষেত্রে:</span>
+                        জা-বি-জা (ত্যাগ)
+                        <div style="font-size: 15px; color: #388e3c; margin-top: 8px;">
+                            <strong>জা</strong>রণ ➜ <strong>বি</strong>জারক ➜ <strong>জা</strong>রিত (ইলেকট্রন ত্যাগ)
+                        </div>
+                    </div>
+
+                    <div class="trick-box-alt">
+                        <span>ইলেকট্রন গ্রহনের ক্ষেত্রে:</span>
+                        বি-জা-বি (গ্রহন)
+                        <div style="font-size: 15px; color: #d32f2f; margin-top: 8px;">
+                            <strong>বি</strong>জারণ ➜ <strong>জা</strong>রক ➜ <strong>বি</strong>জারিত (ইলেকট্রন গ্রহন)
+                        </div>
+                    </div>
+
+                    <div class="note-box">
+                        <strong>সহজ কথায়:</strong> যে পদার্থ ইলেকট্রন ত্যাগ করে সে বিজারক এবং তার জারণ ঘটে। অন্যদিকে, যে পদার্থ ইলেকট্রন গ্রহণ করে সে জারক এবং তার বিজারণ ঘটে।
+                    </div>
+                </div>
+            </div>
+
+            <!-- অর্ধ-বিক্রিয়া চেনার উপায় -->
+            <div class="rule-card">
+                <div class="card-header"><i class="fas fa-search"></i> অর্ধ-বিক্রিয়া চেনার উপায়</div>
+                <div class="card-body">
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #6a1b9a; margin-bottom: 10px; border-bottom: 1px dashed #ce93d8; padding-bottom: 5px;">🔥 জারণ অর্ধ-বিক্রিয়া চেনার উপায়:</h4>
+                        <ul class="feature-list">
+                            <li>$+$ (পজিটিভ) চার্জের মান বৃদ্ধি পাবে।</li>
+                            <li>$-$ (নেগেটিভ) চার্জের মান হ্রাস পাবে।</li>
+                            <li>ইলেকট্রন ত্যাগ ঘটবে। (যেমন: $Fe^{2+} - e^- \rightarrow Fe^{3+} $)</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 style="color: #6a1b9a; margin-bottom: 10px; border-bottom: 1px dashed #ce93d8; padding-bottom: 5px;">❄️ বিজারণ অর্ধ-বিক্রিয়া চেনার উপায়:</h4>
+                        <ul class="feature-list">
+                            <li>$+$ (পজিটিভ) চার্জের মান হ্রাস পাবে।</li>
+                            <li>$-$ (নেগেটিভ) চার্জের মান বৃদ্ধি পাবে।</li>
+                            <li>ইলেকট্রন গ্রহন ঘটবে। (যেমন: $Cl_2 + 2e^- \rightarrow 2Cl^-$)</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2026 Self Study with Sujon Sir | Chemistry Notes
+        </div>
+
+    </div>
+
+</body>
+</html>

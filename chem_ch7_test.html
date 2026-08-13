@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অধ্যায় ৭ - রাসায়নিক বিক্রিয়া</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            background: #e8f5e9; 
+            margin: 0; 
+            padding: 0; 
+            color: #333;
+        }
+        .container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background: #f9fbe7; 
+            min-height: 100vh; 
+            padding-bottom: 30px;
+        }
+        
+        /* ১. হেডার ডিজাইন */
+        .header {
+            background: linear-gradient(135deg, #00695c 0%, #004d40 100%);
+            color: white;
+            padding: 35px 20px;
+            text-align: center;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            position: relative;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .header h1 { font-size: 26px; margin: 10px 0 5px; font-weight: 700; }
+        .header p { font-size: 14px; color: #b2dfdb; margin-top: 5px; }
+        
+        /* ব্যাক বাটন */
+        .back-btn {
+            position: absolute; top: 20px; left: 20px;
+            color: white; font-size: 20px; text-decoration: none;
+            background: rgba(255,255,255,0.2);
+            width: 35px; height: 35px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.3); }
+
+        /* ২. বাণী সেকশন */
+        .quote-box {
+            background: #e0f2f1;
+            padding: 15px;
+            margin: 0 20px 25px 20px;
+            border-radius: 10px;
+            border-left: 5px solid #2e7d32;
+            color: #00695c;
+            font-size: 14px;
+            text-align: center;
+            font-style: italic;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* ৩. পেজ টাইটেল */
+        .title-wrapper { text-align: center; margin-bottom: 20px; }
+        .page-title {
+            text-align: center; font-size: 20px; font-weight: bold; color: #2e7d32;
+            border-bottom: 2px dashed #a5d6a7;
+            display: inline-block; padding-bottom: 5px;
+        }
+
+        /* শর্টকাট লিস্ট কন্টেইনার */
+        .shortcut-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 0 20px;
+        }
+
+        /* শর্টকাট কার্ড ডিজাইন */
+        .shortcut-card {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 16px 20px;
+            border-radius: 14px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .shortcut-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        /* কার্ডের ধরন অনুযায়ী বর্ডার ও কালার */
+        .card-heat { border-left: 6px solid #d84315; }
+        .card-redox-def { border-left: 6px solid #0277bd; }
+        .card-redox-rxn { border-left: 6px solid #6a1b9a; }
+
+        /* আইকন বক্স */
+        .f-icon-box {
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        
+        .icon-heat { background: #fbe9e7; color: #d84315; }
+        .icon-redox-def { background: #e1f5fe; color: #0277bd; }
+        .icon-redox-rxn { background: #f3e5f5; color: #6a1b9a; }
+
+        /* কার্ড কনটেন্ট */
+        .f-content h3 { margin: 0; font-size: 17px; color: #333; font-weight: 700; }
+        .f-content p { margin: 3px 0 0; font-size: 13px; color: #666; line-height: 1.4; }
+        .f-arrow { margin-left: auto; color: #ccc; font-size: 16px; }
+        .shortcut-card:hover .f-arrow { color: #333; }
+
+        /* ফুটার */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+            color: #777;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- হেডার -->
+        <div class="header">
+            <a href="chemistry_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <i class="fas fa-flask" style="font-size: 45px; color: #ffeb3b; margin-bottom: 10px;"></i>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>"তোমার স্বপ্ন, আমাদের দিকনির্দেশনা"</p>
+        </div>
+
+        <!-- বাণী সেকশন -->
+        <div class="quote-box">
+            <i class="fas fa-quote-left"></i> 
+            রাসায়নিক বিক্রিয়া হলো পদার্থের পরিবর্তনের কৌশল, সঠিক ট্রিকস জানলে সব পানির মতো সহজ!
+        </div>
+
+        <!-- অধ্যায় টাইটেল -->
+        <div class="title-wrapper">
+            <div class="page-title">অধ্যায় ৭: রাসায়নিক বিক্রিয়া</div>
+        </div>
+
+        <!-- শর্টকাট অপশনসমূহ -->
+        <div class="shortcut-wrapper">
+
+            <!-- শর্টকাট ১ -->
+            <a href="che_ch7_shortcut_heat.html" class="shortcut-card card-heat">
+                <div class="f-icon-box icon-heat">
+                    <i class="fas fa-fire-alt"></i>
+                </div>
+                <div class="f-content">
+                    <h3>তাপউৎপাদী, তাপহারী, একমুখী ও উভয়মুখী</h3>
+                    <p>বিক্রিয়ার তাপীয় পরিবর্তন ও দিকের শর্টকাট টেকনিক</p>
+                </div>
+                <div class="f-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </a>
+
+            <!-- শর্টকাট ২ -->
+            <a href="che_ch7_shortcut_redox.html" class="shortcut-card card-redox-def">
+                <div class="f-icon-box icon-redox-def">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <div class="f-content">
+                    <h3>জারণ-বিজারণের শর্টকাট ও সংজ্ঞা</h3>
+                    <p>ছন্দের সাহায্যে জারণ, বিজারণ, জারক ও বিজারক চেনার টেকনিক</p>
+                </div>
+                <div class="f-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </a>
+
+            <!-- শর্টকাট ৩ -->
+            <a href="che_ch7_shortcut_redox2.html" class="shortcut-card card-redox-rxn">
+                <div class="f-icon-box icon-redox-rxn">
+                    <i class="fas fa-vial"></i>
+                </div>
+                <div class="f-content">
+                    <h3>জারণ-বিজারণ (রেডক্স) বিক্রিয়াসমূহ</h3>
+                    <p>বিভিন্ন বিক্রিয়ায় সংখ্যারেখা ব্যাবহার করে জারন বিজারক বিক্রিয়া শনাক্ত ও প্রয়োগ</p>
+                </div>
+                <div class="f-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </a>
+
+        </div>
+
+        <div class="footer">
+            &copy; Self Study with Sujon Sir | All Rights Reserved
+        </div>
+
+    </div>
+
+</body>
+</html>
