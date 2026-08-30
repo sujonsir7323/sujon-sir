@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>পদার্থবিজ্ঞান MCQ - অধ্যায় ১০ (মডেল ২)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg'] },
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        body { font-family: 'Hind Siliguri', sans-serif; background: #e8eaf6; margin: 0; padding: 0; color: #333; user-select: none; }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; min-height: 100vh; padding-bottom: 60px; }
+
+        /* লোডার */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3; border-top: 5px solid #3f51b5;
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, #3f51b5 0%, #283593 100%);
+            color: white; padding: 30px 20px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            margin-bottom: 20px;
+        }
+        .header h1 { margin: 10px 0 5px; font-size: 22px; font-weight: 700; }
+        .back-btn { color: white; float: left; font-size: 20px; }
+
+        /* ইনপুট বক্স */
+        .info-box {
+            padding: 20px; margin: 0 20px; background: #e8eaf6;
+            border-radius: 10px; border: 1px solid #c5cae9;
+            text-align: center;
+        }
+        .input-field {
+            width: 80%; padding: 12px; border-radius: 5px; border: 1px solid #aaa;
+            font-family: 'Hind Siliguri', sans-serif; font-size: 16px; margin-top: 10px;
+            outline: none;
+        }
+        .timer { font-size: 20px; font-weight: bold; color: #d32f2f; margin-top: 10px; }
+
+        /* প্রশ্ন কার্ড */
+        .mcq-container { padding: 20px; }
+        .question-card {
+            background: #fff; padding: 15px; margin-bottom: 20px;
+            border-radius: 10px; border: 1px solid #eee;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+        .q-header { font-weight: 600; font-size: 17px; margin-bottom: 15px; display: flex; gap: 10px; align-items: flex-start; }
+        .board-tag { font-size: 11px; background: #eee; color: #555; padding: 2px 6px; border-radius: 4px; height: fit-content; white-space: nowrap; margin-top: 3px; }
+        
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .option {
+            display: flex; align-items: center; padding: 10px; border: 1px solid #ddd;
+            border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 15px;
+        }
+        .option:hover { background: #f9f9f9; }
+        .option input { margin-right: 10px; transform: scale(1.2); cursor: pointer; }
+
+        /* কালার স্কিম */
+        .correct-ans { background-color: #d4edda !important; border-color: #c3e6cb !important; color: #155724; }
+        .wrong-ans { background-color: #f8d7da !important; border-color: #f5c6cb !important; color: #721c24; }
+        .missed-ans { border: 2px solid #ffc107 !important; background-color: #fff3cd; }
+
+        /* বাটন */
+        .submit-btn {
+            display: block; width: 90%; margin: 20px auto; padding: 15px;
+            background: #3f51b5; color: white; font-size: 18px; font-weight: bold;
+            border: none; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(63, 81, 181, 0.3);
+            transition: 0.3s;
+        }
+        .submit-btn:hover { background: #283593; transform: scale(1.02); }
+
+        /* রেজাল্ট পপআপ */
+        .result-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;
+        }
+        .result-box {
+            background: white; width: 90%; max-width: 400px; padding: 30px;
+            border-radius: 15px; text-align: center; position: relative; animation: popUp 0.4s ease;
+        }
+        @keyframes popUp { from {transform: scale(0.5);} to {transform: scale(1);} }
+        
+        .score-circle {
+            width: 120px; height: 120px; background: #e8eaf6; border-radius: 50%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin: 0 auto 20px; border: 5px solid #3f51b5;
+        }
+        .score-number { font-size: 35px; font-weight: bold; color: #3f51b5; }
+        .score-label { font-size: 12px; color: #666; }
+
+        .close-btn {
+            background: #d32f2f; color: white; border: none; padding: 10px 20px;
+            border-radius: 5px; margin-top: 15px; cursor: pointer; font-size: 14px;
+        }
+
+        @media (max-width: 500px) {
+            .options-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="spinner"></div>
+        <p>প্রশ্ন লোড হচ্ছে...</p>
+    </div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        <div class="header">
+            <a href="physics_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <h1>Self Study with Sujon Sir</h1>
+            <p>অধ্যায় ১০: স্থির তড়িৎ (পূর্ণাঙ্গ মডেল টেস্ট)</p>
+        </div>
+
+        <div class="info-box">
+            <h3 style="margin:0 0 10px;">MCQ পরীক্ষা - মডেল ২</h3>
+            <p style="font-size: 13px; color: #555;">পূর্ণমান: ৩০ | সময়: ৩০ মিনিট</p>
+            <div class="timer" id="timer">সময় বাকি: ৩০:০০ মিনিট</div>
+        </div>
+
+        <form id="quizForm" class="mcq-container">
+            <input type="hidden" name="_subject" value="Physics MCQ Result: Chapter 10 Model 2">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="obtained_score" id="hiddenScore">
+
+            <div style="margin-bottom: 20px; text-align: center;">
+                <input type="text" name="Student_Name" id="studentName" class="input-field" placeholder="তোমার নাম লিখ (বাধ্যতামূলক)..." required>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০১.</span> <span class="board-tag">[ঢাকা ২৩]</span>
+                    <span>ঘর্ষণের ফলে এক বস্তু থেকে অন্য বস্তুতে মূলত কোন কণা স্থানান্তরিত হয়?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q1" value="a"> প্রোটন</label>
+                    <label class="option"><input type="radio" name="q1" value="b" data-correct="true"> ইলেকট্রন</label>
+                    <label class="option"><input type="radio" name="q1" value="c"> নিউট্রন</label>
+                    <label class="option"><input type="radio" name="q1" value="d"> পজিট্রন</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০২.</span> <span class="board-tag">[রাজশাহী ২৩]</span>
+                    <span>দুটি আধানের মধ্যবর্তী দূরত্ব অর্ধেক করা হলে বল কতগুণ হবে?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q2" value="a"> ২ গুণ</label>
+                    <label class="option"><input type="radio" name="q2" value="b" data-correct="true"> ৪ গুণ</label>
+                    <label class="option"><input type="radio" name="q2" value="c"> ১/৪ গুণ</label>
+                    <label class="option"><input type="radio" name="q2" value="d"> অপরিবর্তিত থাকবে</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৩.</span> <span class="board-tag">[কুমিল্লা ২২]</span>
+                    <span>তড়িৎ প্রাবল্যের গাণিতিক সমীকরণ কোনটি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q3" value="a"> $E = F q$</label>
+                    <label class="option"><input type="radio" name="q3" value="b"> $E = q / F$</label>
+                    <label class="option"><input type="radio" name="q3" value="c" data-correct="true"> $E = F / q$</label>
+                    <label class="option"><input type="radio" name="q3" value="d"> $E = F d$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৪.</span> <span class="board-tag">[চট্টগ্রাম ২৩]</span>
+                    <span>তড়িৎ বিভবের সমতুল্য একক কোনটি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q4" value="a"> $J C$</label>
+                    <label class="option"><input type="radio" name="q4" value="b" data-correct="true"> $J C^{-1}$</label>
+                    <label class="option"><input type="radio" name="q4" value="c"> $N C^{-1}$</label>
+                    <label class="option"><input type="radio" name="q4" value="d"> $V C$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৫.</span> <span class="board-tag">[সিলেট ২৩]</span>
+                    <span>অসীম দূরত্ব থেকে $10 C$ আধানকে তড়িৎক্ষেত্রের কোনো বিন্দুতে আনতে $50 J$ কাজ করতে হলে ঐ বিন্দুর বিভব কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q5" value="a"> $500 V$</label>
+                    <label class="option"><input type="radio" name="q5" value="b"> $10 V$</label>
+                    <label class="option"><input type="radio" name="q5" value="c" data-correct="true"> $5 V$</label>
+                    <label class="option"><input type="radio" name="q5" value="d"> $0.2 V$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৬.</span> <span class="board-tag">[বরিশাল ২৩]</span>
+                    <span>ধারকত্বের একক কোনটি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q6" value="a" data-correct="true"> Farad ($F$)</label>
+                    <label class="option"><input type="radio" name="q6" value="b"> Coulomb ($C$)</label>
+                    <label class="option"><input type="radio" name="q6" value="c"> Henry ($H$)</label>
+                    <label class="option"><input type="radio" name="q6" value="d"> Ohm ($\Omega$)</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৭.</span> <span class="board-tag">[দিনাজপুর ২৩]</span>
+                    <span>দুটি আধানের মান দ্বিগুণ এবং মধ্যবর্তী দূরত্ব দ্বিগুণ করলে বলের মান কী হবে?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q7" value="a"> ২ গুণ হবে</label>
+                    <label class="option"><input type="radio" name="q7" value="b"> ৪ গুণ হবে</label>
+                    <label class="option"><input type="radio" name="q7" value="c" data-correct="true"> অপরিবর্তিত থাকবে</label>
+                    <label class="option"><input type="radio" name="q7" value="d"> অর্ধেক হবে</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৮.</span> <span class="board-tag">[ময়মনসিংহ ২৩]</span>
+                    <span>কোন বস্তুর আধান ধনাত্মক বলতে কী বোঝায়?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q8" value="a"> প্রোটনের আধিক্য</label>
+                    <label class="option"><input type="radio" name="q8" value="b"> ইলেকট্রনের আধিক্য</label>
+                    <label class="option"><input type="radio" name="q8" value="c" data-correct="true"> ইলেকট্রনের ঘাটতি</label>
+                    <label class="option"><input type="radio" name="q8" value="d"> নিউট্রনের ঘাটতি</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>০৯.</span> <span class="board-tag">[ঢাকা ২২]</span>
+                    <span>একটি ধারকের গায়ে $50V$, $100\mu F$ লেখা আছে। এর সঞ্চিত আধান কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q9" value="a" data-correct="true"> $5 \times 10^{-3} C$</label>
+                    <label class="option"><input type="radio" name="q9" value="b"> $5000 C$</label>
+                    <label class="option"><input type="radio" name="q9" value="c"> $2 \times 10^{-6} C$</label>
+                    <label class="option"><input type="radio" name="q9" value="d"> $5 C$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১০.</span> <span class="board-tag">[যশোর ২৩]</span>
+                    <span>তড়িৎ প্রাবল্য কোন ধরনের রাশি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q10" value="a"> স্কেলার রাশি</label>
+                    <label class="option"><input type="radio" name="q10" value="b" data-correct="true"> ভেক্টর রাশি</label>
+                    <label class="option"><input type="radio" name="q10" value="c"> মৌলিক রাশি</label>
+                    <label class="option"><input type="radio" name="q10" value="d"> ধ্রুবক রাশি</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১১.</span> <span class="board-tag">[রাজশাহী ২২]</span>
+                    <span>তড়িৎক্ষেত্রের কোনো বিন্দুতে স্থাপিত $+2C$ আধান $10N$ বল অনুভব করলে ঐ বিন্দুর প্রাবল্য কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q11" value="a"> $20 N C^{-1}$</label>
+                    <label class="option"><input type="radio" name="q11" value="b" data-correct="true"> $5 N C^{-1}$</label>
+                    <label class="option"><input type="radio" name="q11" value="c"> $0.2 N C^{-1}$</label>
+                    <label class="option"><input type="radio" name="q11" value="d"> $12 N C^{-1}$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১২.</span> <span class="board-tag">[কুমিল্লা ২৩]</span>
+                    <span>তড়িৎ বলরেখার বৈশিষ্ট্য নয় কোনটি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q12" value="a"> এরা ধনাত্মক আধান থেকে নির্গত হয়</label>
+                    <label class="option"><input type="radio" name="q12" value="b"> এরা ঋণাত্মক আধানে শেষ হয়</label>
+                    <label class="option"><input type="radio" name="q12" value="c" data-correct="true"> এরা পরস্পরকে ছেদ করে</label>
+                    <label class="option"><input type="radio" name="q12" value="d"> পরিবাহীর পৃষ্ঠের সাথে লম্বভাবে বের হয়</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৩.</span> <span class="board-tag">[চট্টগ্রাম ২২]</span>
+                    <span>গোলকীয় ধারকের ধারকত্ব কোনটির উপর নির্ভর করে?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q13" value="a"> আধানের পরিমাণের উপর</label>
+                    <label class="option"><input type="radio" name="q13" value="b"> বিভবের উপর</label>
+                    <label class="option"><input type="radio" name="q13" value="c" data-correct="true"> গোলকের ব্যাসার্ধের উপর</label>
+                    <label class="option"><input type="radio" name="q13" value="d"> ভরের উপর</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৪.</span> <span class="board-tag">[সিলেট ২২]</span> <span> $2 \ C$ এবং $4 \ C$ মানের দুটি চার্জ পরস্পর থেকে $3 \ m$ দূরে অবস্থিত হলে এদের মধ্যবর্তী বল কত?</span> </div> <div class="options-grid"> <label class="option"><input type="radio" name="q14" value="a"> $4 \times 10^9 \ N$</label> <label class="option"><input type="radio" name="q14" value="b" data-correct="true"> $8 \times 10^9 \ N$</label> <label class="option"><input type="radio" name="q14" value="c"> $1.2 \times 10^{10} \ N$</label> <label class="option"><input type="radio" name="q14" value="d"> $2.4 \times 10^{10} \ N$</label> </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৫.</span> <span class="board-tag">[বরিশাল ২২]</span>
+                    <span>দুটি সমান মান ও সমধর্মী চার্জের নিরপেক্ষ বিন্দুর অবস্থান কোথায় হয়?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q15" value="a"> মাঝে</label>
+                    <label class="option"><input type="radio" name="q15" value="b" data-correct="true"> বাহিরে</label>
+                    <label class="option"><input type="radio" name="q15" value="c"> নিরপেক্ষ বিন্দু নেই</label>
+                    <label class="option"><input type="radio" name="q15" value="d"> জানি না😑</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৬.</span> <span class="board-tag">[দিনাজপুর ২২]</span>
+                    <span>একটি বিন্দু আধান হতে $r$ দূরত্বে প্রাবল্য কীভাবে পরিবর্তিত হয়?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q16" value="a"> $E \propto r$</label>
+                    <label class="option"><input type="radio" name="q16" value="b"> $E \propto 1/r$</label>
+                    <label class="option"><input type="radio" name="q16" value="c" data-correct="true"> $E \propto 1/r^2$</label>
+                    <label class="option"><input type="radio" name="q16" value="d"> $E \propto r^2$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৭.</span> <span class="board-tag">[ময়মনসিংহ ২২]</span>
+                    <span>তড়িৎ বিভব কোন ধরনের রাশি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q17" value="a" data-correct="true"> স্কেলার রাশি</label>
+                    <label class="option"><input type="radio" name="q17" value="b"> ভেক্টর রাশি</label>
+                    <label class="option"><input type="radio" name="q17" value="c"> মৌলিক রাশি</label>
+                    <label class="option"><input type="radio" name="q17" value="d"> মাত্রাহীন রাশি</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৮.</span> <span class="board-tag">[ঢাকা ২১]</span>
+                    <span>ধারকে সঞ্চিত শক্তির সমীকরণ কোনটি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q18" value="a"> $U = C V^2$</label>
+                    <label class="option"><input type="radio" name="q18" value="b" data-correct="true"> $U = \frac{1}{2} C V^2$</label>
+                    <label class="option"><input type="radio" name="q18" value="c"> $U = \frac{1}{2} C^2 V$</label>
+                    <label class="option"><input type="radio" name="q18" value="d"> $U = \frac{Q^2}{V}$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>১৯.</span> <span class="board-tag">[রাজশাহী ২১]</span> <span>বাতাসে $20 \ C$ মানের একটি বিন্দু আধান থেকে $2 \ m$ দূরে তড়িৎ প্রাবল্য কত $N C^{-1}$?</span> </div> <div class="options-grid"> <label class="option"><input type="radio" name="q19" value="a"> $4.5 \times 10^9$</label> <label class="option"><input type="radio" name="q19" value="b"> $9.0 \times 10^9$</label> <label class="option"><input type="radio" name="q19" value="c" data-correct="true"> $4.5 \times 10^{10}$</label> <label class="option"><input type="radio" name="q19" value="d"> $9.0 \times 10^{10}$</label> </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২০.</span> <span class="board-tag">[যশোর ২২]</span>
+                    <span>$10 \mu F$ ও $10 \mu F$ এর দুটি ধারক সমান্তরাল সমবায়ে যুক্ত করলে তুল্য ধারকত্ব কত হবে?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q20" value="a"> $5 \mu F$</label>
+                    <label class="option"><input type="radio" name="q20" value="b" data-correct="true"> $20 \mu F$</label>
+                    <label class="option"><input type="radio" name="q20" value="c"> $100 \mu F$</label>
+                    <label class="option"><input type="radio" name="q20" value="d"> $1 \mu F$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২১.</span> <span class="board-tag">[কুমিল্লা ২১]</span>
+                    <span>কোনটির ধারকত্ব সবচেয়ে বেশি হতে পারে?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q21" value="a"> ছোট পরিবাহী</label>
+                    <label class="option"><input type="radio" name="q21" value="b"> পৃথিবী</label>
+                    <label class="option"><input type="radio" name="q21" value="c" data-correct="true"> সমান্তরাল পাত ধারক</label>
+                    <label class="option"><input type="radio" name="q21" value="d"> ইনসুলেটর</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২২.</span> <span class="board-tag">[চট্টগ্রাম ২১]</span>
+                    <span>ফ্যারাড ($F$) কিসের সমতুল্য?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q22" value="a"> $J C^{-1}$</label>
+                    <label class="option"><input type="radio" name="q22" value="b" data-correct="true"> $C V^{-1}$</label>
+                    <label class="option"><input type="radio" name="q22" value="c"> $V C^{-1}$</label>
+                    <label class="option"><input type="radio" name="q22" value="d"> $N C^{-1}$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২৩.</span> <span class="board-tag">[সিলেট ২১]</span>
+                    <span>বিন্দু আধানের জন্য বিভব কীভাবে পরিবর্তিত হয়?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q23" value="a"> $V \propto r$</label>
+                    <label class="option"><input type="radio" name="q23" value="b" data-correct="true"> $V \propto 1/r$</label>
+                    <label class="option"><input type="radio" name="q23" value="c"> $V \propto 1/r^2$</label>
+                    <label class="option"><input type="radio" name="q23" value="d"> $V \propto r^2$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২৪.</span> <span class="board-tag">[বরিশাল ২১]</span>
+                    <span>তড়িৎ আবেশের সময় পরিবাহীতে কী ঘটে?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q24" value="a"> নতুন আধানের সৃষ্টি হয়</label>
+                    <label class="option"><input type="radio" name="q24" value="b"> আধান ধ্বংস হয়</label>
+                    <label class="option"><input type="radio" name="q24" value="c" data-correct="true"> আধানের পুনর্বিন্যাস ঘটে</label>
+                    <label class="option"><input type="radio" name="q24" value="d"> পরিবাহীর ভর বৃদ্ধি পায়</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২৫.</span> <span class="board-tag">[দিনাজপুর ২১]</span>
+                    <span>কুলম্বের ধ্রুবকের মান কত?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q25" value="a" data-correct="true"> $9 \times 11^9$</label>
+                    <label class="option"><input type="radio" name="q25" value="b"> $9 \times 10^9$</label>
+                    <label class="option"><input type="radio" name="q25" value="c"> $10 \times 10^9$</label>
+                    <label class="option"><input type="radio" name="q25" value="d"> $11 \times 10^9$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২৬.</span> <span class="board-tag">[ময়মনসিংহ ২১]</span>
+                    <span>সিল্ক দিয়ে কাচদণ্ডকে ঘষলে কাচদণ্ডে কোন আধান উৎপন্ন হয়?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q26" value="a"> ঋণাত্মক</label>
+                    <label class="option"><input type="radio" name="q26" value="b" data-correct="true"> ধনাত্মক</label>
+                    <label class="option"><input type="radio" name="q26" value="c"> নিরপেক্ষ</label>
+                    <label class="option"><input type="radio" name="q26" value="d"> স্থির আধান</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২৭.</span> <span class="board-tag">[ঢাকা ২০]</span>
+                    <span>স্থির তড়িৎ উৎপন্ন করার সবচেয়ে সহজ পদ্ধতি কোনটি?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q27" value="a"> তাপ প্রয়োগ</label>
+                    <label class="option"><input type="radio" name="q27" value="b"> আলো ফেলা</label>
+                    <label class="option"><input type="radio" name="q27" value="c" data-correct="true"> ঘর্ষণ</label>
+                    <label class="option"><input type="radio" name="q27" value="d"> চাপ প্রয়োগ</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২৮.</span> <span class="board-tag">[রাজশাহী ২০]</span>
+                    <span>$1 C$ আধানে কতগুলো ইলেকট্রন থাকে?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q28" value="a"> $1.6 \times 10^{-19}$</label>
+                    <label class="option"><input type="radio" name="q28" value="b"> $9 \times 10^9$</label>
+                    <label class="option"><input type="radio" name="q28" value="c" data-correct="true"> $6.25 \times 10^{18}$</label>
+                    <label class="option"><input type="radio" name="q28" value="d"> $3 \times 10^8$</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>২৯.</span> <span class="board-tag">[যশোর ২০]</span>
+                    <span>একটি ফাঁপা পরিবাহক গোলকের কেন্দ্রে আধান দিলে এর অভ্যন্তরে প্রাবল্য কত হবে?</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q29" value="a"> অসীম</label>
+                    <label class="option"><input type="radio" name="q29" value="b"> গোলকের পৃষ্ঠের প্রাবল্যের সমান</label>
+                    <label class="option"><input type="radio" name="q29" value="c" data-correct="true"> শূন্য</label>
+                    <label class="option"><input type="radio" name="q29" value="d"> বিভবের সমান</label>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-header">
+                    <span>৩০.</span> <span class="board-tag">[কুমিল্লা ২০]</span>
+                    <span>ফ্লানেল দ্বারা প্লাস্টিককে ঘষলে প্লাস্টিকের ক্ষেত্রে চার্জ-</span>
+                </div>
+                <div class="options-grid">
+                    <label class="option"><input type="radio" name="q30" value="a"> ধনাত্মক</label>
+                    <label class="option"><input type="radio" name="q30" value="b"> ঋনাত্নক</label>
+                    <label class="option"><input type="radio" name="q30" value="c"> শুন্য</label>
+                    <label class="option"><input type="radio" name="q30" value="d" data-correct="true"> নিরপেক্ষ </label>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">সাবমিট করুন</button>
+        </form>
+
+        <div class="result-overlay" id="resultOverlay">
+            <div class="result-box">
+                <h2 style="color: #3f51b5; margin-top: 0;">অভিনন্দন!</h2>
+                <div class="score-circle">
+                    <div class="score-number" id="displayScore">0</div>
+                    <div class="score-label">নম্বর ৩০ এর মধ্যে</div>
+                </div>
+                <p>তোমার নাম: <span id="displayName" style="font-weight: bold;"></span></p>
+                <p id="sendStatus" style="font-size: 14px; color: #555;">রেজাল্ট তৈরি হচ্ছে...</p>
+                <button class="close-btn" onclick="closeResult()">উত্তরপত্র দেখুন</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const ADMIN_EMAIL = "leeminho7323@gmail.com";
+        let timeLeft = 30 * 60; 
+        const timerElement = document.getElementById('timer');
+        let countdown;
+
+        function startTimer() {
+             countdown = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+                
+                timerElement.textContent = `সময় বাকি: ${minutes}:${seconds} মিনিট`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    alert("সময় শেষ! স্বয়ংক্রিয়ভাবে সাবমিট হচ্ছে...");
+                    submitQuiz();
+                }
+                timeLeft--;
+            }, 1000);
+        }
+        startTimer();
+
+        const form = document.getElementById('quizForm');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            submitQuiz();
+        });
+
+        function submitQuiz() {
+            const name = document.getElementById('studentName').value;
+            if(!name) { 
+                alert("দয়া করে তোমার নাম লিখ।"); 
+                document.getElementById('studentName').focus();
+                return; 
+            }
+
+            clearInterval(countdown);
+            const btn = document.getElementById('submitBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ডাটা পাঠানো হচ্ছে...';
+            btn.disabled = true;
+            
+            let score = 0;
+            const questionCards = document.querySelectorAll('.question-card');
+
+            questionCards.forEach(card => {
+                const inputs = card.querySelectorAll('input[type="radio"]');
+                let correctAnswer = null;
+                let userAnswer = null;
+
+                inputs.forEach(input => {
+                    if (input.getAttribute('data-correct') === 'true') {
+                        correctAnswer = input.value;
+                    }
+                    if (input.checked) {
+                        userAnswer = input.value;
+                    }
+                    input.disabled = true;
+                });
+
+                inputs.forEach(input => {
+                    const label = input.parentElement;
+                    if (input.value === correctAnswer) {
+                        label.classList.add('correct-ans');
+                        label.innerHTML += ' <i class="fas fa-check" style="margin-left:auto;"></i>';
+                    }
+                    if (userAnswer === input.value && userAnswer !== correctAnswer) {
+                        label.classList.add('wrong-ans');
+                        label.innerHTML += ' <i class="fas fa-times" style="margin-left:auto;"></i>';
+                    }
+                });
+
+                if (userAnswer === correctAnswer) {
+                    score++;
+                } else if (!userAnswer) {
+                    card.classList.add('missed-ans');
+                }
+            });
+
+            document.getElementById('hiddenScore').value = score + " / 30";
+            const finalFormData = new FormData(form);
+
+            fetch(`https://formsubmit.co/ajax/${ADMIN_EMAIL}`, {
+                method: "POST",
+                body: finalFormData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('sendStatus').textContent = "রেজাল্ট সফলভাবে স্যারের ইমেইলে পাঠানো হয়েছে!";
+                document.getElementById('sendStatus').style.color = "green";
+            })
+            .catch(error => {
+                document.getElementById('sendStatus').textContent = "নেটওয়ার্ক সমস্যার কারণে ইমেইল যায়নি, তবে তুমি রেজাল্ট দেখতে পারবে।";
+                document.getElementById('sendStatus').style.color = "red";
+            });
+
+            document.getElementById('displayScore').textContent = score;
+            document.getElementById('displayName').textContent = name;
+            document.getElementById('resultOverlay').style.display = 'flex';
+            
+            btn.style.display = 'none';
+        }
+
+        function closeResult() {
+            document.getElementById('resultOverlay').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>

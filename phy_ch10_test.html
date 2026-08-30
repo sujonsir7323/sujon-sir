@@ -79,7 +79,7 @@
             padding: 0 20px;
         }
 
-        /* সূত্র বাটন ডিজাইন (নতুন) */
+        /* সূত্র বাটন ডিজাইন */
         .formula-link {
             display: flex;
             align-items: center;
@@ -88,7 +88,7 @@
             border-radius: 12px;
             text-decoration: none;
             box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-            border-left: 6px solid #ff6f00; /* কমলা বর্ডার */
+            border-left: 6px solid #ff6f00;
             transition: transform 0.2s, box-shadow 0.2s;
             margin-bottom: 5px;
         }
@@ -146,7 +146,17 @@
         .btn-mcq { background: #e3f2fd; color: #1565c0; border: 1px solid #bbdefb; }
         .btn-mcq:hover { background: #bbdefb; }
 
+        .btn-single {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+            flex-direction: row;
+            gap: 10px;
+        }
+        .btn-single:hover { background: #c8e6c9; }
+
         .btn-icon { font-size: 20px; margin-bottom: 5px; }
+        .btn-single .btn-icon { margin-bottom: 0; }
 
     </style>
 </head>
@@ -155,7 +165,7 @@
     <div class="container">
         
         <div class="header">
-            <a href="math_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <a href="physics_subject.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
             <i class="fas fa-graduation-cap" style="font-size: 45px; color: #ffeb3b; margin-bottom: 10px;"></i>
             <h1>Self Study with Sujon Sir</h1>
             <p>"তোমার স্বপ্ন, আমাদের দিকনির্দেশনা"</p>
@@ -167,7 +177,7 @@
         </div>
 
         <div class="title-wrapper">
-            <div class="page-title">অধ্যায় ১০: স্থীর তড়িৎ </div>
+            <div class="page-title">অধ্যায় ১০: স্থির তড়িৎ </div>
         </div>
 
         <div class="test-wrapper">
@@ -177,7 +187,7 @@
                     <i class="fas fa-calculator"></i>
                 </div>
                 <div class="f-content">
-                    <h3>প্রয়োজনীয় সূত্র ও শর্টকাট</h3>
+                    <h3>প্রয়োজনীয় সূত্র ও শর্টকাট</h3>
                     <p>পরীক্ষার আগে এক নজরে দেখে নাও</p>
                 </div>
                 <div class="f-arrow">
@@ -185,6 +195,7 @@
                 </div>
             </a>
 
+            <!-- মডেল টেস্ট ১ (আগের মতোই রাখা হয়েছে) -->
             <div class="test-card">
                 <div class="test-header">
                     <div class="test-name"> মডেল টেস্ট ১</div>
@@ -199,7 +210,22 @@
 
                     <a href="phy10_mcq_model1.html" class="action-btn btn-mcq">
                         <i class="fas fa-list-ul btn-icon"></i>
-                      বহুনির্বাচনি (MCQ)
+                        বহুনির্বাচনি (MCQ)
+                    </a>
+                </div>
+            </div>
+
+            <!-- মডেল টেস্ট ২ (নতুন যুক্ত করা হয়েছে, সরাসরি লিঙ্কের সাথে) -->
+            <div class="test-card">
+                <div class="test-header">
+                    <div class="test-name"> মডেল টেস্ট ২</div>
+                    <div class="test-info">পূর্ণমান: ৩০</div>
+                </div>
+
+                <div class="btn-group">
+                    <a href="phy10_mcq_model1.html" class="action-btn btn-single">
+                        <i class="fas fa-pen-to-square btn-icon"></i>
+                        নবম শ্রেণী(৩০/০৮/২০২৬)
                     </a>
                 </div>
             </div>
